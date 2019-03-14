@@ -15,7 +15,8 @@ import centraleOperativa.Control.*;
 public class TimerProxy extends Thread{
 	private int tipo;
 	MessageConsumer consumer;
-	
+    private volatile boolean exit = false;
+
 	
 	public TimerProxy(int t, MessageConsumer c){
 		this.tipo=t;
@@ -28,7 +29,7 @@ public class TimerProxy extends Thread{
 		   	try {
 				//La funzionalità 'GestioneSegnalazioneAllarme()' viene invovata ciclicamente per il consumo  
 				//dei messaggi d'allarme dalla coda delle segnalazioni e la loro gestione
-				while (true) {//!interrupted()){
+				while (!exit) {
 				//	System.out.println("[DEBUG][thread allarme](1) richiama ricevisegnalazione");
 					RiceviSegnalazione(consumer);
 				//	System.out.println("[DEBUG][thread allarme](2) ritorno ricevisegnalazione");
@@ -44,7 +45,7 @@ public class TimerProxy extends Thread{
 		
 		else { //tipo ==1(keep)
 			try {
-				while (true) {//!interrupted()){
+				while (!exit) {
 			//		System.out.println("[DEBUG][thread keep](1) richiama ricevikeep");
 					RiceviKeep(consumer);
 			//		System.out.println("[DEBUG][thread keep](2) ritorno ricevikeep");
@@ -56,8 +57,9 @@ public class TimerProxy extends Thread{
 					}
 			 }
 		}
-	
-	
+	 public void stoppa(){
+	        exit = true;
+	    }
 
 	//metodo per ricevere, stampare, e riconoscere e gestire i dati relativi ad un messaggio di SEGNALAZIONE D'ALLARME ricevuto!
 	public synchronized void RiceviSegnalazione(MessageConsumer c) throws JMSException, ParseException{		
