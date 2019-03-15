@@ -39,7 +39,7 @@ public class CentraleOperativaController {
 			System.out.println("Verifica Superata");
 			SegnalazioneManager segnManag=new SegnalazioneManager(idrobot,idsensore,valore,dataora);			//gestisci segnalazione
 			if(segnManag.verificaSegnalazionePendente()) {
-				segnManag.creaSegnalazione();
+			//	segnManag.creaSegnalazione();
 			}
 		}
 		else {
