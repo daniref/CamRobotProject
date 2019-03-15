@@ -2,7 +2,6 @@ package centraleOperativa.Businesslogic;
 
 import java.util.Date;
 
-import centraleOperativa.Businesslogic.*;
 
 public class SegnalazioneManager {
 	private String idRobot;
@@ -10,12 +9,13 @@ public class SegnalazioneManager {
 	private float valore;
 	private Date data_ora;
 	//private ArrayList <Segnalazione> segnalazioni;
+
 /*
   1) leggi tipologia del sensore che ha causato l'allarme
   2) Traduci la tipologia in gestore
   3) vai dal gestore corrispondente e fatti dare la lista delle segnalazioni che sta "gestendo"
   4) verifica se è presente in questa lista una segnalazione precedente
-	*/
+*/
 	
 	
 	public SegnalazioneManager(String idr,String ids,float v, Date dataora) {
@@ -29,7 +29,7 @@ public class SegnalazioneManager {
 		
 	String tipo=this.leggiTipologia();
 	String idg=this.tipoSensoreToGestore(tipo);
-	//ArrayList<Segnalazioni> segn=richiestaListaSegnalazioni(idg);
+	richiestaListaSegnalazioni(idg);
 	//cerca se condizione su questa lista!(id_sensore)
 	//	  3) vai dal gestore corrispondente e fatti dare la lista delle segnalazioni che sta "gestendo"
 	//	  4) verifica se è presente in questa lista una segnalazione precedente
@@ -53,25 +53,24 @@ public class SegnalazioneManager {
 	}
 
 	
-public boolean cercasegnalazionependente() {
+public boolean esistesegnalazioneprecedente() {
 	//  se esiste una segnalazione nella lista che è stat
 	//	seleziona tutte le segnalazioni di quel sensore nella lista associata a quel gestore
 	//	per ognuno vai a calcolare la differenza 
 	//	Date orario_corrente=new Date();
 	//	for(Segnalazione s: segnalazioni_sensore) {
-	//		if(orario_corrente.getTime()-s.Data.getTime()<1800000) return false;
+	//		if(orario_corrente.getTime()-s.Data.getTime()<1800000) return true;
 	//		}
-		return true;
+		return false;
 	} 
 	
-/*
 // metodo che a partire dall'id di un gestore determina tutte le segnalazini non chiuse che sta gestendo!
   	public void richiestaListaSegnalazioni(String idgestore){
-		setSegnalazioni (getListaSegnalazioni(idgestore));
+		//setSegnalazioni(getListaSegnalazioni(idgestore));
 	}
- */
+
 	
-	public void creaSegnalazione() {
+	public void creaSegnalazione(String idgestore) {
 		//deve essere creato un nuovo oggetto di tipo Segnalazione!
 /*		campi di Segnalazione D'Allarme
 			id segnalazione
@@ -82,7 +81,7 @@ public boolean cercasegnalazionependente() {
 			Id Gestore
 			Id Sensore
 	*/
-		//Segnalazione s=new Segnalazione("APERTO",this.getValore(),data,ora,idgestore,idsensore);
+		//Segnalazione s=new Segnalazione(getIdrobot(),getIdrensore(),idgestore, getValore(), "APERTO",data,ora);
 		
 		}
 
