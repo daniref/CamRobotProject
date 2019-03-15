@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -43,13 +44,14 @@ public class Display {
         
     
     private void initialize(ArrayList<SensoreInterface> Sens, String id_robot){
-		frame = new JFrame("CENTRALINA DISPLAY");
+		frame = new JFrame("DISPLAY - Centralina");
+
 		frame.setBounds(100, 100, 688, 333+70*Sens.size());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		//logo:
 		JLabel lblLabelimg = new JLabel("");
-		Image img = new ImageIcon(this.getClass().getResource("/logo.png")).getImage();
+		Image img = new ImageIcon(this.getClass().getResource("/logo2.png")).getImage();
 		lblLabelimg.setIcon(new ImageIcon(img));
 		lblLabelimg.setBounds(35, 13, 144, 136);
 		frame.getContentPane().add(lblLabelimg);		
