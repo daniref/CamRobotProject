@@ -1,11 +1,11 @@
-package centralinaRobot.compute;
+package centralinaRobot.Compute;
 
 
 
 import javax.jms.JMSException;
 
+import centralinaRobot.Control.Display;
 import centralinaRobot.proxyComunicazioneAsincrona.CentraleOperativaProxy;
-import centralinaRobot.control.Display;
 
 public class FunzionamentoManager {
 

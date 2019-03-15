@@ -1,4 +1,4 @@
-package centralinaRobot.control;
+package centralinaRobot.Control;
 
 import java.awt.Font;
 import java.awt.Image;
@@ -10,7 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import centralinaRobot.sense.SensoreInterface;
+import centralinaRobot.Sense.SensoreInterface;
 
 
 

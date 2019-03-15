@@ -1,9 +1,9 @@
-package centralinaRobot.sense;
+package centralinaRobot.Sense;
 
 import javax.jms.JMSException;
 
-import centralinaRobot.control.*;
-import centralinaRobot.compute.CentralinaRobotController;
+import centralinaRobot.Compute.CentralinaRobotController;
+import centralinaRobot.Control.*;
 
 public class TimerInterface extends Thread {
 	private int tipo; //timer monitoraggio(0), timer Keep (1)

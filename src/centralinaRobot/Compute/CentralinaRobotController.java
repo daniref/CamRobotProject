@@ -1,8 +1,8 @@
-package centralinaRobot.compute;
+package centralinaRobot.Compute;
 
 
-import centralinaRobot.control.*;
-import centralinaRobot.sense.*;
+import centralinaRobot.Control.*;
+import centralinaRobot.Sense.*;
 
 import java.util.ArrayList;
 import javax.jms.JMSException;

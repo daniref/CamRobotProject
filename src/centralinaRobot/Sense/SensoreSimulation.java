@@ -1,4 +1,4 @@
-package centralinaRobot.sense;
+package centralinaRobot.Sense;
 
 import java.util.Random;
 

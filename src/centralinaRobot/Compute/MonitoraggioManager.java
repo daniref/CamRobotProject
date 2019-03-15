@@ -1,12 +1,12 @@
-package centralinaRobot.compute;
+package centralinaRobot.Compute;
 
 import java.util.ArrayList;
 import javax.jms.JMSException;
 
 
 import centralinaRobot.proxyComunicazioneAsincrona.CentraleOperativaProxy;
-import centralinaRobot.control.*;
-import centralinaRobot.sense.SensoreInterface;
+import centralinaRobot.Control.*;
+import centralinaRobot.Sense.SensoreInterface;
 
 
 public class MonitoraggioManager {

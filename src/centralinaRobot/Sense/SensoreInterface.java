@@ -1,4 +1,4 @@
-package centralinaRobot.sense;
+package centralinaRobot.Sense;
 
 public class SensoreInterface {
 	
