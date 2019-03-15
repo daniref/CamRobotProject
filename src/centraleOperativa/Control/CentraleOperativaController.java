@@ -25,7 +25,6 @@ public class CentraleOperativaController {
 	}
 
 	
-	
 	public void gestisciSegnalazione(String idrobot, String idsensore,float valore, Date dataora) {
 		CoerenzaMessaggioManager checkMess=new CoerenzaMessaggioManager(idrobot);  //datacheck
 		//String notificaGestore=null;

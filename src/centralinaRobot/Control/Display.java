@@ -24,7 +24,10 @@ public class Display {
     private ArrayList<JLabel> VettValoreSens = new ArrayList<JLabel>(); 
     private ArrayList<JLabel> VettIDSens = new ArrayList<JLabel>(); 
     private JLabel Jlfunzionamento;
-    
+    private JLabel lblImmFunzionamento;
+	private final Image imgFunctError = new ImageIcon(this.getClass().getResource("/incorrect.png")).getImage();
+	private final Image imgFunctOK = new ImageIcon(this.getClass().getResource("/correct.png")).getImage();
+
     	
     //private static DisplaySingl DisplayInstance;
 
@@ -64,10 +67,9 @@ public class Display {
 		
 		//si mostra l'ID del Robot
 		JLabel Jlabel_lD_Robot = new JLabel(id_robot);
-		Jlabel_lD_Robot.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		Jlabel_lD_Robot.setFont(new Font("Tahoma", Font.BOLD, 27));
 		Jlabel_lD_Robot.setBounds(215, 69, 150, 66);
 		frame.getContentPane().add(Jlabel_lD_Robot);
-		
 
 		//mostra 'Valore'
 		JLabel lblValore = new JLabel("Valore");
@@ -105,29 +107,34 @@ public class Display {
 			VettIDSens.add(jl3);
 
 		}	
-		
+	
 		//per funzionamento - immagini e valore
 		Jlfunzionamento = new JLabel("OK");
-		Jlfunzionamento.setFont(new Font("Tahoma", Font.BOLD, 49));
-		Jlfunzionamento.setBounds(450, 80, 119, 124);
+		Jlfunzionamento.setFont(new Font("Tahoma", Font.BOLD, 25));
+		Jlfunzionamento.setBounds(410, 80, 200, 124);
 		frame.getContentPane().add(Jlfunzionamento);
 				
-	
+
+		lblImmFunzionamento = new JLabel("");
+		lblImmFunzionamento.setBounds(425, 11, 110, 124);
+		lblImmFunzionamento.setIcon(new ImageIcon(imgFunctOK));
+		lblImmFunzionamento.setVisible(true);
+		frame.getContentPane().add(lblImmFunzionamento);		
 		
-		JLabel lblFunzionamentoOK = new JLabel("");
-		lblFunzionamentoOK.setBounds(500, 11, 110, 124);
-		Image imgFunctOK = new ImageIcon(this.getClass().getResource("/correct.png")).getImage();
-		lblFunzionamentoOK.setIcon(new ImageIcon(imgFunctOK));
-		lblFunzionamentoOK.setVisible(true);
-		frame.getContentPane().add(lblFunzionamentoOK);
+//		JLabel lblFunzionamentoOK = new JLabel("");
+//		lblFunzionamentoOK.setBounds(500, 11, 110, 124);
+//	
+//		lblFunzionamentoOK.setIcon(new ImageIcon(imgFunctOK));
+//		lblFunzionamentoOK.setVisible(true);
+//		frame.getContentPane().add(lblFunzionamentoOK);
 
 		
-		JLabel lblFunzionamentoError = new JLabel("");
-		lblFunzionamentoError.setBounds(370, 11, 110, 124);
-		Image imgFunctError = new ImageIcon(this.getClass().getResource("/incorrect.png")).getImage();
-		lblFunzionamentoError.setIcon(new ImageIcon(imgFunctError));
-		lblFunzionamentoError.setVisible(true);
-		frame.getContentPane().add(lblFunzionamentoError);
+//		JLabel lblFunzionamentoError = new JLabel("");
+//		lblFunzionamentoError.setBounds(370, 11, 110, 124);
+//		Image imgFunctError = new ImageIcon(this.getClass().getResource("/incorrect.png")).getImage();
+//		lblFunzionamentoError.setIcon(new ImageIcon(imgFunctError));
+//		lblFunzionamentoError.setVisible(true);
+//		frame.getContentPane().add(lblFunzionamentoError);
 		
 		lblDataora = new JLabel("");
 		lblDataora.setFont(new Font("Tahoma", Font.BOLD, 30));
@@ -156,9 +163,16 @@ public void showval(int index, String val) {
 }
 
 public void showFunzionamento(boolean b) {
-	if(b) Jlfunzionamento.setText("OK");
-	else Jlfunzionamento.setText("KO");
+	if(b)
+		{
+		Jlfunzionamento.setText("In Funzione");
+		lblImmFunzionamento.setIcon(new ImageIcon(imgFunctOK));
 
+		}
+	else {
+		Jlfunzionamento.setText("    Error   ");
+		lblImmFunzionamento.setIcon(new ImageIcon(imgFunctError));
+	}
 }
 
 

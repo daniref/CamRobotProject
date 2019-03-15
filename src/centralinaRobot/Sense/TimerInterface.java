@@ -36,7 +36,7 @@ public class TimerInterface extends Thread {
 			try {
 				 verifica(Dis);
 				System.out.println("***CHECK FUNZIONAMENTO***");
-				Thread.sleep(20000);
+				Thread.sleep(2000);
 				}
 			catch (InterruptedException | JMSException e) {
 				// TODO Auto-generated catch block

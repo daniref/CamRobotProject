@@ -34,9 +34,9 @@ public class mainCentralina {
 				}
 			});
 			System.out.println("[DEBUG][main_centralina][0]-controller creato");
-			TimerInterface t1 = new TimerInterface(0,disp);	//timer che scatena monitoraggio
+		//	TimerInterface t1 = new TimerInterface(0,disp);	//timer che scatena monitoraggio
 			TimerInterface t2 = new TimerInterface(1, disp);	//Timer che scatena il controllo funzionamento
-			t1.start();
+			//t1.start();
 			t2.start();
 			
 		}
