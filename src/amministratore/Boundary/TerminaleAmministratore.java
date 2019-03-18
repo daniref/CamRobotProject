@@ -15,10 +15,10 @@ import centraleOperativa.Control.*;
 import javax.jms.JMSException;
 
 
-public class AmministratorGui {
+public class TerminaleAmministratore {
 	Thread t1,t2;
 	
-	private JFrame frmAmministratore;
+	private JFrame frame;
 	private JTextField txtCentraleOperativa;
 	static TimerProxy tp1;
 	static TimerProxy tp2;
@@ -27,18 +27,16 @@ public class AmministratorGui {
 	 * @throws InterruptedException 
 	 */
 	public static void main(String[] args) throws JMSException, InterruptedException {
-		proxysetup proxyAsincrona=new proxysetup();
 		CentraleOperativaController coc = CentraleOperativaController.getIstance();
 		System.out.println("*****CENTRALE****");
-		
-		proxyAsincrona.setup();
+
 
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AmministratorGui window = new AmministratorGui(proxyAsincrona);
-					window.frmAmministratore.setVisible(true);
+					TerminaleAmministratore window = new TerminaleAmministratore();
+					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -49,31 +47,35 @@ public class AmministratorGui {
 
 	/**
 	 * Create the application.
+	 * @throws JMSException 
 	 * @wbp.parser.entryPoint
 	 */
 
-	public AmministratorGui(proxysetup p) {//, TimerProxy timer1, TimerProxy timer2  ) {
-//		initialize(p);
-		initialize(p);
+	public TerminaleAmministratore() throws JMSException {//, TimerProxy timer1, TimerProxy timer2  ) {
+		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @throws JMSException 
 	 */
-	private void initialize(proxysetup Proxy) {
+	private void initialize() throws JMSException {
+
+		proxysetup proxyAsincrona= proxysetup.getIstance();
+		//proxyAsincrona.setup();
+
 		
-		frmAmministratore = new JFrame();
-		frmAmministratore.setTitle("Amministratore");
-		frmAmministratore.setBounds(100, 100, 450, 300);
-		frmAmministratore.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmAmministratore.getContentPane().setLayout(null);
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
 		
 		txtCentraleOperativa = new JTextField();
 		txtCentraleOperativa.setFont(new Font("Tahoma", Font.PLAIN, 28));
 		txtCentraleOperativa.setForeground(Color.BLUE);
 		txtCentraleOperativa.setText("CENTRALE OPERATIVA");
 		txtCentraleOperativa.setBounds(80, 13, 298, 61);
-		frmAmministratore.getContentPane().add(txtCentraleOperativa);
+		frame.getContentPane().add(txtCentraleOperativa);
 		txtCentraleOperativa.setColumns(10);
 		
 		JButton btnStart = new JButton("start");
@@ -86,18 +88,21 @@ public class AmministratorGui {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub			
 				try {
-					start(Proxy);
+				//	proxysetup.getIstance();
+					proxyAsincrona.setup();	//proxy che fa in modo di ricevere le segnalazioni d'allarme
+					tp1 = new TimerProxy(0,proxyAsincrona.getConsumerAllarmi());
+					tp2 = new TimerProxy(1,proxyAsincrona.getConsumerKeep());
+					tp1.start();
+					tp2.start();
+					
 				} catch (JMSException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (InterruptedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
 			
 		});
-		frmAmministratore.getContentPane().add(btnStart);
+		frame.getContentPane().add(btnStart);
 		
 		JButton btnStop = new JButton("stop");
 		btnStop.setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -108,7 +113,10 @@ public class AmministratorGui {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				try {
-					stop(Proxy);
+					tp1.stoppa();
+					tp2.stoppa();
+				//	proxysetup.getIstance();
+					proxyAsincrona.chiudi();
 				} catch (JMSException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -116,7 +124,7 @@ public class AmministratorGui {
 			}
 			
 		});
-		frmAmministratore.getContentPane().add(btnStop);
+		frame.getContentPane().add(btnStop);
 	}
 	
 	
@@ -132,8 +140,6 @@ public class AmministratorGui {
 	public static void stop(proxysetup p) throws JMSException {//, TimerProxy tp1, TimerProxy tp2)  throws JMSException {
 		tp1.stoppa();
 		tp2.stoppa();
-		System.out.println("Thread che schedula le segnalazioni stoppato");
-		System.out.println("Thread che schedula le i Keep Alive stoppato");
 		try
         {
             p.chiudi();

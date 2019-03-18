@@ -25,17 +25,16 @@ public class TimerProxy extends Thread{
 	}
 	
 	public void run(){
-		if(tipo==0) {
+		if(tipo==0) { //se tipo==0 -> monitoragio
 		   	try {
 				//La funzionalità 'GestioneSegnalazioneAllarme()' viene invovata ciclicamente per il consumo  
 				//dei messaggi d'allarme dalla coda delle segnalazioni e la loro gestione
 				while (!exit) {
-				//	System.out.println("[DEBUG][thread allarme](1) richiama ricevisegnalazione");
+					System.out.println("[Thread]Monitoraggio");					
 					RiceviSegnalazione(consumer);
-				//	System.out.println("[DEBUG][thread allarme](2) ritorno ricevisegnalazione");
 					Thread.sleep(2300);
-
 		   			}
+				System.out.println("Thread che scatena il monitoraggio chiuso");
 				}
 		   	catch (JMSException | InterruptedException | ParseException e) {
 					e.printStackTrace();
@@ -47,10 +46,12 @@ public class TimerProxy extends Thread{
 			try {
 				while (!exit) {
 			//		System.out.println("[DEBUG][thread keep](1) richiama ricevikeep");
+					System.out.println("[Thread]Funzionamento");					
 					RiceviKeep(consumer);
 			//		System.out.println("[DEBUG][thread keep](2) ritorno ricevikeep");
 					Thread.sleep(5500);
 					}
+				System.out.println("Thread che verifica il funzionamento chiuso");
 				}	
 			 catch (JMSException | InterruptedException | ParseException e) {
 					e.printStackTrace();
@@ -96,10 +97,7 @@ public class TimerProxy extends Thread{
 		if (message instanceof TextMessage) {
 			TextMessage textMessage = (TextMessage) message;
 	        System.out.println("[KEEP]\n"+textMessage.getText()+"\n");
-	        
-	        
 	        ///ESTRAZIONE DELLE INFO DAL MESSAGGIO KEEP (idrobot;dataora.)
-
 	        String [] arrOfStr= new String[2];
 			arrOfStr = (textMessage.getText()).split(";");
  		   	String idrobot=arrOfStr[0];

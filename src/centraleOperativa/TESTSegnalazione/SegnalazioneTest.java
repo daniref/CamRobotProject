@@ -1,12 +1,14 @@
-package centrale.SegnalazioneTest;
+package centraleOperativa.TESTSegnalazione;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class SegnalazioneTest {
 
 	
-	private String id;
-	private String stato;
+	private String id;		//id allarme
+	private String stato; 	//APERTA , "IN ATTESA", "RISOLTA", "GESTORE ESTERNO" 
 	private float valoreAllarme;
 	Date dataora;
 	String idgestore;
@@ -65,6 +67,34 @@ public class SegnalazioneTest {
 	}
 	public void setIdsensore(String idsensore) {
 		this.idsensore = idsensore;
+	}
+	
+	public void NOTIFICA() {
+		setStato("RISOLTA");
+	}
+	
+	public void ControlloNotifica() {
+		Thread ControlloNotifica=new Thread()
+		{
+			public void run() {
+					try {
+						sleep(120000); //si attende 2 minuti
+						//se dopo 2 minuti lo stato della segnalazione è ancora in attesa
+						//allora significa che non è arrivata alcuna notifica dall'utente!
+						if(getStato()=="IN ATTESA") {
+											//demanda la segnalazione ad un gestore esterno!!!!!!
+											setStato("GESTORE ESTERNO");
+											System.out.println("E' stata notficata una richiesta ad un GESTORE ESTERNO");
+											}
+						
+						}
+					catch(InterruptedException e){
+						e.printStackTrace();
+					}
+				}
+			
+		};
+		ControlloNotifica.start();
 	}
 	
 }

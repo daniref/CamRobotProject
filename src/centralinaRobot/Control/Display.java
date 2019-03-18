@@ -2,13 +2,11 @@ package centralinaRobot.Control;
 
 import java.awt.Font;
 import java.awt.Image;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
