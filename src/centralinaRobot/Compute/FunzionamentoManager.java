@@ -2,6 +2,8 @@ package centralinaRobot.Compute;
 
 
 
+import java.util.Random;
+
 import javax.jms.JMSException;
 
 import centralinaRobot.Control.Display;
@@ -10,12 +12,13 @@ import centralinaRobot.proxyComunicazioneAsincrona.CentraleOperativaProxy;
 public class FunzionamentoManager {
 
 	private boolean funz; 
-
+	private String idrobot;
 	private final static CentraleOperativaProxy proxyAsincr= new CentraleOperativaProxy();
 
 	
-	public FunzionamentoManager() {
+	public FunzionamentoManager(String idr) {
 		this.funz=true;
+		this.idrobot=idr;
 	}
 	
 
@@ -23,31 +26,44 @@ public class FunzionamentoManager {
 		 this.funz=!funz;
 		 }
 		
-	
+
+	public void setFunz(boolean funz) {
+		this.funz = funz;
+	}
+
+	public String getIdrobot() {
+		return idrobot;
+	}
+
+
+	public void setIdrobot(String idrobot) {
+		this.idrobot = idrobot;
+	}
+
+
 	public boolean getFunzionamento(){
 			return funz;
 	}
 	
 	//si simula un errato funzionamento solo nel 15% dei casi!
 	public boolean simulafunzionamento() {
-		if(Math.random()*100>85) return false;
+		Random random=new Random();
+		int t= random.nextInt(100);
+		if(t>85) return false;
 		return true;
 	}
 
-	//metodo che 
-	public void CheckFunzionamento(String id_robot,Display d) throws JMSException{
-		//simula cambio valore del funzionamento!
-		if (simulafunzionamento()) change();
-		System.out.print("FUNZIONAMENTO: ");
-		if(getFunzionamento())System.out.println("OK");
-		else System.out.println("KO");
+	public void CheckFunzionamento(Display d) throws JMSException{
+		if (getFunzionamento()!=simulafunzionamento()) change();
 
+		System.out.print("[Funzionamento Manager] FUNZIONAMENTO: ");
+		if(getFunzionamento())System.out.println("["+getIdrobot()+"] OK");
+		else System.out.println("["+idrobot+"] KO");
+		
 		if(getFunzionamento()){
 				d.showFunzionamento(true);
-//				System.out.println("[DEBUG][MANAGERFUNZIONAMENTO](verifica) - tutto appost 1)richiama proxy");
-	//			System.out.println("[DEBUG][MANAGERFUNZIONAMENTO](verifica) - invia parametri al proxy:");
-			//	proxyAsincr.GeneraKeep(id_robot);
-		//		System.out.println("[DEBUG][MANAGERFUNZIONAMENTO](verifica) - keep inviato 2)ritorno al manager");
+				
+				//proxyAsincr.GeneraKeep(id_robot);
 				}
 			else d.showFunzionamento(false);
 		}

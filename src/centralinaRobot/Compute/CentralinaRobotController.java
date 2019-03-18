@@ -13,10 +13,18 @@ public class CentralinaRobotController {
 	private final static String idR="rb0001"; //id robot univoco per ogni controller!
 	
 	private final static ArrayList<SensoreInterface> Sensori= new ArrayList<SensoreInterface>();
-	private static MonitoraggioManager ManagerMon;
-	private static FunzionamentoManager ManagerFunz;
+	private static ArrayList<Float> SensoriSoglie= new ArrayList<Float>();	
 
+	public static ArrayList<Float> getSensoriSoglie() {
+		return SensoriSoglie;
+	}
+	public static void setSensoriSoglie(ArrayList<Float> sensoriSoglie) {
+		SensoriSoglie = sensoriSoglie;
+	}
+
+	private static MonitoraggioManager ManagerMon;
 	private static String IDRobot;
+
 	//CREAZIONE DEL 'SINGLETON'
 	private static CentralinaRobotController centralinaRobot=null;
 	//costruttore privato---------------------------------
@@ -42,28 +50,49 @@ public class CentralinaRobotController {
 		IDRobot=idR; 
 		SensoreInterface  s=new SensoreInterface("s030","T");
         SensoreInterface s1=new SensoreInterface("s031","F");
-        SensoreInterface s2=new SensoreInterface("s032","P");
-        SensoreInterface s3=new SensoreInterface("s033","P");
-        SensoreInterface s4=new SensoreInterface("s034","P");
+       // SensoreInterface s2=new SensoreInterface("s032","P");
+        //SensoreInterface s3=new SensoreInterface("s033","P");
+        //SensoreInterface s4=new SensoreInterface("s034","P");
         Sensori.add(s);
         Sensori.add(s1);
-        Sensori.add(s2);
-        Sensori.add(s3);
-        Sensori.add(s4);
-		ManagerMon=new MonitoraggioManager(Sensori);
-		ManagerFunz=new FunzionamentoManager();
-		ManagerMon.configurationSoglie();
-		System.out.println("[Controller] e manager configurazione completata");
+        //Sensori.add(s2);
+        //Sensori.add(s3);
+        //Sensori.add(s4);
+        configurationSoglie();
+		System.out.println("[Controller]configurazione completata");
 }
 
+	public void configurationSoglie() {
+		for(int i=0;i<Sensori.size();i++) {
+		switch(Sensori.get(i).getTipo()) {
+			case "F":
+				SensoriSoglie.add((float)80.0);
+				break;
+			case "T":
+				SensoriSoglie.add((float)30.0);
+				break;
+			case "P":
+				SensoriSoglie.add((float)50);
+				break;	
+			default: 
+				SensoriSoglie.add((float)20);
+				break;									
+			}
+		}
+	}
+
+	
 	public void Misura(Display d) throws JMSException{
-		System.out.println("[Controller]chiama funzione manager");
-		ManagerMon.Monitora(getID(), d);
+		System.out.println("[Controller]crea manager segnalazioni con idrobot "+ getID() + "Sensori e Soglie");
+        ManagerMon=new MonitoraggioManager(getID(),Sensori, SensoriSoglie); //carica soglie!
+		ManagerMon.Monitora(d);
 	}
 	
+	
 	public void ControllaFunz(Display d) throws JMSException{
-		System.out.println("[Controller]chiama funzione manager");
-		ManagerFunz.CheckFunzionamento(getID(),d);
+		System.out.println("[Controller]crea un nuovo manager con idrobot="+ getID());
+		FunzionamentoManager mf=new FunzionamentoManager(getID());
+		mf.CheckFunzionamento(d);
 	}
 	
 }

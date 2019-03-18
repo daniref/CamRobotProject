@@ -11,46 +11,48 @@ import centralinaRobot.Sense.SensoreInterface;
 
 public class MonitoraggioManager {
 	private static ArrayList<SensoreInterface> Sensori= new ArrayList<SensoreInterface>();
-	private static ArrayList<Integer> SensoriSoglie= new ArrayList<Integer>();	
+	private static ArrayList<Float> SensoriSoglie= new ArrayList<Float>();	
+	private static String idRobot;
 	private final static CentraleOperativaProxy proxyAsincr= new CentraleOperativaProxy();	
 
-	public MonitoraggioManager(ArrayList<SensoreInterface> SI) {
-		Sensori=SI;
+	public MonitoraggioManager(String idr,ArrayList<SensoreInterface> SI, ArrayList <Float >SS ) {
+		setIdRobot(idr);
+		setSensori(SI);
+		setSensoriSoglie(SS);
 	}
 	
-//Per ogni sensore si inizializza un vettore di Soglie .
-//la soglia è settata in modo conforme al tipo di Sensore
-public void configurationSoglie() {
-	for(int i=0;i<Sensori.size();i++) {
-	switch(Sensori.get(i).getTipo()) {
-		case "F":
-			SensoriSoglie.add(80);
-			break;
-		case "T":
-			SensoriSoglie.add(30);
-			break;
-		case "P":
-			SensoriSoglie.add(50);
-			break;	
-		default: 
-			SensoriSoglie.add(20);
-			break;									
-		}
-	}
+public ArrayList <Float> getSensoriSoglie(){
+	return SensoriSoglie;
 }
 
-public ArrayList <Integer> getSensoriSoglie(){
-	return SensoriSoglie;
+public static ArrayList<SensoreInterface> getSensori() {
+	return Sensori;
+}
+
+public static void setSensori(ArrayList<SensoreInterface> sensori) {
+	Sensori = sensori;
+}
+
+public static String getIdRobot() {
+	return idRobot;
+}
+
+public static void setIdRobot(String idRobot) {
+	MonitoraggioManager.idRobot = idRobot;
+}
+
+public static void setSensoriSoglie(ArrayList<Float> sensoriSoglie) {
+	SensoriSoglie = sensoriSoglie;
 }
 
 //funzione per poter impostare un nuovo valore di soglia per un determinato sensore
 //è importante che l'ordinamento dei Sensori sia corrispondente all'ordinamento delle soglie
-public void changeSoglia(int index, int newSoglia) {
+public void changeSoglia(int index, float newSoglia) {
 	 SensoriSoglie.set(index, newSoglia);
  }
 		
 	
-public boolean VerificaSuperamentoSoglia(float valore, int soglia){
+public boolean VerificaSuperamentoSoglia(float valore, float soglia){
 	if(valore>soglia)
 		return true;
 	else 
@@ -65,18 +67,17 @@ public ArrayList<Number> LetturaValori(){
 	return valoriletti;
 }
 	
-public void Monitora(String id_robot, Display d) throws JMSException{
+public void Monitora(Display d) throws JMSException{
 	float valore;
 	//	per ogni sensore gestito dalla centralina viene letto il valore e la soglia
 	for(int i=0;i<Sensori.size();i++){
-		System.out.println("[DEBUG][MANAGERMONITORA[] iterazione :"+i);
 		valore=Sensori.get(i).Leggi();
 		d.showval(i,valore);
 		if(VerificaSuperamentoSoglia(valore, SensoriSoglie.get(i))==true){
 	//		System.out.println("[DEBUG][MANAGERMONITORA](verifica) - soglia superata 1)richiama proxy");
 	//		estrae il tipo di allarme dall'id del sensore
 	//		System.out.println("[DEBUG][MANAGERMONITORA](verifica) - invia parametri al proxy:{Robot: "+id_robot +",Sensore: "+Sensori.get(i)+"}");
-			proxyAsincr.GeneraAllarme(id_robot,Sensori.get(i).getID(),valore);
+		//	proxyAsincr.GeneraAllarme(getIdRobot() ,Sensori.get(i).getID(),valore);
 	//		System.out.println("[DEBUG][MANAGERMONITORA](verifica) - soglia superata 2)ritorno al manager");
 		}
 	}

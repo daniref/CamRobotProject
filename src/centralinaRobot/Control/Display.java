@@ -2,6 +2,7 @@ package centralinaRobot.Control;
 
 import java.awt.Font;
 import java.awt.Image;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -23,6 +24,7 @@ public class Display {
     private ArrayList<JLabel> VettLabelSens = new ArrayList<JLabel>(); 
     private ArrayList<JLabel> VettValoreSens = new ArrayList<JLabel>(); 
     private ArrayList<JLabel> VettIDSens = new ArrayList<JLabel>(); 
+    private ArrayList<JLabel> VettSoglieSens = new ArrayList<JLabel>(); 
     private JLabel Jlfunzionamento;
     private JLabel lblImmFunzionamento;
 	private final Image imgFunctError = new ImageIcon(this.getClass().getResource("/incorrect.png")).getImage();
@@ -31,22 +33,14 @@ public class Display {
     	
     //private static DisplaySingl DisplayInstance;
 
-   public Display (ArrayList<SensoreInterface> Sens, String id_r){
-    	initialize(Sens,id_r);
+   public Display (ArrayList<SensoreInterface> Sens, String id_r, ArrayList <Float> ss){
+    	initialize(Sens,id_r,ss);
     	clock();
-    }  //private constructor.
+    }  
 
-    
-
-//    public static synchronized DisplaySingl getDisplaySing(ArrayList<SensoreInterface> Sens, ArrayList<Integer> Sogl, String id_r){
-//        if (DisplayInstance == null){ //if there is no instance available... create new one
-//        	DisplayInstance = new DisplaySingl(Sens,Sogl,id_r);
-//        }
-//        return DisplayInstance;
-//    }
-        
-    
-    private void initialize(ArrayList<SensoreInterface> Sens, String id_robot){
+   
+    //funzione in cui si inizializza i valori statici e si imposta la giusta grandezza del display!
+    private void initialize(ArrayList<SensoreInterface> Sens, String id_robot, ArrayList<Float> soglie){
 		frame = new JFrame("DISPLAY - Centralina");
 
 		frame.setBounds(100, 100, 688, 333+70*Sens.size());
@@ -71,20 +65,25 @@ public class Display {
 		Jlabel_lD_Robot.setBounds(215, 69, 150, 66);
 		frame.getContentPane().add(Jlabel_lD_Robot);
 
+		JLabel lblID2 = new JLabel("ID Sensore");
+		lblID2.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblID2.setBounds(340, 230, 94, 22);
+		frame.getContentPane().add(lblID2);
+		
 		//mostra 'Valore'
 		JLabel lblValore = new JLabel("Valore");
 		lblValore.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lblValore.setBounds(370, 230, 60, 22);
+		lblValore.setBounds(450, 230, 60, 22);
 		frame.getContentPane().add(lblValore);
 		
 		//mostra 'Soglia'
-		JLabel lblSoglia = new JLabel("ID");
+		JLabel lblSoglia = new JLabel("Soglia");
 		lblSoglia.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lblSoglia.setBounds(540, 230, 60, 22);
+		lblSoglia.setBounds(550, 230, 94, 22);
 		frame.getContentPane().add(lblSoglia);
 
 		//aggiungo al frame tante label quanti sono i sensori - in cui ho inizializzato i 
-		JLabel jl1, jl2, jl3;
+		JLabel jl1, jl2, jl3,jl4;
 		for(int i=0; i< Sens.size();i++) {
 			//Tipo, ID
 			jl1 = new JLabel(""+Sens.get(i).getTipoEsteso()); //per Tipo  e ID
@@ -95,17 +94,23 @@ public class Display {
 
 			jl2 = new JLabel("val "+ i); //valore misurato
 			jl2.setFont(new Font("Tahoma", Font.BOLD, 18));
-			jl2.setBounds(370, 253+50*i, 50, 35);
+			jl2.setBounds(450, 253+50*i, 80, 35);
 			frame.getContentPane().add(jl2);
 			VettValoreSens.add(jl2);
 
 			
 			jl3 = new JLabel("("+Sens.get(i).getID()+")"); //ID misurato
 			jl3.setFont(new Font("Tahoma", Font.BOLD, 18));
-			jl3.setBounds(540, 253+50*i, 80, 35);
+			jl3.setBounds(350, 253+50*i, 80, 35);
 			frame.getContentPane().add(jl3);
 			VettIDSens.add(jl3);
-
+			
+			
+			jl4 = new JLabel(String.format ("%.2f",soglie.get(i))); //ID misurato
+			jl4.setFont(new Font("Tahoma", Font.BOLD, 18));
+			jl4.setBounds(545, 253+50*i, 150, 35);
+			frame.getContentPane().add(jl4);
+			VettSoglieSens.add(jl4);
 		}	
 	
 		//per funzionamento - immagini e valore
@@ -140,6 +145,8 @@ public class Display {
 		lblDataora.setFont(new Font("Tahoma", Font.BOLD, 30));
 		lblDataora.setBounds(84, 177, 485, 41);
 		frame.getContentPane().add(lblDataora);
+		
+
 	}
 
 
@@ -152,8 +159,9 @@ public class Display {
 
 //serve per aggiornare la JLabel associata all'iesimo sensore
 public void showval(int index, float val) {
-		VettValoreSens.get(index).setText(String.format ("%.1f",val));
-		System.out.println("Ho aggornato il sensore "+index+" con il valore "+String.format ("%.1f",val));
+
+		VettValoreSens.get(index).setText(String.format ("%.2f",val));
+		System.out.println("Ho aggornato il sensore "+index+" con il valore: "+String.format ("%.1f",val));
 }
 
 //stringa
@@ -161,6 +169,7 @@ public void showval(int index, String val) {
 	VettValoreSens.get(index).setText(""+val);
 	System.out.println("Ho aggornato il sensore "+index+" con il valore"+val);
 }
+
 
 public void showFunzionamento(boolean b) {
 	if(b)
@@ -195,5 +204,4 @@ public void clock() {
 	};
 	clock.start();
 }
-//fine classe
 }
