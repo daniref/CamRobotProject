@@ -82,7 +82,7 @@ public class cliente_Entity {
 		}		
 	}
 	
-	public void getClienteById(String id) throws PersistentException{
+	public Cliente getClienteById(String id) throws PersistentException{
 		
 		try {
 			TimeZone.getDefault();
@@ -97,6 +97,7 @@ public class cliente_Entity {
 			this.recapito=new_cliente.getRecapito();
 			this.data_di_nascita=convertFromSQLDateToJAVADate(new_cliente.getData_di_nascita());
 			this.luogo_di_nascita=new_cliente.getLuogo_di_nascita();
+			return new_cliente;
 			
 		}
 		catch(Exception e) {

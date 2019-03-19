@@ -57,7 +57,7 @@ public class robot_Entity {
 		}		
 	}
 	
-	public void getRobotById(String id) throws PersistentException{
+	public Robot getRobotById(String id) throws PersistentException{
 		
 		try {
 			Robot new_robot=new Robot();
@@ -68,6 +68,7 @@ public class robot_Entity {
 			this.funzionamento=new_robot.getFunzionamento();
 			this.indirizzo=new_robot.getIndirizzo();
 			this.areaId=new_robot.getAreaId();
+			return new_robot;
 		}
 		catch(Exception e) {
 			System.out.println("Robot non presente!");

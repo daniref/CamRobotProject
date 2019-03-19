@@ -15,8 +15,8 @@ public class test {
 
 	public static void main(String[] args) {
 		
-//----------hg--TEST 1---/Inserimento nuovo cliente e ottenimento del recapito di un cliente tramite id
-		try {
+//--------------TEST 1---/Inserimento nuovo cliente e ottenimento del recapito di un cliente tramite id
+/*		try {
 		//	TimeZone.getDefault();
 		//	TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 		//	cliente_Entity new_cliente = new cliente_Entity("Aladin","Genio","lampada","61fss","123123",new SimpleDateFormat("yyyy-MM-dd").parse("2000-01-20"),"Disneyland Paris");
@@ -36,7 +36,7 @@ public class test {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+*/		
 //---------------TEST 2---------ricerca di un cliente tramite id e lettura suoi parametri		
 /*		try {
         		cliente_Entity cli = new cliente_Entity();
@@ -73,21 +73,26 @@ public class test {
 			System.out.println(rob.getStatoById("rb0003"));
 			System.out.println(rob.getCondizioneById("rb0003"));
 			System.out.println(rob.getFunzionamentoById("rb0003"));
-
-			
 			
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		
-		
-		
+				
 		*/
 		
-		
-		
-		
+//---------------TEST 4---------ricerca del recapito di un utente, fornendo l'id del robot associato al suo contratto		
+		try {
+			contratto_Entity new_contratto = new contratto_Entity();
+			String id_utente=new_contratto.getIdUtenteByIdRobot("rb0002");
+			cliente_Entity new_cliente= new cliente_Entity();
+			System.out.println(new_cliente.getRecapitoById(id_utente));
+			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	
 		
 	}
 
