@@ -6,19 +6,23 @@ import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import centraleOperativa.ProxyComunicazioneAsincrona.*;
 import centraleOperativa.Control.*;
 
 import javax.jms.JMSException;
+import java.awt.Toolkit;
 
 
 public class TerminaleAmministratore {
 	Thread t1,t2;
 	
-	private JFrame frame;
+	private JFrame frmTerminaleAmministratore;
 	private JTextField txtCentraleOperativa;
 	static TimerProxy tp1;
 	static TimerProxy tp2;
@@ -36,7 +40,7 @@ public class TerminaleAmministratore {
 			public void run() {
 				try {
 					TerminaleAmministratore window = new TerminaleAmministratore();
-					window.frame.setVisible(true);
+					window.frmTerminaleAmministratore.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -65,17 +69,22 @@ public class TerminaleAmministratore {
 		//proxyAsincrona.setup();
 
 		
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmTerminaleAmministratore = new JFrame();
+//		Image imgTerminale = new ImageIcon(this.getClass().getResource("/logo.png")).getImage();
+	//	frmTerminaleAmministratore.setIconImage(Toolkit.getDefaultToolkit().getImage(eIcon(imgTerminale));
+
+		frmTerminaleAmministratore.setIconImage(Toolkit.getDefaultToolkit().getImage(TerminaleAmministratore.class.getResource("/logo.png")));
+		frmTerminaleAmministratore.setTitle("Terminale Amministratore");
+		frmTerminaleAmministratore.setBounds(100, 100, 450, 300);
+		frmTerminaleAmministratore.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmTerminaleAmministratore.getContentPane().setLayout(null);
 		
 		txtCentraleOperativa = new JTextField();
 		txtCentraleOperativa.setFont(new Font("Tahoma", Font.PLAIN, 28));
 		txtCentraleOperativa.setForeground(Color.BLUE);
 		txtCentraleOperativa.setText("CENTRALE OPERATIVA");
 		txtCentraleOperativa.setBounds(80, 13, 298, 61);
-		frame.getContentPane().add(txtCentraleOperativa);
+		frmTerminaleAmministratore.getContentPane().add(txtCentraleOperativa);
 		txtCentraleOperativa.setColumns(10);
 		
 		JButton btnStart = new JButton("start");
@@ -102,7 +111,7 @@ public class TerminaleAmministratore {
 			}
 			
 		});
-		frame.getContentPane().add(btnStart);
+		frmTerminaleAmministratore.getContentPane().add(btnStart);
 		
 		JButton btnStop = new JButton("stop");
 		btnStop.setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -124,7 +133,7 @@ public class TerminaleAmministratore {
 			}
 			
 		});
-		frame.getContentPane().add(btnStop);
+		frmTerminaleAmministratore.getContentPane().add(btnStop);
 	}
 	
 	
