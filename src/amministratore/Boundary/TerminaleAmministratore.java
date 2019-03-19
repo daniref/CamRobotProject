@@ -2,6 +2,7 @@ package amministratore.Boundary;
 
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -64,7 +65,7 @@ public class TerminaleAmministratore {
 	 * @throws JMSException 
 	 */
 	private void initialize() throws JMSException {
-
+		Iniziato started=new Iniziato();
 		proxysetup proxyAsincrona= proxysetup.getIstance();
 		//proxyAsincrona.setup();
 
@@ -96,17 +97,21 @@ public class TerminaleAmministratore {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub			
-				try {
-				//	proxysetup.getIstance();
-					proxyAsincrona.setup();	//proxy che fa in modo di ricevere le segnalazioni d'allarme
-					tp1 = new TimerProxy(0,proxyAsincrona.getConsumerAllarmi());
-					tp2 = new TimerProxy(1,proxyAsincrona.getConsumerKeep());
-					tp1.start();
-					tp2.start();
-					
-				} catch (JMSException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				if(!started.isB()) {
+					try {
+						started.setB(true);
+						proxyAsincrona.setup();	//proxy che fa in modo di ricevere le segnalazioni d'allarme
+						tp1 = new TimerProxy(0,proxyAsincrona.getConsumerAllarmi());
+						tp2 = new TimerProxy(1,proxyAsincrona.getConsumerKeep());
+						tp1.start();
+						tp2.start();
+						}
+					 catch (JMSException e1) {
+						 e1.printStackTrace();
+					 	}
+					}
+				else {
+					JOptionPane.showMessageDialog(null,"Monitoraggio già attivo","DisplayMessage",JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 			
@@ -121,16 +126,23 @@ public class TerminaleAmministratore {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				try {
-					tp1.stoppa();
-					tp2.stoppa();
-				//	proxysetup.getIstance();
-					proxyAsincrona.chiudi();
-				} catch (JMSException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				if(started.isB()) {
+							try {
+								
+								tp1.stoppa();
+								tp2.stoppa();
+							//	proxysetup.getIstance();
+								proxyAsincrona.chiudi();
+								started.setB(false);
+							} catch (JMSException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+				else {
+					JOptionPane.showMessageDialog(null,"Monitoraggio già disattivato, si prega di farlo ripartire","DisplayMessage",JOptionPane.INFORMATION_MESSAGE);
 				}
-			}
+				}
 			
 		});
 		frmTerminaleAmministratore.getContentPane().add(btnStop);
@@ -161,6 +173,19 @@ public class TerminaleAmministratore {
 		System.out.println("[stop-function](2)");
 	}
 	
+	public class Iniziato {
+		boolean b;
+		public Iniziato() {
+			this.b=false;
+		}
+		public synchronized boolean isB() {
+			return b;
+		}
+		public synchronized void setB(boolean b) {
+			this.b = b;
+		}
+		
+	}
 	
 }
 
