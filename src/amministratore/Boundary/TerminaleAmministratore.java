@@ -7,14 +7,12 @@ import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.Image;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import centraleOperativa.ProxyComunicazioneAsincrona.*;
-import centraleOperativa.Control.*;
 
 import javax.jms.JMSException;
 import java.awt.Toolkit;
@@ -32,7 +30,6 @@ public class TerminaleAmministratore {
 	 * @throws InterruptedException 
 	 */
 	public static void main(String[] args) throws JMSException, InterruptedException {
-		CentraleOperativaController coc = CentraleOperativaController.getIstance();
 		System.out.println("*****CENTRALE****");
 
 
@@ -65,7 +62,8 @@ public class TerminaleAmministratore {
 	 * @throws JMSException 
 	 */
 	private void initialize() throws JMSException {
-		Iniziato started=new Iniziato();
+		final Boolean iniziato= new Boolean(false);
+		Started started=new Started();
 		proxysetup proxyAsincrona= proxysetup.getIstance();
 		//proxyAsincrona.setup();
 
@@ -97,6 +95,7 @@ public class TerminaleAmministratore {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub			
+
 				if(!started.isB()) {
 					try {
 						started.setB(true);
@@ -173,15 +172,15 @@ public class TerminaleAmministratore {
 		System.out.println("[stop-function](2)");
 	}
 	
-	public class Iniziato {
+	public class Started {
 		boolean b;
-		public Iniziato() {
+		public Started() {
 			this.b=false;
 		}
-		public synchronized boolean isB() {
+		public boolean isB() {
 			return b;
 		}
-		public synchronized void setB(boolean b) {
+		public void setB(boolean b) {
 			this.b = b;
 		}
 		

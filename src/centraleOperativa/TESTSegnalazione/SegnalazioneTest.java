@@ -5,8 +5,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class SegnalazioneTest {
-
-	
 	private String id;		//id allarme
 	private String stato; 	//APERTA , "IN ATTESA", "RISOLTA", "GESTORE ESTERNO" 
 	private float valoreAllarme;
@@ -14,11 +12,7 @@ public class SegnalazioneTest {
 	String idgestore;
 	String idsensore;
 	
-	
-	
-	
-	public SegnalazioneTest(String id, String stato, float valoreAllarme, Date dataora, String idgestore,
-			String idsensore) {
+	public SegnalazioneTest(String id, String stato, float valoreAllarme, Date dataora, String idgestore, String idsensore) {
 		super();
 		this.id = id;
 		this.stato = stato;
@@ -73,20 +67,23 @@ public class SegnalazioneTest {
 		setStato("RISOLTA");
 	}
 	
-	public void ControlloNotifica() {
+/*	
+	//da portare in gestore_entity
+	public void ControlloNotifica(String id_segnalazione) {
 		Thread ControlloNotifica=new Thread()
 		{
 			public void run() {
 					try {
-						sleep(120000); //si attende 2 minuti
-						//se dopo 2 minuti lo stato della segnalazione è ancora in attesa
-						//allora significa che non è arrivata alcuna notifica dall'utente!
-						if(getStato()=="IN ATTESA") {
-											//demanda la segnalazione ad un gestore esterno!!!!!!
-											setStato("GESTORE ESTERNO");
-											System.out.println("E' stata notficata una richiesta ad un GESTORE ESTERNO");
-											}
-						
+						sleep(120000);															// attende 2 minuti
+						for(int i=0;i<this.ListaSegnalazioni.size();i++){						//CERCA LA SEGNALAZIONE CON QUELL'ID
+							if(this.ListaSegnalazioni.get(i).getId() == id_segnalazione){		
+					        	if(ListaSegnalazioni.get(i).getStato()=="IN ATTESA") {			//presa la segnalazione con quell'id controlla se è IN ATTESA
+									setStato("GESTORE ESTERNO");								//in tal caso demanda la segnalazione ad un gestore esterno!!!!!!
+									System.out.println("E' stata notficata una richiesta ad un GESTORE ESTERNO");
+									}
+					        	}
+					    	break;		//esci dal ciclo se hai trovato la segnalazione con quell'ID 
+					    	}
 						}
 					catch(InterruptedException e){
 						e.printStackTrace();
@@ -96,5 +93,8 @@ public class SegnalazioneTest {
 		};
 		ControlloNotifica.start();
 	}
+	*/
 	
 }
+
+
