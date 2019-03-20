@@ -59,7 +59,7 @@ public class contratto_Entity {
 		}		
 	}
 	
-	public Contratto getContrattoById(String id) throws PersistentException{
+	public void getContrattoById(String id) throws PersistentException{
 		
 		try {
 			Contratto new_contratto=new Contratto();
@@ -70,7 +70,6 @@ public class contratto_Entity {
 			this.data_di_inizio=convertFromSQLDateToJAVADate(new_contratto.getData_di_inizio());
 			this.data_di_scadenza=convertFromSQLDateToJAVADate(new_contratto.getData_di_scadenza());
 			this.canone=new_contratto.getCanone();
-			return new_contratto;
 		}
 		catch(Exception e) {
 			System.out.println("Contratto non presente!");
@@ -103,7 +102,53 @@ public class contratto_Entity {
 		        }
 		        return javaDate;
 		    }
-	
-	
 
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public Robot getRobot() {
+		return robot;
+	}
+
+	public void setRobot(Robot robot) {
+		this.robot = robot;
+	}
+
+	public Date getData_di_inizio() {
+		return data_di_inizio;
+	}
+
+	public void setData_di_inizio(Date data_di_inizio) {
+		this.data_di_inizio = data_di_inizio;
+	}
+
+	public Date getData_di_scadenza() {
+		return data_di_scadenza;
+	}
+
+	public void setData_di_scadenza(Date data_di_scadenza) {
+		this.data_di_scadenza = data_di_scadenza;
+	}
+
+	public float getCanone() {
+		return canone;
+	}
+
+	public void setCanone(float canone) {
+		this.canone = canone;
+	}
+	
 }

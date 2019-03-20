@@ -82,7 +82,7 @@ public class cliente_Entity {
 		}		
 	}
 	
-	public Cliente getClienteById(String id) throws PersistentException{
+	public void getClienteById(String id) throws PersistentException{
 		
 		try {
 			TimeZone.getDefault();
@@ -96,9 +96,7 @@ public class cliente_Entity {
 			this.password=new_cliente.getPassword();
 			this.recapito=new_cliente.getRecapito();
 			this.data_di_nascita=convertFromSQLDateToJAVADate(new_cliente.getData_di_nascita());
-			this.luogo_di_nascita=new_cliente.getLuogo_di_nascita();
-			return new_cliente;
-			
+			this.luogo_di_nascita=new_cliente.getLuogo_di_nascita();			
 		}
 		catch(Exception e) {
 			System.out.println("Cliente non presente!");

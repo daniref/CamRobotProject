@@ -19,6 +19,7 @@ import org.hibernate.LockMode;
 
 import java.util.Date;
 import java.util.List;
+import java.util.ArrayList;
 
 public class RobotDAO {
 
@@ -109,6 +110,29 @@ public class RobotDAO {
 			    session.close();
 			}
 				
+	}
+	
+	//---------Restituisci tutti i robot dell'area---------
+	public static ArrayList<Robot> getRobotListByIdArea(String idArea) throws PersistentException{
+		
+		
+		PersistentSession session = centraleOperativa.DB.CamRobotPersistentManager.instance().getSession();
+		PersistentTransaction transaction = session.beginTransaction();
+		try {
+			String hql = "FROM Robot R WHERE R.areaId='"+idArea+"'";
+			Query query = session.createQuery(hql);
+			transaction.commit();
+			ArrayList<Robot> tmp = new ArrayList<Robot>(query.list());
+			return tmp;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			throw new PersistentException(e);
+		}
+		finally {
+			    session.close();
+			}
+			
 	}
 
 }

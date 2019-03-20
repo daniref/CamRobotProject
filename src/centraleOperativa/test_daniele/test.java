@@ -82,7 +82,7 @@ public class test {
 		*/
 		
 //---------------TEST 4---------ricerca del recapito di un utente, fornendo l'id del robot associato al suo contratto		
-		try {
+/*		try {
 			contratto_Entity new_contratto = new contratto_Entity();
 			String id_utente=new_contratto.getIdUtenteByIdRobot("rb0002");
 			cliente_Entity new_cliente= new cliente_Entity();
@@ -92,7 +92,23 @@ public class test {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-	
+*/	
+//---------------TEST 5--------Ottieni lista robot da area		
+		try {
+			area_Entity area = area_Entity.getInstance("ar0001");
+			for(robot_Entity r : area.getListaRobot()) {
+			//	System.out.println(r.getId());
+			}
+			
+			System.out.println("Prova ottenimento robot singolo da lista contenuta in area");
+			robot_Entity rob = new robot_Entity();
+			rob=area.getRobotById("rb0001");
+			System.out.println(rob.getCondizione());
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		
 	}
 
