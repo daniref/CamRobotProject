@@ -17,13 +17,13 @@ public class test {
 		
 //--------------TEST 1---/Inserimento nuovo cliente e ottenimento del recapito di un cliente tramite id
 /*		try {
-		//	TimeZone.getDefault();
-		//	TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-		//	cliente_Entity new_cliente = new cliente_Entity("Aladin","Genio","lampada","61fss","123123",new SimpleDateFormat("yyyy-MM-dd").parse("2000-01-20"),"Disneyland Paris");
+			TimeZone.getDefault();
+			TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+			cliente_Entity new_cliente = new cliente_Entity("Aladin","Genio","lampada","61fss","123123",new SimpleDateFormat("yyyy-MM-dd").parse("2000-01-20"),"Disneyland Paris");
 			try {   
 				
-		//		String id=new_cliente.addCliente();
-		//		System.out.println("Cliente inserito con l'id "+id);
+				String id=new_cliente.addCliente();
+				System.out.println("Cliente inserito con l'id "+id);
 				cliente_Entity searchcliente = new cliente_Entity();
 				searchcliente.getClienteById("cl0004");	
 				
@@ -36,7 +36,7 @@ public class test {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-*/		
+*/	
 //---------------TEST 2---------ricerca di un cliente tramite id e lettura suoi parametri		
 /*		try {
         		cliente_Entity cli = new cliente_Entity();
@@ -94,7 +94,7 @@ public class test {
 		}
 */	
 //---------------TEST 5--------Ottieni lista robot da area		
-		try {
+/*		try {
 			area_Entity area = area_Entity.getInstance("ar0001");
 			for(robot_Entity r : area.getListaRobot()) {
 			//	System.out.println(r.getId());
@@ -109,7 +109,7 @@ public class test {
 			e.printStackTrace();
 		}
 		
-		
+	*/	
 	}
 
 }

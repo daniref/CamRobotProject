@@ -161,7 +161,7 @@
       <UserTypes/>
     </Column>
   </Entity>
-  <Entity name="Keep Alive" Unlogged="false" PKClustered="0">
+  <Entity name="KeepAlive" Unlogged="false" PKClustered="0">
     <Column name="id">
       <PrimaryKey>true</PrimaryKey>
       <ForeignKey>false</ForeignKey>
@@ -324,7 +324,7 @@
       <UserTypes/>
     </Column>
   </Entity>
-  <Entity name="Segnalazione di allarme" Unlogged="false" PKClustered="0">
+  <Entity name="Segnalazione" Unlogged="false" PKClustered="0">
     <Column name="id">
       <PrimaryKey>true</PrimaryKey>
       <ForeignKey>false</ForeignKey>
@@ -472,8 +472,8 @@
       <Column>Id</Column>
     </RefColumns>
   </ForeignKey>
-  <ForeignKey name="FKKeep Alive951800">
-    <ReferenceTable>Keep Alive</ReferenceTable>
+  <ForeignKey name="FKKeepAlive563869">
+    <ReferenceTable>KeepAlive</ReferenceTable>
     <ReferencedTable>Robot</ReferencedTable>
     <Columns>
       <Column>robotId</Column>
@@ -482,8 +482,8 @@
       <Column>Id</Column>
     </RefColumns>
   </ForeignKey>
-  <ForeignKey name="FKSegnalazio774156">
-    <ReferenceTable>Segnalazione di allarme</ReferenceTable>
+  <ForeignKey name="FKSegnalazio153765">
+    <ReferenceTable>Segnalazione</ReferenceTable>
     <ReferencedTable>Sensore</ReferencedTable>
     <Columns>
       <Column>sensoreId</Column>
@@ -502,8 +502,8 @@
       <Column>Id</Column>
     </RefColumns>
   </ForeignKey>
-  <ForeignKey name="FKSegnalazio532900">
-    <ReferenceTable>Segnalazione di allarme</ReferenceTable>
+  <ForeignKey name="FKSegnalazio153292">
+    <ReferenceTable>Segnalazione</ReferenceTable>
     <ReferencedTable>Gestore</ReferencedTable>
     <Columns>
       <Column>gestoreid</Column>
@@ -512,8 +512,8 @@
       <Column>id</Column>
     </RefColumns>
   </ForeignKey>
-  <ForeignKey name="FKSegnalazio602868">
-    <ReferenceTable>Segnalazione di allarme</ReferenceTable>
+  <ForeignKey name="FKSegnalazio982476">
+    <ReferenceTable>Segnalazione</ReferenceTable>
     <ReferencedTable>Robot</ReferencedTable>
     <Columns>
       <Column>robotId</Column>
