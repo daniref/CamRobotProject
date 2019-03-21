@@ -39,8 +39,11 @@ public class CentraleOperativaController {
 			
 			SegnalazioneManager segnManag=new SegnalazioneManager(idrobot,idsensore,valore,dataora);			//gestisci segnalazione
 			segnManag.trattaSegnalazione();
-			//	segnManag.creaSegnalazione();
-			
+			String ids=segnManag.getIdSegnalazione();
+			//MESSAGGIO AL PROPRIETARIO: idsegnalazione; idsensore; dataora;
+			String messaggioProprietario =(ids+";"+idsensore+";"+valore+";"+dataora+";");
+			ComunicazioneManager cm= new ComunicazioneManager(messaggioProprietario,idrobot);
+			cm.ContattaProprietario();
 		}
 		else {
 			System.out.println("\n\nErrore! Dati ricevuti non corretti. Il messaggio ricevuto da '"+idrobot+"' e' stato ignorato!\n\n");

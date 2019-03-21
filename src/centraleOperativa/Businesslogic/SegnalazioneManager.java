@@ -11,6 +11,7 @@ public class SegnalazioneManager {
 	private String idsensore;
 	private float valore;
 	private Date data_ora;
+	private String idSegnalazione;
 
 /*
   1) leggi tipologia del sensore che ha causato l'allarme
@@ -27,6 +28,7 @@ public class SegnalazioneManager {
 		this.data_ora= dataora;
 	}
 	
+	
 	public void trattaSegnalazione() {
 		String tipo=this.leggiTipologia();
 		String idg=this.tipoSensoreToGestore(tipo);
@@ -34,11 +36,21 @@ public class SegnalazioneManager {
 		if (s.size()>0) {
 						if (!verificaCondizione(s.get(1))) {
 							SegnalazioneTest newSeg = new SegnalazioneTest("s01","APERTO",this.getValore(),this.getData_ora(),idg, this.getIdsensore());
+							setIdSegnalazione(newSeg.getId()); //setta id segnalazione che è stato restituito dall'entity
 							}
 						}
 	}
 	
-//deve essere creato un nuovo oggetto di tipo Segnalazione!
+	
+	public String getIdSegnalazione() {
+		return this.idSegnalazione;
+	}
+
+	public void setIdSegnalazione(String idseg) {
+		this.idSegnalazione=idseg;
+	}
+
+	//deve essere creato un nuovo oggetto di tipo Segnalazione!
 /*
  		campi di Segnalazione D'Allarme
 		id segnalazione
