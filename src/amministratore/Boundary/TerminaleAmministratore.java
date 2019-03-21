@@ -16,6 +16,7 @@ import centraleOperativa.ProxyComunicazioneAsincrona.*;
 
 import javax.jms.JMSException;
 import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 
 
 public class TerminaleAmministratore {
@@ -82,20 +83,18 @@ public class TerminaleAmministratore {
 		txtCentraleOperativa.setFont(new Font("Tahoma", Font.PLAIN, 28));
 		txtCentraleOperativa.setForeground(Color.BLUE);
 		txtCentraleOperativa.setText("CENTRALE OPERATIVA");
-		txtCentraleOperativa.setBounds(80, 13, 298, 61);
+		txtCentraleOperativa.setBounds(24, 56, 298, 117);
 		frmTerminaleAmministratore.getContentPane().add(txtCentraleOperativa);
 		txtCentraleOperativa.setColumns(10);
 		
-		JButton btnStart = new JButton("start");
-		btnStart.setFont(new Font("Tahoma", Font.BOLD, 18));
-		btnStart.setBounds(12, 118, 164, 54);
-		btnStart.addActionListener(new ActionListener() {
-		
-
+		JButton btnPower = new JButton("");
+		btnPower.setIcon(new ImageIcon("/offv.png"));
+		btnPower.setFont(new Font("Tahoma", Font.BOLD, 18));
+		btnPower.setBounds(333, 39, 79, 159);
+		btnPower.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub			
-
 				if(!started.isB()) {
 					try {
 						started.setB(true);
@@ -104,47 +103,35 @@ public class TerminaleAmministratore {
 						tp2 = new TimerProxy(1,proxyAsincrona.getConsumerKeep());
 						tp1.start();
 						tp2.start();
+						btnPower.setIcon(new ImageIcon("onv.png"));
+
 						}
 					 catch (JMSException e1) {
 						 e1.printStackTrace();
 					 	}
 					}
 				else {
-					JOptionPane.showMessageDialog(null,"Monitoraggio già attivo","DisplayMessage",JOptionPane.INFORMATION_MESSAGE);
+					try {
+						
+						tp1.stoppa();
+						tp2.stoppa();
+					//	proxysetup.getIstance();
+						proxyAsincrona.chiudi();
+						started.setB(false);
+						btnPower.setIcon(new ImageIcon("C:\\Users\\giann\\Desktop\\offv.png"));
+//						btnPower.setIcon(new ImageIcon("/offv.png"));
+					} catch (JMSException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+//					JOptionPane.showMessageDialog(null,"Monitoraggio già attivo","DisplayMessage",JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 			
 		});
-		frmTerminaleAmministratore.getContentPane().add(btnStart);
+		frmTerminaleAmministratore.getContentPane().add(btnPower);
 		
-		JButton btnStop = new JButton("stop");
-		btnStop.setFont(new Font("Tahoma", Font.BOLD, 18));
-		btnStop.setBounds(239, 118, 164, 54);
-		btnStop.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				if(started.isB()) {
-							try {
-								
-								tp1.stoppa();
-								tp2.stoppa();
-							//	proxysetup.getIstance();
-								proxyAsincrona.chiudi();
-								started.setB(false);
-							} catch (JMSException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-						}
-				else {
-					JOptionPane.showMessageDialog(null,"Monitoraggio già disattivato, si prega di farlo ripartire","DisplayMessage",JOptionPane.INFORMATION_MESSAGE);
-				}
-				}
-			
-		});
-		frmTerminaleAmministratore.getContentPane().add(btnStop);
 	}
 	
 	
