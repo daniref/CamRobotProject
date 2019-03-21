@@ -7,7 +7,7 @@ import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
-
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,6 +17,7 @@ import centraleOperativa.ProxyComunicazioneAsincrona.*;
 import javax.jms.JMSException;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
+import java.awt.SystemColor;
 
 
 public class TerminaleAmministratore {
@@ -70,6 +71,7 @@ public class TerminaleAmministratore {
 
 		
 		frmTerminaleAmministratore = new JFrame();
+		frmTerminaleAmministratore.getContentPane().setBackground(new Color(245, 245, 245));
 //		Image imgTerminale = new ImageIcon(this.getClass().getResource("/logo.png")).getImage();
 	//	frmTerminaleAmministratore.setIconImage(Toolkit.getDefaultToolkit().getImage(eIcon(imgTerminale));
 
@@ -80,21 +82,27 @@ public class TerminaleAmministratore {
 		frmTerminaleAmministratore.getContentPane().setLayout(null);
 		
 		txtCentraleOperativa = new JTextField();
+		txtCentraleOperativa.setBackground(new Color(245, 245, 245));
 		txtCentraleOperativa.setFont(new Font("Tahoma", Font.PLAIN, 28));
 		txtCentraleOperativa.setForeground(Color.BLUE);
 		txtCentraleOperativa.setText("CENTRALE OPERATIVA");
-		txtCentraleOperativa.setBounds(24, 56, 298, 117);
+		txtCentraleOperativa.setBounds(29, 67, 298, 61);
 		frmTerminaleAmministratore.getContentPane().add(txtCentraleOperativa);
 		txtCentraleOperativa.setColumns(10);
 		
 		JButton btnPower = new JButton("");
-		btnPower.setIcon(new ImageIcon("/offv.png"));
+		btnPower.setForeground(new Color(245, 245, 245));
+		btnPower.setBackground(new Color(245, 245, 245));
+		btnPower.setIcon(new ImageIcon(this.getClass().getResource("/offv.png")));
+
 		btnPower.setFont(new Font("Tahoma", Font.BOLD, 18));
-		btnPower.setBounds(333, 39, 79, 159);
+		btnPower.setBounds(339, 30, 68, 150);
 		btnPower.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub			
+				// TODO Auto-generated method stub		
+				final Image imgOn = new ImageIcon(this.getClass().getResource("/onv.png")).getImage();
+				final Image imgOff = new ImageIcon(this.getClass().getResource("/offv.png")).getImage();
 				if(!started.isB()) {
 					try {
 						started.setB(true);
@@ -103,8 +111,7 @@ public class TerminaleAmministratore {
 						tp2 = new TimerProxy(1,proxyAsincrona.getConsumerKeep());
 						tp1.start();
 						tp2.start();
-						btnPower.setIcon(new ImageIcon("onv.png"));
-
+						btnPower.setIcon(new ImageIcon(imgOn));
 						}
 					 catch (JMSException e1) {
 						 e1.printStackTrace();
@@ -118,7 +125,9 @@ public class TerminaleAmministratore {
 					//	proxysetup.getIstance();
 						proxyAsincrona.chiudi();
 						started.setB(false);
-						btnPower.setIcon(new ImageIcon("C:\\Users\\giann\\Desktop\\offv.png"));
+						btnPower.setIcon(new ImageIcon(imgOff));
+
+//						btnPower.setIcon(new ImageIcon("C:\\Users\\giann\\Desktop\\offv.png"));
 //						btnPower.setIcon(new ImageIcon("/offv.png"));
 					} catch (JMSException e1) {
 						// TODO Auto-generated catch block
