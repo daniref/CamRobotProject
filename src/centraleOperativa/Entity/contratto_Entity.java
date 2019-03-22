@@ -10,8 +10,8 @@ import centraleOperativa.DB.*;
 public class contratto_Entity {
 	
 	private String id;
-	private Cliente cliente;
-	private Robot robot;
+	private String idCliente;
+	private String idRobot;
 	private Date data_di_inizio;
 	private Date data_di_scadenza;
 	private float canone;
@@ -20,12 +20,12 @@ public class contratto_Entity {
 		
 	}
 	
-	public contratto_Entity(String id, Cliente cliente, Robot robot, Date data_di_inizio, 
+	public contratto_Entity(String id, String idCliente, String idRobot, Date data_di_inizio, 
 			Date data_di_scadenza, float canone) throws PersistentException {
 		try {
 			this.id = ContrattoDAO.getNextId();
-			this.cliente = cliente;
-			this.robot = robot;
+			this.idCliente = idCliente;
+			this.idRobot = idRobot;
 			this.data_di_inizio=data_di_inizio;
 			this.data_di_scadenza=data_di_scadenza;
 			this.canone=canone;
@@ -42,13 +42,13 @@ public class contratto_Entity {
 			java.sql.Date new_date1 = new java.sql.Date(this.data_di_inizio.getTime());
 			java.sql.Date new_date2 = new java.sql.Date(this.data_di_scadenza.getTime());			
 			
-			centraleOperativa.DB.Contratto contratto = centraleOperativa.DB.ContrattoDAO.createContratto(this.id,
-											this.cliente,
-											this.robot,
+			Contratto contratto = ContrattoDAO.createContratto(this.id,
+											ClienteDAO.getClienteById(idCliente),
+											RobotDAO.getRobotById(idRobot),
 											new_date1,
 											new_date2,
 											this.canone);
-			centraleOperativa.DB.ContrattoDAO.save(contratto);
+			ContrattoDAO.save(contratto);
 			System.out.println("Aggiunto nuovo contratto!");
 			return this.id;
 		}
@@ -65,8 +65,8 @@ public class contratto_Entity {
 			Contratto new_contratto=new Contratto();
 			new_contratto=ContrattoDAO.getContrattoByIdContratto(id);
 			this.id=new_contratto.getId();
-			this.cliente=new_contratto.getUtente();
-			this.robot=new_contratto.getRobot();
+			this.idCliente=new_contratto.getUtente().getId();
+			this.idRobot=new_contratto.getRobot().getId();
 			this.data_di_inizio=convertFromSQLDateToJAVADate(new_contratto.getData_di_inizio());
 			this.data_di_scadenza=convertFromSQLDateToJAVADate(new_contratto.getData_di_scadenza());
 			this.canone=new_contratto.getCanone();
@@ -111,20 +111,20 @@ public class contratto_Entity {
 		this.id = id;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
+	public String getCliente() {
+		return idCliente;
 	}
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+	public void setCliente(String idCliente) {
+		this.idCliente = idCliente;
 	}
 
-	public Robot getRobot() {
-		return robot;
+	public String getRobot() {
+		return idRobot;
 	}
 
-	public void setRobot(Robot robot) {
-		this.robot = robot;
+	public void setRobot(String idRobot) {
+		this.idRobot = idRobot;
 	}
 
 	public Date getData_di_inizio() {
