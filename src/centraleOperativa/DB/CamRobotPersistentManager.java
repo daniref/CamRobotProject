@@ -39,10 +39,10 @@ public class CamRobotPersistentManager extends PersistentManager {
 		super.configureMetadataSources(aMetadataSources);
 		aMetadataSources.addAnnotatedClass(Cliente.class);
 		aMetadataSources.addAnnotatedClass(Contratto.class);
-		aMetadataSources.addAnnotatedClass(Keep_Alive.class);
+		aMetadataSources.addAnnotatedClass(KeepAlive.class);
 		aMetadataSources.addAnnotatedClass(Robot.class);
 		aMetadataSources.addAnnotatedClass(Sensore.class);
-		aMetadataSources.addAnnotatedClass(Segnalazione_di_allarme.class);
+		aMetadataSources.addAnnotatedClass(Segnalazione.class);
 		aMetadataSources.addAnnotatedClass(Gestore.class);
 	}
 	
