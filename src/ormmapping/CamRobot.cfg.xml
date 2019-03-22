@@ -10,8 +10,8 @@ License Type: Evaluation
 	<session-factory>
    	<!-- properties -->
 		<property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
-		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="connection.url">jdbc:mysql://localhost/camrobotdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC</property>
+		<property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+		<property name="connection.url">jdbc:mysql://localhost:3306/camrobotdb?useSSL=false&amp;serverTimezone=UTC</property>
 		<property name="connection.username">root</property>
 		<property name="connection.password">esamePSSS</property>
 		<property name="hibernate.connection.provider_class">org.hibernate.service.jdbc.connections.internal.C3P0ConnectionProvider</property>

@@ -28,9 +28,7 @@ public class Cliente implements Serializable {
 		
 	public Cliente(String id, String nome, String cognome, String username, String password, String recapito,
 			Date data_di_nascita, String luogo_di_nascita) {
-		
-		
-		
+	
 		this.id = id;
 		this.nome = nome;
 		this.cognome = cognome;
