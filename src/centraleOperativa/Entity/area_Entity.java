@@ -55,15 +55,14 @@ public class area_Entity {
 		return area;
 	}
 	
-	public void addRobotToList(Robot robot) {
-		robot_Entity new_robot = new robot_Entity();
-		new_robot.setId(robot.getId());
-		new_robot.setStato(robot.getStato());
-		new_robot.setCondizione(robot.getCondizione());
-		new_robot.setFunzionamento(robot.getFunzionamento());
-		new_robot.setIndirizzo(robot.getIndirizzo());
-		new_robot.setAreaId(robot.getAreaId());
-		listaRobot.add(new_robot);
+	public void addRobotToList(robot_Entity new_robot) throws PersistentException {
+		try {
+			listaRobot.add(new_robot);
+			new_robot.addRobot();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static ArrayList<robot_Entity> getListaRobot() {
