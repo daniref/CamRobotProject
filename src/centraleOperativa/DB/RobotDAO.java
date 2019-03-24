@@ -22,6 +22,10 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class RobotDAO {
+	
+	public RobotDAO() {
+		
+	}
 
 	//-------------Crea un nuovo Robot-------------
 	public static Robot createRobot(String id, String stato, String condizione, String funzionamento, String indirizzo, String areaId) {

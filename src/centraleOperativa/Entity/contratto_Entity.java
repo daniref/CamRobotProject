@@ -20,7 +20,7 @@ public class contratto_Entity {
 		
 	}
 	
-	public contratto_Entity(String id, String idCliente, String idRobot, Date data_di_inizio, 
+	public contratto_Entity(String idCliente, String idRobot, Date data_di_inizio, 
 			Date data_di_scadenza, float canone) throws PersistentException {
 		try {
 			this.id = ContrattoDAO.getNextId();
@@ -43,11 +43,12 @@ public class contratto_Entity {
 			java.sql.Date new_date2 = new java.sql.Date(this.data_di_scadenza.getTime());			
 			
 			Contratto contratto = ContrattoDAO.createContratto(this.id,
-											ClienteDAO.getClienteById(idCliente),
-											RobotDAO.getRobotById(idRobot),
-											new_date1,
-											new_date2,
-											this.canone);
+									ClienteDAO.getClienteById(this.idCliente),
+									RobotDAO.getRobotById(this.idRobot),
+									new_date1,
+									new_date2,
+									this.canone);
+			
 			ContrattoDAO.save(contratto);
 			System.out.println("Aggiunto nuovo contratto!");
 			return this.id;

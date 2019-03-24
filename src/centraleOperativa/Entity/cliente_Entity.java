@@ -105,14 +105,15 @@ public class cliente_Entity {
 		}		
 	}
 	
-	public static java.util.Date convertFromSQLDateToJAVADate(
-		            java.sql.Date sqlDate) {
-		        java.util.Date javaDate = null;
-		        if (sqlDate != null) {
-		            javaDate = new Date(sqlDate.getTime());
-		        }
-		        return javaDate;
-		    }
+	public static java.util.Date convertFromSQLDateToJAVADate(java.sql.Date sqlDate) {
+		
+		java.util.Date javaDate = null;
+		if (sqlDate != null) {
+			javaDate = new Date(sqlDate.getTime());
+		}
+		return javaDate;
+	
+	}
 
 	public String getId() {
 		return id;

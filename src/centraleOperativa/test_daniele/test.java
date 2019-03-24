@@ -1,6 +1,7 @@
 package centraleOperativa.test_daniele;
 
 import org.orm.*;
+import java.util.concurrent.TimeUnit;
 
 import centraleOperativa.Entity.*;
 import centraleOperativa.DB.*;
@@ -8,6 +9,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.time.LocalDateTime;
         
   
 
@@ -16,10 +19,10 @@ public class test {
 	public static void main(String[] args) {
 		
 //--------------TEST 1---/Inserimento nuovo cliente e ottenimento del recapito di un cliente tramite id
-		try {
+/*		try {
 			TimeZone.getDefault();
 			TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-			cliente_Entity new_cliente = new cliente_Entity("Aladin","Genio","jafar","61fssdss","123123",new SimpleDateFormat("yyyy-MM-dd").parse("2000-01-20"),"Disneyland Paris");
+			cliente_Entity new_cliente = new cliente_Entity("Jafar","Faraone","baudo","61dsfssdss","123123",new SimpleDateFormat("yyyy-MM-dd").parse("2000-01-20"),"Disneyland Paris");
 			try {   
 				
 				String id=new_cliente.addCliente();
@@ -36,7 +39,7 @@ public class test {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-
+*/
 //---------------TEST 2---------ricerca di un cliente tramite id e lettura suoi parametri		
 /*		try {
         		cliente_Entity cli = new cliente_Entity();
@@ -97,19 +100,41 @@ public class test {
 /*		try {
 			area_Entity area = area_Entity.getInstance("ar0001");
 			for(robot_Entity r : area.getListaRobot()) {
-			//	System.out.println(r.getId());
+				System.out.println(r.getId());
 			}
-			
-			System.out.println("Prova ottenimento robot singolo da lista contenuta in area");
-			robot_Entity rob = new robot_Entity();
-			rob=area.getRobotById("rb0001");
-			System.out.println(rob.getCondizione());
+			area.addRobotToList(new robot_Entity("REGISTRATO","ON","OK","Via Pippo Baudo 18, Torre del Greco (NA)","ar0001"));
+			System.out.println("Nuova lista: ");
+			for(robot_Entity r : area.getListaRobot()) {
+				System.out.println(r.getId());
+			}
+		//	System.out.println("Prova ottenimento robot singolo da lista contenuta in area");
+		//	robot_Entity rob = new robot_Entity();
+		//	rob=area.getRobotById("rb0001");
+		//	System.out.println(rob.getCondizione());
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-	*/	
+*/	
+		
+//-------------TEST 6------------Aggiungi keep alive al db
+		try {
+			TimeZone.getDefault();
+			TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+			registroKeepAlive_Entity registro = registroKeepAlive_Entity.getInstance();
+			keepAlive_Entity keep = new keepAlive_Entity(new Date(),"rb0002");
+			registro.addKeepToList(keep);
+			TimeUnit.SECONDS.sleep(10);
+			registroKeepAlive_Entity reg = registroKeepAlive_Entity.getInstance();
+			keepAlive_Entity kee = new keepAlive_Entity(new Date(),"rb0002");
+			reg.addKeepToList(kee);
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	
 	}
-
+	
 }

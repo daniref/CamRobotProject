@@ -15,11 +15,23 @@ package centraleOperativa.DB;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.sql.Time;
+import java.sql.Date;
+
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="KeepAlive")
 public class KeepAlive implements Serializable {
 	public KeepAlive() {
+	}
+	
+	public KeepAlive(String id,Date data,Time ora,Robot robot) {
+		
+		this.id=id;
+		this.data=data;
+		this.ora=ora;
+		this.robot=robot;
+		
 	}
 	
 	@Column(name="id", nullable=false, unique=true, length=7)	
@@ -29,11 +41,10 @@ public class KeepAlive implements Serializable {
 	private String id;
 	
 	@Column(name="data", nullable=false)	
-	@Temporal(TemporalType.DATE)	
-	private java.util.Date data;
+	private Date data;
 	
 	@Column(name="ora", nullable=false)	
-	private java.sql.Time ora;
+	private Time ora;
 	
 	@OneToOne(optional=false, targetEntity=Robot.class, fetch=FetchType.LAZY)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
@@ -52,11 +63,11 @@ public class KeepAlive implements Serializable {
 		return getId();
 	}
 	
-	public void setData(java.util.Date value) {
+	public void setData(java.sql.Date value) {
 		this.data = value;
 	}
 	
-	public java.util.Date getData() {
+	public java.sql.Date getData() {
 		return data;
 	}
 	
