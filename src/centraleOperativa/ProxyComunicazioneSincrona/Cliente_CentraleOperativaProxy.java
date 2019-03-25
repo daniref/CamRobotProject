@@ -18,8 +18,7 @@ public class Cliente_CentraleOperativaProxy extends UnicastRemoteObject
 	public void Notifica(String s) throws RemoteException {
 		// TODO Auto-generated method stub
 		CentraleOperativaController cpc=CentraleOperativaController.getIstance();
-		NotificheManager mm =new NotificheManager();
-		mm.NotificaLetturaSegnalazione(s);
+		cpc.gestisciNotifica(s);
 	}
 }
 /*
