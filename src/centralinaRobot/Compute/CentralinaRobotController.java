@@ -89,6 +89,13 @@ public class CentralinaRobotController {
 	}
 	
 	
+	public ArrayList<String> MonitoraggioRemoto(){
+		System.out.println("[Controller]crea manager MONITORAGGIO-REMOTO con idrobot "+ getID() + "Sensori e Soglie");
+		MonitoraggioManager MonMan=new MonitoraggioManager(getID(),Sensori, SensoriSoglie);
+		return MonMan.MonitoraggioRemoto();
+		
+	}
+	
 	public void ControllaFunz(Display d) throws JMSException{
 		System.out.println("[Controller]crea un nuovo manager con idrobot="+ getID());
 		FunzionamentoManager mf=new FunzionamentoManager(getID());

@@ -2,7 +2,8 @@ package RMI.Interfaces;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 public interface ProxyClienteCentralina extends Remote {
-	   public String MonitoraggioRemoto() throws RemoteException;
+	   public ArrayList<String> MonitoraggioRemoto() throws RemoteException;
 }

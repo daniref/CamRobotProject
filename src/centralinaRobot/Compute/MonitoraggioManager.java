@@ -82,5 +82,13 @@ public void Monitora(Display d) throws JMSException{
 		}
 	}
 }
-
+public ArrayList<String> MonitoraggioRemoto() {
+	ArrayList<String> lista_msg=new ArrayList<String>();
+	String msg;
+	for(int i=0;i<Sensori.size();i++){
+		  msg=Sensori.get(i).toString()+" "+"Valore: "+String.format ("%.2f",Sensori.get(i).getMisura());  
+		  lista_msg.add(msg);
+		}
+	return lista_msg;
+	}
 }

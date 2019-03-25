@@ -8,6 +8,13 @@ import javax.jms.JMSException;
 import centralinaRobot.Compute.*;
 import centralinaRobot.Control.*;
 import centralinaRobot.Sense.*;
+import centralinaRobot.ProxyComunicazioneSincrona.*;
+
+import java.rmi.*;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.*;   
+ 
 
 
 /*******MAIN DI PROVA*************/
@@ -17,11 +24,23 @@ public class mainCentralina {
 	
 	public static void main(String argv[]) throws JMSException{
 
+		   try {
+			   //la centralina riceve i messaggi dal cliente sulla porta 4000!
+			   Cliente_CentralinaRobotProxy proxyc1 = new Cliente_CentralinaRobotProxy();		
+			   Registry mioregistro1=LocateRegistry.createRegistry(4000);
+			   Naming.rebind("rmi://localhost:4000/BC", proxyc1);
+			   System.out.println("Centralina pronta a ricever richieste dal Cliente.");
+			   }catch (Exception e) {
+				   System.out.println("Centralina Server/Cliente error: " + e);
+				}
+		   
 		System.out.println("*****CENTRALINA****");
 			CentralinaRobotController c = CentralinaRobotController.getCentralinaRobot();
 			System.out.println("[main_centralina][CONTROLLER][0]-controller creato");
 			c.configuration();		
 			System.out.println("[main_centralina][CONTROLLER][1]-controller configurato");
+
+			
 			Display disp = new Display(c.getSensori(),c.getID(),CentralinaRobotController.getSensoriSoglie());
 			System.out.println("[main_centralina][Dysplay][0]-costruttore display invocato");
 			EventQueue.invokeLater(new Runnable() {
