@@ -31,7 +31,7 @@ public class keepAlive_Entity {
 		
 		try {
 			java.sql.Date new_date = new java.sql.Date(this.dataTime.getTime());
-			java.sql.Time new_time = new java.sql.Time(this.dataTime.getTime());			
+			java.sql.Time new_time = new java.sql.Time(this.dataTime.getTime());
 			KeepAlive keep = KeepAliveDAO.createKeep(this.id,new_date,new_time,RobotDAO.getRobotById(this.idRobot));
 			KeepAliveDAO.save(keep);
 		//	System.out.println("Aggiunto nuovo keep Alive!");

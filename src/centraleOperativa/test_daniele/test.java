@@ -99,14 +99,27 @@ public class test {
 //---------------TEST 5--------Ottieni lista robot da area		
 /*		try {
 			area_Entity area = area_Entity.getInstance("ar0001");
-			for(robot_Entity r : area.getListaRobot()) {
-				System.out.println(r.getId());
-			}
-			area.addRobotToList(new robot_Entity("REGISTRATO","ON","OK","Via Pippo Baudo 18, Torre del Greco (NA)","ar0001"));
-			System.out.println("Nuova lista: ");
-			for(robot_Entity r : area.getListaRobot()) {
-				System.out.println(r.getId());
-			}
+//			for(robot_Entity r : area.getListaRobot()) {
+//				System.out.println(r.getId());
+//			}
+//			area.addRobotToList(new robot_Entity("REGISTRATO","ON","OK","Via Pippo Baudo 18, Torre del Greco (NA)","ar0001"));
+//			System.out.println("Nuova lista: ");
+//			for(robot_Entity r : area.getListaRobot()) {
+//				System.out.println(r.getId());
+//			}
+			robot_Entity robot = area.getRobotById("rb0006");
+		//	System.out.println("Robot: "+robot);
+		//	System.out.println("Id Robot: "+robot.getId());
+		//	System.out.println(robot.getCondizione());
+			robot.setCondizione("OFF");
+			area.updateRobot(robot);
+			robot_Entity ro = area.getRobotById("rb0006");
+			System.out.println("Nuova condizione del robot: "+ro.getCondizione());
+		//	robot.setFunzionamento("AJEJE");
+		//	area.updateRobot(robot);
+		//	System.out.println("Robot: "+robot);
+		//	System.out.println("Id Robot: "+robot.getId());
+			
 		//	System.out.println("Prova ottenimento robot singolo da lista contenuta in area");
 		//	robot_Entity rob = new robot_Entity();
 		//	rob=area.getRobotById("rb0001");
@@ -116,20 +129,29 @@ public class test {
 			e.printStackTrace();
 		}
 		
-*/	
+*/
 		
 //-------------TEST 6------------Aggiungi keep alive al db
 		try {
 			TimeZone.getDefault();
 			TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 			registroKeepAlive_Entity registro = registroKeepAlive_Entity.getInstance();
-			keepAlive_Entity keep = new keepAlive_Entity(new Date(),"rb0002");
-			registro.addKeepToList(keep);
-			TimeUnit.SECONDS.sleep(10);
-			registroKeepAlive_Entity reg = registroKeepAlive_Entity.getInstance();
-			keepAlive_Entity kee = new keepAlive_Entity(new Date(),"rb0002");
-			reg.addKeepToList(kee);
+			//keep creato con i dati del messaggio arrivati
+			keepAlive_Entity keep = new keepAlive_Entity(new Date(),"rb0003");
 			
+			//ricerca nella lista se c'è  già un keep presente
+			keepAlive_Entity old_keep = new keepAlive_Entity();
+			old_keep=registro.getKeepByIdRobot(keep.getIdRobot());
+			if(old_keep.getId()==null) {
+				System.out.println("Oggetto non presente");
+				registro.addKeep(keep);
+			}
+			else {
+				System.out.println("Oggetto presente");
+			//	old_keep.setIdRobot("rb0002");
+				old_keep.setDataTime(keep.getDataTime());
+				registro.updateKeep(old_keep);
+			}			
 		}
 		catch(Exception e) {
 			e.printStackTrace();

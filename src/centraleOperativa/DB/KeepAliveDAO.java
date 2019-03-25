@@ -141,7 +141,6 @@ public class KeepAliveDAO {
 			Query query = session.createQuery(hql);
 			transaction.commit();
 			return((KeepAlive)query.list().get(0));
-
 		}
 		catch(Exception e) {
 			e.printStackTrace();

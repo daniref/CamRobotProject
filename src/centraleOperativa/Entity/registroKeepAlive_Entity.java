@@ -71,55 +71,51 @@ public class registroKeepAlive_Entity {
 	
 	}
 	
-	public void addKeepToList(keepAlive_Entity keep) throws PersistentException{
-
+	public void addKeep(keepAlive_Entity keep) throws PersistentException{
 		try {
-			keepAlive_Entity ex_keep = removeKeepFromListByIdRobot(keep.getIdRobot());
-			if(ex_keep.getId()==null) {
-		//		System.out.println("Aggiunta 1° volta keep associato al robot: "+keep.getIdRobot());
-				keep.addKeep();
-				this.listaKeep.add(keep);
-			}
-			else {
-		//		System.out.println("Aggiornamento keep associato al robot: "+keep.getIdRobot());
-				ex_keep.deleteKeep();
-				ex_keep.setDataTime(keep.getDataTime());
-				ex_keep.addKeep();
-				this.listaKeep.add(ex_keep);
-			}
+			listaKeep.add(keep);
+			keep.addKeep();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	public void updateKeep(keepAlive_Entity keep) throws PersistentException{
 		
+		try {
+			keepAlive_Entity old_keep=getKeepByIdRobot(keep.getIdRobot());
+			listaKeep.set(listaKeep.indexOf(old_keep),keep);
+			old_keep.deleteKeep();
+			keep.addKeep();
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 	public static ArrayList<keepAlive_Entity> getListaKeepAlive() {
 		return listaKeep;
 	}
 
-	public static keepAlive_Entity removeKeepFromListByIdRobot(String idRobot) {
+	public static keepAlive_Entity getKeepByIdRobot(String idRobot) {
 
-		ArrayList<keepAlive_Entity> keepList = new ArrayList<keepAlive_Entity>(); 
-		keepList=getListaKeepAlive();
+		ArrayList<keepAlive_Entity> keepList = getListaKeepAlive();
+		keepAlive_Entity k = new keepAlive_Entity();
 		int i=0;
 		boolean trovato=false;
-		if(keepList!=null) {
-			while(i<keepList.size() && !trovato) {
-				keepAlive_Entity k = keepList.get(i);
-				if(k.getIdRobot().compareTo(idRobot)==0) {
-					trovato=true;
-					listaKeep.remove(i);
-					return k;
-				}
-				else {
-					i++;
-				}
+		while(i<keepList.size() && !trovato) {
+			k = keepList.get(i);
+			if(k.getIdRobot().compareTo(idRobot)==0) {
+				trovato=true;
+			}
+			else {
+				i++;
 			}
 		}
-		
-		return new keepAlive_Entity();
-	
+		return k;
 	}
 
 }

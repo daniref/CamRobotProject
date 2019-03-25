@@ -6,6 +6,8 @@ import org.orm.PersistentException;
 
 import centraleOperativa.DB.Cliente;
 import centraleOperativa.DB.ClienteDAO;
+import centraleOperativa.DB.KeepAlive;
+import centraleOperativa.DB.KeepAliveDAO;
 import centraleOperativa.DB.Robot;
 import centraleOperativa.DB.RobotDAO;
 
@@ -54,7 +56,26 @@ public class robot_Entity {
 			System.out.println("Errore nell'inserimento del nuovo robot!");
 			e.printStackTrace();
 			throw new PersistentException(e);
-		}		
+		}
+		
+	}
+	
+	public boolean deleteRobot() throws PersistentException{
+		
+		try {
+			Robot robot = RobotDAO.createRobot(this.id,this.stato,
+							this.condizione,this.funzionamento,
+							this.indirizzo,this.areaId);
+			RobotDAO.delete(robot);
+			return true;
+		}
+		catch(Exception e){
+			System.out.println("Errore nella cancellazione del robot!");
+			e.printStackTrace();
+			throw new PersistentException(e);
+			
+		}
+		
 	}
 	
 	public void getRobotById(String id) throws PersistentException{

@@ -51,6 +51,23 @@ public class RobotDAO {
 		}
 	}
 	
+	//----------Cancella un robot dal database
+	public static boolean delete(centraleOperativa.DB.Robot robot) throws PersistentException {
+
+		PersistentSession session = CamRobotPersistentManager.instance().getSession();
+		PersistentTransaction transaction = session.beginTransaction();
+		try {
+			CamRobotPersistentManager.instance().deleteObject(robot);
+			transaction.commit();
+			return true;
+		}
+		catch (Exception e) {
+			transaction.rollback();
+			e.printStackTrace();
+			throw new PersistentException(e);
+		}
+	}
+	
 	//----------Calcola l'id più grande salvato nel db
 	public static String getMaxId() throws PersistentException {
 		

@@ -55,7 +55,8 @@ public class area_Entity {
 		return area;
 	}
 	
-	public void addRobotToList(robot_Entity new_robot) throws PersistentException {
+	//------------inserisce nuovo robot nella lista e nel database
+	public void addRobot(robot_Entity new_robot) throws PersistentException {
 		try {
 			listaRobot.add(new_robot);
 			new_robot.addRobot();
@@ -64,17 +65,33 @@ public class area_Entity {
 			e.printStackTrace();
 		}
 	}
+	
+	public void updateRobot(robot_Entity robot) throws PersistentException{
+		
+		try {
+			robot_Entity old_robot=getRobotById(robot.getId());
+			//old_robot.deleteRobot();
+			listaRobot.set(listaRobot.indexOf(old_robot),robot);
+			robot.addRobot();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 
 	public static ArrayList<robot_Entity> getListaRobot() {
 		return listaRobot;
 	}
 	
 	public static robot_Entity getRobotById(String idRobot) {
+		
 		ArrayList<robot_Entity> robotList = getListaRobot();
+		robot_Entity r = new robot_Entity();
 		int i=0;
 		boolean trovato=false;
 		while(i<robotList.size() && !trovato) {
-			robot_Entity r = robotList.get(i);
+			r = robotList.get(i);
 			if(r.getId().compareTo(idRobot)==0) {
 				trovato=true;
 			}
@@ -82,7 +99,7 @@ public class area_Entity {
 				i++;
 			}
 		}
-		return robotList.get(i);
+		return r;
 	}
 	
 
