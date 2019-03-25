@@ -24,8 +24,9 @@ import java.awt.Font;
 public class TerminaleCliente {
 
 	private JFrame frame;
-	private JTextField txtAdd1;
+	private JTextField txtIDSegnalazione;
 	private ArrayList<JLabel> ListaLabelSensore1 = new ArrayList<JLabel>();
+
 	/**
 	 * Launch the application.
 	 */
@@ -75,27 +76,15 @@ public class TerminaleCliente {
     		ListaLabelSensore1.add(lblDati);
 		}	
 		
-//		JLabel lblSensore1 = new JLabel("New label");
-//		lblSensore1.setFont(new Font("Tahoma", Font.BOLD, 13));
-//		lblSensore1.setBounds(105, 129, 315, 38);
-//		frame.getContentPane().add(lblSensore1);
-//		
-//		
-//		JLabel lblSensore2 = new JLabel("New label");
-//		lblSensore2.setFont(new Font("Tahoma", Font.BOLD, 13));
-//		lblSensore2.setBounds(105, 165, 302, 38);
-//		frame.getContentPane().add(lblSensore2);
-//
-//		JLabel labelSensore3 = new JLabel("New label");
-//		labelSensore3.setFont(new Font("Tahoma", Font.BOLD, 13));
-//		labelSensore3.setBounds(105, 202, 302, 38);
-//		frame.getContentPane().add(labelSensore3);
-
+		JLabel lblRiep = new JLabel("Riepilogo");
+		lblRiep.setBounds(12, 142, 81, 47);
+		lblRiep.setVisible(false);
+		frame.getContentPane().add(lblRiep);
 		
-		txtAdd1 = new JTextField();
-		txtAdd1.setBounds(134, 43, 116, 22);
-		frame.getContentPane().add(txtAdd1);
-		txtAdd1.setColumns(10);
+		txtIDSegnalazione = new JTextField();
+		txtIDSegnalazione.setBounds(134, 43, 116, 22);
+		frame.getContentPane().add(txtIDSegnalazione);
+		txtIDSegnalazione.setColumns(10);
 		
 		JButton btnLeggi = new JButton("Visualizza ultimi valori misurati");
 		btnLeggi.setBounds(31, 91, 376, 38);
@@ -107,6 +96,7 @@ public class TerminaleCliente {
 				    Cliente_CentralinaRobotProxy ccrp= new Cliente_CentralinaRobotProxy();
 				    ArrayList<String> buffer= new ArrayList<String> ();
 				    buffer=ccrp.MonitoraggioRemoto();
+					lblRiep.setVisible(true);
 				    for(int i=0;i<buffer.size();i++) {
 			    		ListaLabelSensore1.get(i).setText(buffer.get(i));
 			    		System.out.println(buffer.get(i));
@@ -127,9 +117,7 @@ public class TerminaleCliente {
 		
 	
 		
-		JLabel lblSomma = new JLabel("Riepilogo");
-		lblSomma.setBounds(12, 142, 81, 47);
-		frame.getContentPane().add(lblSomma);
+
 		
 
 		
@@ -141,6 +129,29 @@ public class TerminaleCliente {
 		JButton btnNewButton = new JButton("Notiifca\r\n Lettura");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				String buffer=txtIDSegnalazione.getText();
+				if(buffer.length()==6){
+					if(buffer.substring(0, 2).compareTo("sg")==0){
+						try{
+							Integer.parseInt(buffer.substring(2));
+						    Cliente_CentraleOperativaProxy ccop= new Cliente_CentraleOperativaProxy();
+						    ccop.NotificaLetturaSegnalazione(buffer);
+							JOptionPane.showMessageDialog(frame, "E' stata inviata una notifica per la segnalazione"+buffer);						
+							}
+						catch(Exception e){
+							JOptionPane.showMessageDialog(frame, "i caratteri che seguono sg devono essere numeri es: sg0004");						
+							}
+						}
+					else {
+						JOptionPane.showMessageDialog(frame, "i primi due caratteri devono essere 'sg'");						
+					}
+				}					
+				
+				else {
+					JOptionPane.showMessageDialog(frame, "Numero caratteri Segnalazione Errato - devono essere 6");
+					}
+
+				
 			}
 		});
 		btnNewButton.setBounds(280, 35, 127, 38);
@@ -149,4 +160,21 @@ public class TerminaleCliente {
 		
 		
 	}
+	
+	public boolean isformatoSegnalazione(String a) {
+		if (a.length()!=6)return false;
+//		System.out.print("Inserire un formato di segnalazione valido : es: sg0413");
+		if(a.substring(0,2)!="sg") return false;
+//		System.out.print("Inserire un formato di segnalazione valido : es: sg0413");
+		try {
+			Integer.parseInt(a.substring(2,6));
+		}
+		catch (Exception e){
+			return false;
+//			System.out.print("Parsing non andato a buon fine");
+		}
+		
+		return true;
+	}
+	
 }
