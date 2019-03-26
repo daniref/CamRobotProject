@@ -4,15 +4,14 @@ import java.sql.Date;
 
 import org.orm.PersistentException;
 
-import centraleOperativa.DB.Cliente;
-import centraleOperativa.DB.ClienteDAO;
-import centraleOperativa.DB.KeepAlive;
-import centraleOperativa.DB.KeepAliveDAO;
-import centraleOperativa.DB.Robot;
-import centraleOperativa.DB.RobotDAO;
+import centraleOperativa.DB.*;
+import centraleOperativa.Entity.sensore_Entity;
+import java.util.ArrayList;
+
 
 public class robot_Entity {
 	
+	// attributi privati della classe
 	private String id;
 	private String stato;
 	private String condizione;
@@ -20,12 +19,17 @@ public class robot_Entity {
 	private String indirizzo;
 	private String areaId;
 	
+	private ArrayList<sensore_Entity> listaSensori;
+	
+	//costruttore vuoto
 	public robot_Entity() {
 		
 	}
 
+	//costruttore con parametri
 	public robot_Entity(String stato,String condizione, String funzionamento, 
 			String indirizzo, String areaId) {
+
 		try {
 			this.id=RobotDAO.getNextId();
 			this.stato=stato;
@@ -37,8 +41,10 @@ public class robot_Entity {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
 	
+	//metodo per aggiungere un robot al db
 	public String addRobot() throws PersistentException{
 		
 		try {
@@ -60,6 +66,7 @@ public class robot_Entity {
 		
 	}
 	
+	//metodo per cancellare un robot dal db
 	public boolean deleteRobot() throws PersistentException{
 		
 		try {
@@ -73,11 +80,11 @@ public class robot_Entity {
 			System.out.println("Errore nella cancellazione del robot!");
 			e.printStackTrace();
 			throw new PersistentException(e);
-			
 		}
 		
 	}
 	
+	// metodo per ricercare un robot all'interno del db passando l'id del robot
 	public void getRobotById(String id) throws PersistentException{
 		
 		try {
@@ -97,6 +104,34 @@ public class robot_Entity {
 		}
 	}
 	
+	//metodo per riempire la lista di sensori associata al robot in questione
+	public void fillSensoriList() {
+		try {
+			listaSensori=new ArrayList<sensore_Entity>();
+        		ArrayList<Sensore> sensoriList= new ArrayList<Sensore>();
+        		SensoreDAO sen=new SensoreDAO();
+        		sensoriList=sen.getSensoriListByIdRobot(this.id);
+        		for(Sensore s : sensoriList) {
+        			sensore_Entity new_sensore = new sensore_Entity();
+        			new_sensore.setId(s.getId());
+        			new_sensore.setSoglia(s.getSoglia());
+        			new_sensore.setTipologia(s.getTipologia());
+        			new_sensore.setIdRobot(s.getRobot().getId());
+        			listaSensori.add(new_sensore);
+        		}	
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	//metodo che restituisce la lista di sensori privata della classe
+	public ArrayList<sensore_Entity> getSensoriList(){
+		return listaSensori;
+	}
+	
+	//metodi di get e set del robot
 	public String getStatoById(String id) throws PersistentException{
 		
 		try {
@@ -192,8 +227,6 @@ public class robot_Entity {
 		}		
 	}
 	
-	
-
 	public String getId() {
 		return id;
 	}
