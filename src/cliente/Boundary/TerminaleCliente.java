@@ -135,8 +135,9 @@ public class TerminaleCliente {
 						try{
 							Integer.parseInt(buffer.substring(2));
 						    Cliente_CentraleOperativaProxy ccop= new Cliente_CentraleOperativaProxy();
-						    ccop.NotificaLetturaSegnalazione(buffer);
-							JOptionPane.showMessageDialog(frame, "E' stata inviata una notifica per la segnalazione"+buffer);						
+						    if(ccop.NotificaLetturaSegnalazione(buffer)) JOptionPane.showMessageDialog(frame, "Notifica inviata e segnalazione <"+buffer+"> chiusa regolarmente");
+						    else{ JOptionPane.showMessageDialog(frame, "Notifica inviata, ma la segnalazione <"+ buffer +"> e' stata risolta contattando un GESTORE ESTERNO");}
+
 							}
 						catch(Exception e){
 							JOptionPane.showMessageDialog(frame, "i caratteri che seguono sg devono essere numeri es: sg0004");						

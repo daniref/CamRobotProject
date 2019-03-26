@@ -2,31 +2,33 @@ package amministratore.Boundary;
 
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
+import amministratore.ProxyComunicazioneSincrona.Amministratore_CentraleOperativaProxy;
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 
 import javax.swing.JButton;
-import centraleOperativa.ProxyComunicazioneAsincrona.*;
 
 import javax.jms.JMSException;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
-import java.awt.SystemColor;
 
 
 public class TerminaleAmministratore {
-	Thread t1,t2;
 	
 	private JFrame frmTerminaleAmministratore;
 	private JTextField txtCentraleOperativa;
-	static TimerProxy tp1;
-	static TimerProxy tp2;
+//	static TimerProxy tp1;
+//	static TimerProxy tp2;
 	/**
 	 * Launch the application.
 	 * @throws InterruptedException 
@@ -64,16 +66,9 @@ public class TerminaleAmministratore {
 	 * @throws JMSException 
 	 */
 	private void initialize() throws JMSException {
-		final Boolean iniziato= new Boolean(false);
-		Started started=new Started();
-		proxysetup proxyAsincrona= proxysetup.getIstance();
-		//proxyAsincrona.setup();
-
-		
+		Started started=new Started();	
 		frmTerminaleAmministratore = new JFrame();
 		frmTerminaleAmministratore.getContentPane().setBackground(new Color(245, 245, 245));
-//		Image imgTerminale = new ImageIcon(this.getClass().getResource("/logo.png")).getImage();
-	//	frmTerminaleAmministratore.setIconImage(Toolkit.getDefaultToolkit().getImage(eIcon(imgTerminale));
 
 		frmTerminaleAmministratore.setIconImage(Toolkit.getDefaultToolkit().getImage(TerminaleAmministratore.class.getResource("/logo.png")));
 		frmTerminaleAmministratore.setTitle("Terminale Amministratore");
@@ -100,74 +95,47 @@ public class TerminaleAmministratore {
 		btnPower.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub		
 				final Image imgOn = new ImageIcon(this.getClass().getResource("/onv.png")).getImage();
 				final Image imgOff = new ImageIcon(this.getClass().getResource("/offv.png")).getImage();
 				if(!started.isB()) {
-					try {
 						started.setB(true);
-						proxyAsincrona.setup();	//proxy che fa in modo di ricevere le segnalazioni d'allarme
-						tp1 = new TimerProxy(0,proxyAsincrona.getConsumerAllarmi());
-						tp2 = new TimerProxy(1,proxyAsincrona.getConsumerKeep());
-						tp1.start();
-						tp2.start();
+						Amministratore_CentraleOperativaProxy acp= new Amministratore_CentraleOperativaProxy();
+						try {
+							acp.start();
+						} catch (MalformedURLException e1) {
+							e1.printStackTrace();
+						} catch (RemoteException e1) {
+							e1.printStackTrace();
+						} catch (NotBoundException e1) {
+							e1.printStackTrace();
+						}
 						btnPower.setIcon(new ImageIcon(imgOn));
 						}
-					 catch (JMSException e1) {
-						 e1.printStackTrace();
-					 	}
-					}
 				else {
+					Amministratore_CentraleOperativaProxy acp= new Amministratore_CentraleOperativaProxy();
 					try {
-						
-						tp1.stoppa();
-						tp2.stoppa();
-					//	proxysetup.getIstance();
-						proxyAsincrona.chiudi();
-						started.setB(false);
-						btnPower.setIcon(new ImageIcon(imgOff));
-
-//						btnPower.setIcon(new ImageIcon("C:\\Users\\giann\\Desktop\\offv.png"));
-//						btnPower.setIcon(new ImageIcon("/offv.png"));
-					} catch (JMSException e1) {
+						acp.stop();
+					} catch (MalformedURLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (NotBoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					
-//					JOptionPane.showMessageDialog(null,"Monitoraggio già attivo","DisplayMessage",JOptionPane.INFORMATION_MESSAGE);
-				}
-			}
-			
-		});
-		frmTerminaleAmministratore.getContentPane().add(btnPower);
+					started.setB(false);
+					btnPower.setIcon(new ImageIcon(imgOff));
+					}
+		}
 		
-	}
+	});
+	frmTerminaleAmministratore.getContentPane().add(btnPower);
 	
-	
-	public static void start(proxysetup p) throws JMSException, InterruptedException{
-		p.setup();	//proxy che fa in modo di ricevere le segnalazioni d'allarme
-		tp1 = new TimerProxy(0,p.getConsumerAllarmi());
-		tp2 = new TimerProxy(1,p.getConsumerKeep());
-		tp1.start();
-		tp2.start();
-	}
+}		
+					
 
-	
-	public static void stop(proxysetup p) throws JMSException {//, TimerProxy tp1, TimerProxy tp2)  throws JMSException {
-		tp1.stoppa();
-		tp2.stoppa();
-		try
-        {
-            p.chiudi();
-        }
-        catch (JMSException e)
-        {
-			e.printStackTrace();
-
-        }
-		System.out.println("[stop-function](2)");
-	}
-	
 	public class Started {
 		boolean b;
 		public Started() {
