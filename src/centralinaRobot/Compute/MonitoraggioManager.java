@@ -74,11 +74,9 @@ public void Monitora(Display d) throws JMSException{
 		valore=Sensori.get(i).Leggi();
 		d.showval(i,valore);
 		if(VerificaSuperamentoSoglia(valore, SensoriSoglie.get(i))==true){
-	//		System.out.println("[DEBUG][MANAGERMONITORA](verifica) - soglia superata 1)richiama proxy");
+	
 	//		estrae il tipo di allarme dall'id del sensore
-	//		System.out.println("[DEBUG][MANAGERMONITORA](verifica) - invia parametri al proxy:{Robot: "+id_robot +",Sensore: "+Sensori.get(i)+"}");
-		//	proxyAsincr.GeneraAllarme(getIdRobot() ,Sensori.get(i).getID(),valore);
-	//		System.out.println("[DEBUG][MANAGERMONITORA](verifica) - soglia superata 2)ritorno al manager");
+			proxyAsincr.GeneraAllarme(getIdRobot() ,Sensori.get(i).getID(),valore);
 		}
 	}
 }

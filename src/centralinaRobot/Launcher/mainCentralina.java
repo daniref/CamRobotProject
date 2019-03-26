@@ -23,8 +23,10 @@ public class mainCentralina {
 
 	
 	public static void main(String argv[]) throws JMSException{
+
 		final int PortaCentralinaCliente=4000;
 		final String urCentralinalCliente= "rmi://localhost:"+PortaCentralinaCliente+"/BC";
+
 		CentralinaRobotController c = CentralinaRobotController.getCentralinaRobot();
 		c.configuration();		
 		System.out.println("*****CENTRALINA <"+ c.getID()+">*****");

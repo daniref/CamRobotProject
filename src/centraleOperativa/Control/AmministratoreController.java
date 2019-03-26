@@ -3,7 +3,7 @@ package centraleOperativa.Control;
 import javax.jms.JMSException;
 
 import centraleOperativa.ProxyComunicazioneAsincrona.TimerProxy;
-import centraleOperativa.ProxyComunicazioneAsincrona.proxysetup;
+import centraleOperativa.ProxyComunicazioneAsincrona.CentraleOperativaProxy;
 
 public class AmministratoreController {
 	static TimerProxy tp1;
@@ -30,7 +30,7 @@ public class AmministratoreController {
 	
 
 	public void gestisciStart() throws JMSException {
-		proxysetup proxyAsincrona= proxysetup.getIstance();
+		CentraleOperativaProxy proxyAsincrona= CentraleOperativaProxy.getIstance();
 		proxyAsincrona.setup();	//proxy che fa in modo di ricevere le segnalazioni d'allarme
 		tp1 = new TimerProxy(0,proxyAsincrona.getConsumerAllarmi());
 		tp2 = new TimerProxy(1,proxyAsincrona.getConsumerKeep());
@@ -41,7 +41,7 @@ public class AmministratoreController {
 	public void gestisciStop() throws JMSException {
 		tp1.stoppa();
 		tp2.stoppa();
-		proxysetup proxyAsincrona= proxysetup.getIstance();
+		CentraleOperativaProxy proxyAsincrona= CentraleOperativaProxy.getIstance();
 		proxyAsincrona.chiudi();
 	}
 	

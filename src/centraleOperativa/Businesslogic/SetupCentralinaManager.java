@@ -16,8 +16,8 @@ public class SetupCentralinaManager {
 
 		
 			ArrayList<String> datiSensori=new ArrayList<String>();
-			datiSensori.add("ss123;T;50.0");
-			datiSensori.add("s1223;F;40.0");
+			datiSensori.add("ss123;T;50.10");
+			datiSensori.add("s1223;F;40.90");
 			datiSensori.add("s1013;P;25.11");
 			datiSensori.add("s1530;P;50.22");
 		//	String msg;

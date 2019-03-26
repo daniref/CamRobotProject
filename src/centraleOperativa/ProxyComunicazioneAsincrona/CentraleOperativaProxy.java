@@ -12,9 +12,9 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 
 //si pensa di utilizzare il proxy setup come singleton! dunque ce ne è uno solo!
 
-public class proxysetup {
+public class CentraleOperativaProxy {
 	// URL del JMS server	
-	private static proxysetup AProxyCentrale=null;
+	private static CentraleOperativaProxy AProxyCentrale=null;
 
     private static String url = ActiveMQConnection.DEFAULT_BROKER_URL;//    private static String url = "failover://tcp://127.0.0.1:61616";
 	private static String queueAllarmi = "Queue - Segnalazioni d'Allarme";
@@ -22,13 +22,13 @@ public class proxysetup {
 	private MessageConsumer consumerAllarmi,consumerKeep; 
 	private Connection connessione;
 
-	public static synchronized proxysetup getIstance(){
+	public static synchronized CentraleOperativaProxy getIstance(){
 		if(AProxyCentrale==null){
-			AProxyCentrale= new proxysetup();
+			AProxyCentrale= new CentraleOperativaProxy();
 		}
 		return AProxyCentrale;
 	}
-	public proxysetup() {}
+	public CentraleOperativaProxy() {}
 	
 	public void setup() throws JMSException {
       	ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
