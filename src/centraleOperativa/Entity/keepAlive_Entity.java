@@ -7,14 +7,17 @@ import centraleOperativa.DB.*;
 
 public class keepAlive_Entity {
 	
+	//attributi privati della classe
 	private String id;
 	private Date dataTime;
 	private String idRobot;
 	
+	//costruttore vuoto
 	public keepAlive_Entity(){
 		
 	}
 	
+	//costruttore con parametri
 	public keepAlive_Entity(Date dataTime, String idRobot) throws PersistentException {
 		
 		try {
@@ -25,8 +28,10 @@ public class keepAlive_Entity {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
 	
+	//metodo per l'aggiunta di un keepAlive al db
 	public String addKeep() throws PersistentException{
 		
 		try {
@@ -34,7 +39,6 @@ public class keepAlive_Entity {
 			java.sql.Time new_time = new java.sql.Time(this.dataTime.getTime());
 			KeepAlive keep = KeepAliveDAO.createKeep(this.id,new_date,new_time,RobotDAO.getRobotById(this.idRobot));
 			KeepAliveDAO.save(keep);
-		//	System.out.println("Aggiunto nuovo keep Alive!");
 			return this.id;
 		}
 		catch(Exception e) {
@@ -45,6 +49,27 @@ public class keepAlive_Entity {
 		
 	}
 	
+	//metodo per l'aggiornamento del keep alive nel db con l'orario del keep in question
+	//ma con lo stesso id keepAlive
+	public void updateKeep() throws PersistentException{
+
+		try {
+			KeepAlive tobeupdate_keep=new KeepAlive();
+			tobeupdate_keep=KeepAliveDAO.getKeepAliveByIdRobot(this.idRobot);
+			java.sql.Date updated_date = new java.sql.Date(this.dataTime.getTime());
+			java.sql.Time updated_time = new java.sql.Time(this.dataTime.getTime());
+			tobeupdate_keep.setData(updated_date);
+			tobeupdate_keep.setOra(updated_time);
+			KeepAliveDAO.save(tobeupdate_keep);
+		}
+		catch(Exception e) {
+			System.out.println("Errore nell'aggiornamento del keep alive!");
+			e.printStackTrace();
+		}	
+		
+	}
+	
+	//metodo per la cancellazione di un keep alive dal db
 	public boolean deleteKeep() throws PersistentException{
 		
 		try {
@@ -52,18 +77,17 @@ public class keepAlive_Entity {
 			java.sql.Time new_time = new java.sql.Time(this.dataTime.getTime());	
 			KeepAlive keep = KeepAliveDAO.createKeep(this.id,new_date,new_time,RobotDAO.getRobotById(this.idRobot));
 			KeepAliveDAO.delete(keep);
-		//	System.out.println("Keep cancellato dal db");
 			return true;
 		}
 		catch(Exception e){
 			System.out.println("Errore nella cancellazione del keep alive!");
 			e.printStackTrace();
 			throw new PersistentException(e);
-			
 		}
 		
 	}
 	
+	// metodo per ricercare un keepAlive all'interno del db passando l'id del keep
 	public void getKeepById(String id) throws PersistentException{
 		
 		try {
@@ -78,12 +102,13 @@ public class keepAlive_Entity {
 			this.idRobot=new_keep.getRobot().getId();
 		}
 		catch(Exception e) {
-			System.out.println("Cliente non presente!");
-			throw new PersistentException(e);
-			
-		}		
+			System.out.println("Keep non presente!");
+			throw new PersistentException(e);	
+		}
+		
 	}
 	
+	//metodo usato per la conversione da sql.date a util.date
 	public static java.util.Date convertFromSQLDateToJAVADate(java.sql.Date sqlDate) {
 		
 		java.util.Date javaDate = null;
@@ -94,7 +119,8 @@ public class keepAlive_Entity {
 	
 	}
 	
-
+	//metodi di set e get della classe
+	
 	public String getId() {
 		return id;
 	}

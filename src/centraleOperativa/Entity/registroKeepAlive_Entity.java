@@ -1,6 +1,7 @@
 package centraleOperativa.Entity;
 
 import centraleOperativa.Entity.*;
+import centraleOperativa.DB.CamRobotPersistentManager;
 import centraleOperativa.DB.KeepAlive;
 import centraleOperativa.DB.KeepAliveDAO;
 import centraleOperativa.DB.Robot;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.TimeZone;
 
-import org.orm.PersistentException;
+import org.orm.*;
 
 public class registroKeepAlive_Entity {
 	
@@ -48,6 +49,7 @@ public class registroKeepAlive_Entity {
 	
 	//-------metodo usato per l'accesso alla classe singleton
 	public static synchronized registroKeepAlive_Entity getInstance() throws PersistentException{
+
 		if(registro==null) {
 			try {
 				registro=new registroKeepAlive_Entity();
@@ -60,7 +62,7 @@ public class registroKeepAlive_Entity {
 		return registro;
 	}
 	
-	
+	//metodo usato per la conversione da sql.date a util.date
 	public static java.util.Date convertFromSQLDateToJAVADate(java.sql.Date sqlDate) {
 		
 		java.util.Date javaDate = null;
@@ -71,7 +73,9 @@ public class registroKeepAlive_Entity {
 	
 	}
 	
+	//metodo per aggiungere un keep  alive alla lista e al db
 	public void addKeep(keepAlive_Entity keep) throws PersistentException{
+
 		try {
 			listaKeep.add(keep);
 			keep.addKeep();
@@ -82,27 +86,33 @@ public class registroKeepAlive_Entity {
 
 	}
 	
+	//metodo per aggiornare un keep alive nella lista e nel db
 	public void updateKeep(keepAlive_Entity keep) throws PersistentException{
 		
 		try {
 			keepAlive_Entity old_keep=getKeepByIdRobot(keep.getIdRobot());
+			keep.setId(old_keep.getId());
 			listaKeep.set(listaKeep.indexOf(old_keep),keep);
-			old_keep.deleteKeep();
-			keep.addKeep();
+			keepAlive_Entity tobeupdate_keep = new keepAlive_Entity();
+			tobeupdate_keep=keep;
+			tobeupdate_keep.updateKeep();
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
+	//metodo che restituisce la lista dei keep alive presenti nel registro
 	public static ArrayList<keepAlive_Entity> getListaKeepAlive() {
 		return listaKeep;
 	}
 
+	//metodo che resituisce un keep alive nella lista cercandolo in base al robot a cui è associato
 	public static keepAlive_Entity getKeepByIdRobot(String idRobot) {
 
 		ArrayList<keepAlive_Entity> keepList = getListaKeepAlive();
+		keepAlive_Entity returnedKeep_Entity = new keepAlive_Entity();
 		keepAlive_Entity k = new keepAlive_Entity();
 		int i=0;
 		boolean trovato=false;
@@ -110,12 +120,14 @@ public class registroKeepAlive_Entity {
 			k = keepList.get(i);
 			if(k.getIdRobot().compareTo(idRobot)==0) {
 				trovato=true;
+				returnedKeep_Entity=k;
 			}
 			else {
 				i++;
 			}
 		}
-		return k;
+		return returnedKeep_Entity;
+		
 	}
 
 }
