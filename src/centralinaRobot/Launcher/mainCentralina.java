@@ -23,13 +23,13 @@ public class mainCentralina {
 
 	
 	public static void main(String argv[]) throws JMSException{
-		final int PortaClienteCentralina=4000;
-		final String urlClienteCentralina= "rmi://localhost:"+PortaClienteCentralina+"/BC";
+		final int PortaCentralinaCliente=4000;
+		final String urCentralinalCliente= "rmi://localhost:"+PortaCentralinaCliente+"/BC";
 		   try {
 			   //la centralina riceve i messaggi dal cliente sulla porta 4000!
 			   Cliente_CentralinaRobotProxy proxyc1 = new Cliente_CentralinaRobotProxy();		
-			   Registry mioregistro1=LocateRegistry.createRegistry(PortaClienteCentralina);
-			   Naming.rebind(urlClienteCentralina, proxyc1);
+			   Registry mioregistro1=LocateRegistry.createRegistry(PortaCentralinaCliente);
+			   Naming.rebind(urCentralinalCliente, proxyc1);
 			   System.out.println("Centralina pronta a ricever richieste dal Cliente.");
 			   }catch (Exception e) {
 				   System.out.println("Centralina Server/Cliente error: " + e);

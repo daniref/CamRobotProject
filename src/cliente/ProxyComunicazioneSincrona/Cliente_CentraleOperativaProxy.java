@@ -9,15 +9,15 @@ import java.util.ArrayList;
 import RMI.Interfaces.ProxyClienteCentrale;
 
 public class Cliente_CentraleOperativaProxy {
-	final int PortaCliente=4001;
-	final String urlCliente= "rmi://localhost:"+PortaCliente+"/cl";
+	final int PortaCentraleCliente=4001;
+	final String urlCentraleCliente= "rmi://localhost:"+PortaCentraleCliente+"/cl";
 	
 	public Cliente_CentraleOperativaProxy() {};
 	public boolean NotificaLetturaSegnalazione(String idsegnalazione) throws MalformedURLException, RemoteException, NotBoundException {
 		
 		try{
 			ProxyClienteCentrale proxy;
-			proxy = (ProxyClienteCentrale)Naming.lookup(urlCliente);
+			proxy = (ProxyClienteCentrale)Naming.lookup(urlCentraleCliente);
 			return proxy.Notifica(idsegnalazione);
 			}
 		catch (Exception e1) {

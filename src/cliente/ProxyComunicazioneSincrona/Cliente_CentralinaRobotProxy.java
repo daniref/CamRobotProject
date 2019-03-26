@@ -11,15 +11,15 @@ import RMI.Interfaces.*;
 
 
 public class Cliente_CentralinaRobotProxy {
-	final int PortaClienteCentralina=4000;
-	final String urlClienteCentralina= "rmi://localhost:"+PortaClienteCentralina+"/BC";
+	final int PortaCentralinaCliente=4000;
+	final String urlCentralinaCliente= "rmi://localhost:"+PortaCentralinaCliente+"/BC";
 	
 	public Cliente_CentralinaRobotProxy() {};
 	public ArrayList<String> MonitoraggioRemoto() throws MalformedURLException, RemoteException, NotBoundException {
 		
 		try{
 			ProxyClienteCentralina proxy;
-			proxy = (ProxyClienteCentralina)Naming.lookup(urlClienteCentralina);
+			proxy = (ProxyClienteCentralina)Naming.lookup(urlCentralinaCliente);
 			ArrayList<String> buff= new ArrayList<String>();
 			buff=proxy.MonitoraggioRemoto();
 			return buff;

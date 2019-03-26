@@ -9,8 +9,8 @@ import RMI.Interfaces.ProxyAmministratore;
 
 public class Amministratore_CentraleOperativaProxy {
 
-	final int PortaAmministratore=6100;
-	final String urlAmministratore= "rmi://localhost:"+PortaAmministratore+"/AM";
+	final int PortaCentraleAmministratore=6100;
+	final String urlCentraleAmministratore= "rmi://localhost:"+PortaCentraleAmministratore+"/AM";
 
 	public Amministratore_CentraleOperativaProxy() {}
 	
@@ -18,7 +18,7 @@ public class Amministratore_CentraleOperativaProxy {
 
 		try {
 			ProxyAmministratore pr;
-			pr=(ProxyAmministratore)Naming.lookup(urlAmministratore);
+			pr=(ProxyAmministratore)Naming.lookup(urlCentraleAmministratore);
 			pr.startMonitoraggio();
 			}
 		catch(Exception e) {
@@ -32,7 +32,7 @@ public class Amministratore_CentraleOperativaProxy {
 	public void stop()  throws MalformedURLException, RemoteException, NotBoundException{
 		try {
 			ProxyAmministratore pr1;
-			pr1=(ProxyAmministratore)Naming.lookup(urlAmministratore);
+			pr1=(ProxyAmministratore)Naming.lookup(urlCentraleAmministratore);
 			pr1.stopMonitoraggio();
 			}
 		catch(Exception e) {
