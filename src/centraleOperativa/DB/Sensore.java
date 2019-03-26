@@ -22,6 +22,13 @@ public class Sensore implements Serializable {
 	public Sensore() {
 	}
 	
+	public Sensore(String id, float soglia, String tipologia, Robot robot) {
+		this.id=id;
+		this.soglia=soglia;
+		this.tipologia=tipologia;
+		this.robot=robot;		
+	}
+	
 	private void this_setOwner(Object owner, int key) {
 		if (key == ORMConstants.KEY_SENSORE_ROBOT) {
 			this.robot = (Robot) owner;
