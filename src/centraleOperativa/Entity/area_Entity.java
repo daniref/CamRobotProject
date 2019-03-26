@@ -86,7 +86,9 @@ public class area_Entity {
 
 	//metodo che restituisce la lista di robot dell'area
 	public static ArrayList<robot_Entity> getListaRobot() {
+
 		return listaRobot;
+	
 	}
 	
 	//metodo che cerca nella lista dell'area un robot attraverso il suo id e lo restituisce
@@ -94,18 +96,20 @@ public class area_Entity {
 		
 		ArrayList<robot_Entity> robotList = getListaRobot();
 		robot_Entity r = new robot_Entity();
+		robot_Entity returnedRobot = new robot_Entity();
 		int i=0;
 		boolean trovato=false;
 		while(i<robotList.size() && !trovato) {
 			r = robotList.get(i);
 			if(r.getId().compareTo(idRobot)==0) {
 				trovato=true;
+				returnedRobot=r;
 			}
 			else {
 				i++;
 			}
 		}
-		return r;
+		return returnedRobot;
 	}
 	
 }
