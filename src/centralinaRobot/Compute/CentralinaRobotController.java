@@ -48,18 +48,28 @@ public class CentralinaRobotController {
 	//dati ottenuti dal server
 	public void configuration(){
 		IDRobot=idR; 
-		SensoreInterface  s=new SensoreInterface("s030","T");
-        SensoreInterface s1=new SensoreInterface("s031","F");
+		//si va a fare una richiesta con RMI in cui si caricano i Sensori Interface con i valori che ci sono sul db!
+		ArrayList<String> datisensoriDB= new ArrayList<String>();
+		SetupManager sm=new SetupManager();
+		datisensoriDB=sm.loadDataDB(idR);
+		String [] splitdati =new String[3];
+		for(int i=0;i<datisensoriDB.size();i++) {
+			splitdati=datisensoriDB.get(i).split(";");	
+			Sensori.add(new SensoreInterface(splitdati[0],splitdati[1]));
+			SensoriSoglie.add(Float.valueOf(splitdati[2]));
+		}
+//		SensoreInterface  s=new SensoreInterface("s030","T");
+ //       SensoreInterface s1=new SensoreInterface("s031","F");
        // SensoreInterface s2=new SensoreInterface("s032","P");
         //SensoreInterface s3=new SensoreInterface("s033","P");
         //SensoreInterface s4=new SensoreInterface("s034","P");
-        Sensori.add(s);
-        Sensori.add(s1);
+   //     Sensori.add(s);
+   //     Sensori.add(s1);
         //Sensori.add(s2);
         //Sensori.add(s3);
         //Sensori.add(s4);
-        configurationSoglie();
-		System.out.println("[Controller]configurazione completata");
+    //    configurationSoglie();
+	//	System.out.println("[Controller]configurazione completata");
 }
 
 	public void configurationSoglie() {
@@ -83,7 +93,7 @@ public class CentralinaRobotController {
 
 	
 	public void Misura(Display d) throws JMSException{
-		System.out.println("[Controller]crea manager segnalazioni con idrobot "+ getID() + "Sensori e Soglie");
+	//	System.out.println("[Controller]crea manager segnalazioni con idrobot "+ getID() + "Sensori e Soglie");
         ManagerMon=new MonitoraggioManager(getID(),Sensori, SensoriSoglie); //carica soglie!
 		ManagerMon.Monitora(d);
 	}

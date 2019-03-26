@@ -6,10 +6,8 @@ import java.rmi.server.UnicastRemoteObject;
 import javax.jms.JMSException;
 
 import RMI.Interfaces.ProxyAmministratore;
-import RMI.Interfaces.ProxyClienteCentrale;
 import centraleOperativa.Control.AmministratoreController;
 
-import centraleOperativa.Control.ClienteController;
 
 public class Amministratore_CentraleOperativaProxy extends UnicastRemoteObject
 implements ProxyAmministratore{

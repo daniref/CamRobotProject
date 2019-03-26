@@ -25,6 +25,9 @@ public class mainCentralina {
 	public static void main(String argv[]) throws JMSException{
 		final int PortaCentralinaCliente=4000;
 		final String urCentralinalCliente= "rmi://localhost:"+PortaCentralinaCliente+"/BC";
+		CentralinaRobotController c = CentralinaRobotController.getCentralinaRobot();
+		c.configuration();		
+		System.out.println("*****CENTRALINA <"+ c.getID()+">*****");
 		   try {
 			   //la centralina riceve i messaggi dal cliente sulla porta 4000!
 			   Cliente_CentralinaRobotProxy proxyc1 = new Cliente_CentralinaRobotProxy();		
@@ -35,15 +38,9 @@ public class mainCentralina {
 				   System.out.println("Centralina Server/Cliente error: " + e);
 				}
 		   
-		System.out.println("*****CENTRALINA****");
-			CentralinaRobotController c = CentralinaRobotController.getCentralinaRobot();
-			System.out.println("[main_centralina][CONTROLLER][0]-controller creato");
-			c.configuration();		
-			System.out.println("[main_centralina][CONTROLLER][1]-controller configurato");
 
 			
 			Display disp = new Display(c.getSensori(),c.getID(),CentralinaRobotController.getSensoriSoglie());
-			System.out.println("[main_centralina][Dysplay][0]-costruttore display invocato");
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {

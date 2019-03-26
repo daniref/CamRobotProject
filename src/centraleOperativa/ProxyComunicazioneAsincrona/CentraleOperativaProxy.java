@@ -9,7 +9,6 @@ import javax.jms.*;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
-import centraleOperativa.Control.CentraleOperativaController;
 
 //si pensa di utilizzare il proxy setup come singleton! dunque ce ne è uno solo!
 
