@@ -29,11 +29,14 @@ public class RobotDAO {
 
 	//-------------Crea un nuovo Robot-------------
 	public static Robot createRobot(String id, String stato, String condizione, String funzionamento, String indirizzo, String areaId) {
-				return new Robot(id,stato,condizione,funzionamento,indirizzo,areaId);
-		}
+
+		return new Robot(id,stato,condizione,funzionamento,indirizzo,areaId);
+		
+	}
 	
 	//--------------Salva un nuovo Robot nel database
 	public static boolean save(centraleOperativa.DB.Robot robot) throws PersistentException {
+
 		PersistentSession session = centraleOperativa.DB.CamRobotPersistentManager.instance().getSession();
 		PersistentTransaction transaction = session.beginTransaction();
 		try {
@@ -49,6 +52,7 @@ public class RobotDAO {
 		finally {
 			session.close();
 		}
+		
 	}
 	
 	//----------Cancella un robot dal database
@@ -66,6 +70,10 @@ public class RobotDAO {
 			e.printStackTrace();
 			throw new PersistentException(e);
 		}
+		finally {
+			session.close();
+		}
+		
 	}
 	
 	//----------Calcola l'id più grande salvato nel db
@@ -77,7 +85,9 @@ public class RobotDAO {
 		try {
 			String hql = "SELECT max(R.id) FROM Robot R";
 			Query query = session.createQuery(hql);
-			max=(String)query.list().get(0);
+			if(query.list().get(0)!=null) {
+				max=(String)query.list().get(0);
+			}
 			transaction.commit();
 			return max;
 		}
@@ -89,12 +99,13 @@ public class RobotDAO {
 		finally {
 		    session.close();
 		}
+		
 	}
 	
 	//----------Calcola l'id univoco da associare al nuovo cliente
 	public static String getNextId () throws PersistentException{
-		String nextMaxIdString="000";
 
+		String nextMaxIdString="000";
 		try {
 			String currentMaxIdString = getMaxId();
 			int currentMaxIdInt = Integer.parseInt(currentMaxIdString.substring(2));
@@ -116,14 +127,18 @@ public class RobotDAO {
 		
 		PersistentSession session = centraleOperativa.DB.CamRobotPersistentManager.instance().getSession();
 		PersistentTransaction transaction = session.beginTransaction();
+		Robot returnedRobot = new Robot();
 		try {
 			String hql = "FROM Robot R WHERE R.id='"+id+"'";
 			Query query = session.createQuery(hql);
 			transaction.commit();
-			return((Robot)query.list().get(0));
-
+			if(!query.list().isEmpty()) {
+				returnedRobot=(Robot)query.list().get(0);
+			}
+			return returnedRobot;
 		}
 		catch(Exception e) {
+			transaction.rollback();
 			e.printStackTrace();
 			throw new PersistentException(e);
 		}
@@ -136,17 +151,20 @@ public class RobotDAO {
 	//---------Restituisci tutti i robot dell'area---------
 	public static ArrayList<Robot> getRobotListByIdArea(String idArea) throws PersistentException{
 		
-		
 		PersistentSession session = centraleOperativa.DB.CamRobotPersistentManager.instance().getSession();
 		PersistentTransaction transaction = session.beginTransaction();
+		ArrayList<Robot> robotList = new ArrayList<Robot>();
 		try {
 			String hql = "FROM Robot R WHERE R.areaId='"+idArea+"'";
 			Query query = session.createQuery(hql);
 			transaction.commit();
-			ArrayList<Robot> tmp = new ArrayList<Robot>(query.list());
-			return tmp;
+			if(!query.list().isEmpty()) {
+				robotList=(ArrayList<Robot>)query.list();
+			}
+			return robotList;
 		}
 		catch(Exception e) {
+			transaction.rollback();
 			e.printStackTrace();
 			throw new PersistentException(e);
 		}

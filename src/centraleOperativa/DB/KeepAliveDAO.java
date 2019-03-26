@@ -26,11 +26,14 @@ public class KeepAliveDAO {
 	
 	//-------------Crea un nuovo Keep Alive-------------
 	public static KeepAlive createKeep(String id, Date data, Time ora, Robot robot) {
-				return new KeepAlive(id,data,ora,robot);
-		}
+
+		return new KeepAlive(id,data,ora,robot);
+		
+	}
 	
 	//--------------Salva un nuovo cliente nel database
-	public static boolean save(centraleOperativa.DB.KeepAlive keep) throws PersistentException {
+	public static boolean save(KeepAlive keep) throws PersistentException {
+		
 		PersistentSession session = CamRobotPersistentManager.instance().getSession();
 		PersistentTransaction transaction = session.beginTransaction();
 		try {
@@ -46,6 +49,7 @@ public class KeepAliveDAO {
 		finally {
 			session.close();
 		}
+
 	}	
 	
 	//----------Cancella un keep alive dal database
@@ -54,7 +58,7 @@ public class KeepAliveDAO {
 		PersistentSession session = CamRobotPersistentManager.instance().getSession();
 		PersistentTransaction transaction = session.beginTransaction();
 		try {
-			CamRobotPersistentManager.instance().deleteObject(keep);
+			session.delete(keep);
 			transaction.commit();
 			return true;
 		}
@@ -62,6 +66,9 @@ public class KeepAliveDAO {
 			transaction.rollback();
 			e.printStackTrace();
 			throw new PersistentException(e);
+		}
+		finally {
+			session.close();
 		}
 	}
 	
@@ -86,14 +93,14 @@ public class KeepAliveDAO {
 			throw new PersistentException(e);
 		}
 		finally {
-		    session.close();
+			session.close();
 		}
 	}
 	
 	//----------Calcola l'id univoco da associare al nuovo keep alive
 	public static String getNextId () throws PersistentException{
-		String nextMaxIdString="000";
 		
+		String nextMaxIdString="000";
 		try {
 			String currentMaxIdString = getMaxId();
 			int currentMaxIdInt = Integer.parseInt(currentMaxIdString.substring(2));
@@ -114,20 +121,24 @@ public class KeepAliveDAO {
 		
 		PersistentSession session = CamRobotPersistentManager.instance().getSession();
 		PersistentTransaction transaction = session.beginTransaction();
+		ArrayList<KeepAlive> keepAliveList = new ArrayList<KeepAlive>();
 		try {
 			String hql = "FROM KeepAlive";
 			Query query = session.createQuery(hql);
 			transaction.commit();
-			ArrayList<KeepAlive> keepAliveList = new ArrayList<KeepAlive>(query.list());
+			if(!query.list().isEmpty()) {
+				keepAliveList=(ArrayList<KeepAlive>)query.list();
+			}
 			return keepAliveList;
 		}
 		catch(Exception e) {
+			transaction.rollback();
 			e.printStackTrace();
 			throw new PersistentException(e);
 		}
 		finally {
-			    session.close();
-			}
+			session.close();
+		}
 				
 	}
 			
@@ -136,44 +147,51 @@ public class KeepAliveDAO {
 		
 		PersistentSession session = CamRobotPersistentManager.instance().getSession();
 		PersistentTransaction transaction = session.beginTransaction();
+		KeepAlive returnedKeep = new KeepAlive();
 		try {
 			String hql = "FROM KeepAlive K WHERE K.id='"+id+"'";
 			Query query = session.createQuery(hql);
 			transaction.commit();
-			return((KeepAlive)query.list().get(0));
+			if(!query.list().isEmpty()) {
+				returnedKeep=(KeepAlive)query.list().get(0);
+			}
+			return returnedKeep;
 		}
 		catch(Exception e) {
+			transaction.rollback();
 			e.printStackTrace();
 			throw new PersistentException(e);
 		}
 		finally {
-			    session.close();
-			}
+			session.close();
+		}
 				
 	}
-	
-	/*
 	
 	//----------Cerca un keep alive nel database fornendo l'id del robot----------
 	public static KeepAlive getKeepAliveByIdRobot(String id) throws PersistentException{
 		
 		PersistentSession session = CamRobotPersistentManager.instance().getSession();
 		PersistentTransaction transaction = session.beginTransaction();
+		KeepAlive returnedKeep = new KeepAlive();
 		try {
-			String hql = "FROM KeepAlive K WHERE K.robotId='"+id+"'";
+			String hql = "FROM KeepAlive K WHERE K.robot='"+id+"'";
 			Query query = session.createQuery(hql);
 			transaction.commit();
-			return((KeepAlive)query.list().get(0));
-
+			if(!query.list().isEmpty()) {
+				returnedKeep=(KeepAlive)query.list().get(0);
+			}
+			return returnedKeep;
 		}
 		catch(Exception e) {
+			transaction.rollback();
 			e.printStackTrace();
 			throw new PersistentException(e);
 		}
 		finally {
-			    session.close();
-			}
+			session.close();
+		}
 				
 	}
-*/		
+		
 }

@@ -25,11 +25,14 @@ public class ContrattoDAO {
 	//-------------Crea un nuovo Contratto-------------
 	public static Contratto createContratto(String id, Cliente utente, Robot robot, Date data_di_inizio, Date data_di_scadenza,
 			float canone) {
+
 		return new Contratto(id,utente,robot,data_di_inizio,data_di_scadenza,canone);
+	
 	}
 
 	//--------------Salva un nuovo contratto nel database
 	public static boolean save(Contratto contratto) throws PersistentException {
+
 		PersistentSession session = centraleOperativa.DB.CamRobotPersistentManager.instance().getSession();
 		PersistentTransaction transaction = session.beginTransaction();
 		try {
@@ -45,6 +48,7 @@ public class ContrattoDAO {
 		finally {
 			session.close();
 		}
+		
 	}
 	
 	//----------Calcola l'id più grande salvato nel db
@@ -56,7 +60,9 @@ public class ContrattoDAO {
 		try {
 			String hql = "SELECT max(C.id) FROM Contratto C";
 			Query query = session.createQuery(hql);
-			max=(String)query.list().get(0);
+			if(query.list().get(0)!=null) {
+				max=(String)query.list().get(0);
+			}
 			transaction.commit();
 			return max;
 		}
@@ -68,12 +74,13 @@ public class ContrattoDAO {
 		finally {
 		    session.close();
 		}
+		
 	}
 	
 	//----------Calcola l'id univoco da associare al nuovo contratto
 	public static String getNextId () throws PersistentException{
+
 		String nextMaxIdString="000";
-		
 		try {
 			String currentMaxIdString = getMaxId();
 			int currentMaxIdInt = Integer.parseInt(currentMaxIdString.substring(2));
@@ -94,14 +101,18 @@ public class ContrattoDAO {
 		
 		PersistentSession session = centraleOperativa.DB.CamRobotPersistentManager.instance().getSession();
 		PersistentTransaction transaction = session.beginTransaction();
+		Contratto returnedContratto = new Contratto();
 		try {
 			String hql = "FROM Contratto C WHERE C.id='"+id+"'";
 			Query query = session.createQuery(hql);
 			transaction.commit();
-			return((Contratto)query.list().get(0));
-
+			if(!query.list().isEmpty()) {
+				returnedContratto=(Contratto)query.list().get(0);
+			}
+			return returnedContratto;
 		}
 		catch(Exception e) {
+			transaction.rollback();
 			e.printStackTrace();
 			throw new PersistentException(e);
 		}
@@ -116,14 +127,18 @@ public class ContrattoDAO {
 		
 		PersistentSession session = centraleOperativa.DB.CamRobotPersistentManager.instance().getSession();
 		PersistentTransaction transaction = session.beginTransaction();
+		Contratto returnedContratto = new Contratto();
 		try {
 			String hql = "FROM Contratto C WHERE C.robot='"+id+"'";
 			Query query = session.createQuery(hql);
 			transaction.commit();
-			return((Contratto)query.list().get(0));
-
+			if(!query.list().isEmpty()) {
+				returnedContratto=(Contratto)query.list().get(0);
+			}
+			return returnedContratto;
 		}
 		catch(Exception e) {
+			transaction.rollback();
 			e.printStackTrace();
 			throw new PersistentException(e);
 		}
