@@ -9,6 +9,7 @@ import centraleOperativa.DB.*;
 
 public class contratto_Entity {
 	
+	//attributi privati della classe
 	private String id;
 	private String idCliente;
 	private String idRobot;
@@ -16,12 +17,15 @@ public class contratto_Entity {
 	private Date data_di_scadenza;
 	private float canone;
 		
+	//costruttore privato
 	public contratto_Entity() {
 		
 	}
 	
+	//costruttore con parametri
 	public contratto_Entity(String idCliente, String idRobot, Date data_di_inizio, 
 			Date data_di_scadenza, float canone) throws PersistentException {
+
 		try {
 			this.id = ContrattoDAO.getNextId();
 			this.idCliente = idCliente;
@@ -34,8 +38,10 @@ public class contratto_Entity {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
 	
+	//metodo per l'aggiunta di un nuovo contratto al db
 	public String addContratto() throws PersistentException{
 		
 		try {
@@ -48,7 +54,6 @@ public class contratto_Entity {
 									new_date1,
 									new_date2,
 									this.canone);
-			
 			ContrattoDAO.save(contratto);
 			System.out.println("Aggiunto nuovo contratto!");
 			return this.id;
@@ -58,8 +63,10 @@ public class contratto_Entity {
 			e.printStackTrace();
 			throw new PersistentException(e);
 		}		
+		
 	}
 	
+	//metodo che restituisce un contratto dal db in base al suo id
 	public void getContrattoById(String id) throws PersistentException{
 		
 		try {
@@ -75,10 +82,12 @@ public class contratto_Entity {
 		catch(Exception e) {
 			System.out.println("Contratto non presente!");
 			throw new PersistentException(e);
-			
 		}
+		
 	}
 	
+	//metodo che restituisce l'id di un cliente proprietario di un certo robot
+	//in base all'id robot passato
 	public String getIdUtenteByIdRobot(String id) throws PersistentException{
 		
 		try {
@@ -87,22 +96,25 @@ public class contratto_Entity {
 			Cliente new_cliente=new Cliente();
 			new_cliente=new_contratto.getUtente();
 			return new_cliente.getId();			
-			
 		}
 		catch(Exception e) {
 			System.out.println("Impossibile recuperare l'id del cliente a partire dall'id robot: "+id);
 			throw new PersistentException(e);
 		}	
+		
 	}
 	
-	public static java.util.Date convertFromSQLDateToJAVADate(
-		            java.sql.Date sqlDate) {
-		        java.util.Date javaDate = null;
-		        if (sqlDate != null) {
-		            javaDate = new Date(sqlDate.getTime());
-		        }
-		        return javaDate;
-		    }
+	//metodo usato per la conversione da sql.date a util.date
+	public static java.util.Date convertFromSQLDateToJAVADate(java.sql.Date sqlDate) {
+
+		java.util.Date javaDate = null;
+	        if (sqlDate != null) {
+	            javaDate = new Date(sqlDate.getTime());
+	        }
+	        return javaDate;
+	    }
+	
+	//metodi di get e set degli attributi privati della classe
 
 	public String getId() {
 		return id;
