@@ -1,3 +1,4 @@
+package centraleOperativa.DB;
 /**
  * "Visual Paradigm: DO NOT MODIFY THIS FILE!"
  * 
@@ -11,17 +12,13 @@
  * Licensee: 
  * License Type: Evaluation
  */
-package centraleOperativa.DB;
-
 import java.io.Serializable;
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Gestore")
 public class Gestore implements Serializable {
-
 	public Gestore() {
-
 	}
 	
 	public Gestore(String id, String nome, String recapito) {
@@ -29,6 +26,7 @@ public class Gestore implements Serializable {
 		this.nome=nome;
 		this.recapito=recapito;
 	}
+	
 	
 	private java.util.Set this_getSet (int key) {
 		if (key == ORMConstants.KEY_GESTORE_SEGNALAZIONE) {
@@ -98,6 +96,5 @@ public class Gestore implements Serializable {
 	private java.util.Set getORM_Segnalazione() {
 		return ORM_segnalazione;
 	}
-	
-	
+
 }

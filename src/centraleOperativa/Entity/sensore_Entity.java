@@ -1,7 +1,5 @@
 package centraleOperativa.Entity;
 
-import centraleOperativa.DB.SensoreDAO;
-
 import org.orm.PersistentException;
 
 import centraleOperativa.DB.ClienteDAO;
@@ -9,6 +7,7 @@ import centraleOperativa.DB.Contratto;
 import centraleOperativa.DB.ContrattoDAO;
 import centraleOperativa.DB.RobotDAO;
 import centraleOperativa.DB.Sensore;
+import centraleOperativa.DB.SensoreDAO;
 
 public class sensore_Entity {
 	

@@ -75,6 +75,7 @@ public class Segnalazione implements Serializable {
 	private float valore_allarme;
 	
 	@Column(name="data", nullable=false)	
+	@Temporal(TemporalType.DATE)	
 	private Date data;
 	
 	@Column(name="ora", nullable=false)	
@@ -85,8 +86,8 @@ public class Segnalazione implements Serializable {
 	@JoinColumns(value={ @JoinColumn(name="gestoreid", referencedColumnName="id", nullable=false) }, foreignKey=@ForeignKey(name="FKSegnalazio153292"))	
 	private Gestore gestore;
 	
-	@OneToOne(optional=false, targetEntity=Sensore.class, fetch=FetchType.LAZY)	
-	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
+	@ManyToOne(targetEntity=Sensore.class, fetch=FetchType.LAZY)	
+	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns(value={ @JoinColumn(name="sensoreId", referencedColumnName="Id", nullable=false) }, foreignKey=@ForeignKey(name="FKSegnalazio153765"))	
 	private Sensore sensore;
 	
@@ -135,28 +136,25 @@ public class Segnalazione implements Serializable {
 		this.ora = value;
 	}
 	
-	public Time getOra() {
+	public java.sql.Time getOra() {
 		return ora;
-	}
-	
-	public void setSensore(Sensore value) {
-		if (this.sensore != value) {
-			Sensore lsensore = this.sensore;
-			this.sensore = value;
-			if (value != null) { 
-				sensore.setSegnalazione(this);
-			}
-			if (lsensore != null && lsensore.getSegnalazione() == this) {
-				lsensore.setSegnalazione(null);
-			}
-		}
 	}
 	
 	public Sensore getSensore() {
 		return sensore;
 	}
 	
-
+	/**
+	 * This method is for internal use only.
+	 */
+	public void setORM_Sensore(Sensore value) {
+		this.sensore = value;
+	}
+	
+	private Sensore getORM_Sensore() {
+		return sensore;
+	}
+	
 	public Gestore getGestore() {
 		return gestore;
 	}
@@ -171,6 +169,7 @@ public class Segnalazione implements Serializable {
 	private Gestore getORM_Gestore() {
 		return gestore;
 	}
+	
 	
 	public Robot getRobot() {
 		return robot;
