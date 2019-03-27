@@ -3,7 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/orm.jar" sourcepath="src/config"/>
+	<classpathentry exported="true" kind="lib" path="lib/orm.jar" sourcepath="src/config"/>
 	<classpathentry kind="lib" path="lib/activemq-broker-5.14.5.jar"/>
 	<classpathentry kind="lib" path="lib/activemq-client-5.14.5.jar"/>
 	<classpathentry kind="lib" path="lib/activemq-console-5.14.5.jar"/>
@@ -19,6 +19,5 @@
 	<classpathentry kind="lib" path="lib/hawtbuf-1.11.jar"/>
 	<classpathentry kind="lib" path="lib/jcl-over-slf4j-1.7.13.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-api-1.7.13.jar"/>
-
 	<classpathentry kind="output" path="bin"/>
 </classpath>
