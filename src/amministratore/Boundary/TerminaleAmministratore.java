@@ -27,8 +27,7 @@ public class TerminaleAmministratore {
 	
 	private JFrame frmTerminaleAmministratore;
 	private JTextField txtCentraleOperativa;
-//	static TimerProxy tp1;
-//	static TimerProxy tp2;
+
 	/**
 	 * Launch the application.
 	 * @throws InterruptedException 

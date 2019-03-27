@@ -8,9 +8,6 @@ import centraleOperativa.ProxyComunicazioneAsincrona.CentraleOperativaProxy;
 public class AmministratoreController {
 	static TimerProxy tp1;
 	static TimerProxy tp2;
-	
-	
-
 	//CREAZIONE DEL 'SINGLETON'
 	private static AmministratoreController AmmCon=null;
 	
