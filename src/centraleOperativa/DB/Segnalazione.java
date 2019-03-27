@@ -143,7 +143,7 @@ public class Segnalazione implements Serializable {
 		if (this.sensore != value) {
 			Sensore lsensore = this.sensore;
 			this.sensore = value;
-			if (value != null) {
+			if (value != null) { 
 				sensore.setSegnalazione(this);
 			}
 			if (lsensore != null && lsensore.getSegnalazione() == this) {
