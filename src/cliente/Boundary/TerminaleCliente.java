@@ -60,7 +60,7 @@ public class TerminaleCliente {
 	private void initialize() throws MalformedURLException, RemoteException, NotBoundException {
 
 		frame = new JFrame("Terminale Cliente");
-		frame.setBounds(100, 100, 450, 389);
+		frame.setBounds(1000, 100, 450, 196);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
@@ -95,6 +95,7 @@ public class TerminaleCliente {
 				    for(int i=0;i<buffer.size();i++) {
 			    		ListaLabelSensore1.get(i).setText(buffer.get(i));
 			    		System.out.println(buffer.get(i));
+			    		frame.setBounds(1000, 100, 450, 300);
 			    		ListaLabelSensore1.get(i).setVisible(true);
 						    }	
 				} catch (MalformedURLException | RemoteException | NotBoundException e1) {

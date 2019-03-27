@@ -48,7 +48,7 @@ public class Notifica {
 	private void initialize() {
 		frmFormInvioNotifiche = new JFrame();
 		frmFormInvioNotifiche.setTitle("Finestra Notifiche");
-		frmFormInvioNotifiche.setBounds(100, 100, 514, 202);
+		frmFormInvioNotifiche.setBounds(1050, 120, 514, 202);
 		//frmFormInvioNotifiche.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmFormInvioNotifiche.getContentPane().setLayout(null);
 		
