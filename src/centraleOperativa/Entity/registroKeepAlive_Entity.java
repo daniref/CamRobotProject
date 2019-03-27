@@ -16,7 +16,22 @@ import org.orm.*;
 public class registroKeepAlive_Entity {
 	
 	//creazione del SINGLETON
-	private static registroKeepAlive_Entity registro=null;
+	private static registroKeepAlive_Entity registro=null;	
+	
+	//-------metodo usato per l'accesso alla classe singleton
+	public static synchronized registroKeepAlive_Entity getInstance() throws PersistentException{
+
+		if(registro==null) {
+			try {
+				registro=new registroKeepAlive_Entity();
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+				throw new PersistentException(e);
+			}
+		}
+		return registro;
+	}
 	
 	//lista di tutti i robot appartenenti all'area
 	private static ArrayList<keepAlive_Entity> listaKeep;
@@ -45,21 +60,6 @@ public class registroKeepAlive_Entity {
         		throw new PersistentException(e);
         	}
 		
-	}
-	
-	//-------metodo usato per l'accesso alla classe singleton
-	public static synchronized registroKeepAlive_Entity getInstance() throws PersistentException{
-
-		if(registro==null) {
-			try {
-				registro=new registroKeepAlive_Entity();
-			}
-			catch(Exception e) {
-				e.printStackTrace();
-				throw new PersistentException(e);
-			}
-		}
-		return registro;
 	}
 	
 	//metodo usato per la conversione da sql.date a util.date

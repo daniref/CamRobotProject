@@ -19,7 +19,15 @@ import javax.persistence.*;
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Gestore")
 public class Gestore implements Serializable {
+
 	public Gestore() {
+
+	}
+	
+	public Gestore(String id, String nome, String recapito) {
+		this.id=id;
+		this.nome=nome;
+		this.recapito=recapito;
 	}
 	
 	private java.util.Set this_getSet (int key) {

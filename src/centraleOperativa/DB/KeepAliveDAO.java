@@ -31,7 +31,7 @@ public class KeepAliveDAO {
 		
 	}
 	
-	//--------------Salva un nuovo cliente nel database
+	//--------------Salva un nuovo keep alive nel database
 	public static boolean save(KeepAlive keep) throws PersistentException {
 		
 		PersistentSession session = CamRobotPersistentManager.instance().getSession();
@@ -53,7 +53,7 @@ public class KeepAliveDAO {
 	}	
 	
 	//----------Cancella un keep alive dal database
-	public static boolean delete(centraleOperativa.DB.KeepAlive keep) throws PersistentException {
+	public static boolean delete(KeepAlive keep) throws PersistentException {
 
 		PersistentSession session = CamRobotPersistentManager.instance().getSession();
 		PersistentTransaction transaction = session.beginTransaction();
@@ -70,6 +70,7 @@ public class KeepAliveDAO {
 		finally {
 			session.close();
 		}
+		
 	}
 	
 	//----------Calcola l'id più grande salvato nel db

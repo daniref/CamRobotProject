@@ -11,6 +11,7 @@ import java.util.TimeZone;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
         
   
 
@@ -132,31 +133,64 @@ public class test {
 */
 		
 //-------------TEST 6------------Aggiungi keep alive al db
-		try {
+/*		try {
+			
 			TimeZone.getDefault();
 			TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 			registroKeepAlive_Entity registro = registroKeepAlive_Entity.getInstance();
+						
 			//keep creato con i dati del messaggio arrivati
-			keepAlive_Entity keep = new keepAlive_Entity(new Date(),"rb0003");
+			keepAlive_Entity keep = new keepAlive_Entity(new Date(),"rb0005");
 			
 			//ricerca nella lista se c'è  già un keep presente
 			keepAlive_Entity old_keep = new keepAlive_Entity();
 			old_keep=registro.getKeepByIdRobot(keep.getIdRobot());
 			if(old_keep.getId()==null) {
-				System.out.println("Oggetto non presente");
 				registro.addKeep(keep);
+				System.out.println("Nuovo keep inserito");
 			}
 			else {
-				System.out.println("Oggetto presente");
-			//	old_keep.setIdRobot("rb0002");
-				old_keep.setDataTime(keep.getDataTime());
-				registro.updateKeep(old_keep);
-			}			
+				registro.updateKeep(keep);
+				System.out.println("keep aggiornato");
+			}
+			ArrayList<keepAlive_Entity> lista = registro.getListaKeepAlive();
+			for(keepAlive_Entity k : lista) {
+				System.out.println("[lista] keep id: "+k.getId()+"/ data: "+k.getDataTime());
+			}
+			
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-	
+		
+*/
+
+//-----------TEST 7 Inserimento di una segnalazione nel db e nella lista del gestore
+		try {
+			float valore_misurato=57.745f;
+			String idGestore="gs0001";
+			segnalazione_Entity segn = new segnalazione_Entity(valore_misurato,
+							new Date(),idGestore,
+							"sn0004","rb0002");
+			gestore_Entity gestore = gestore_Entity.getInstance(idGestore);
+		//	System.out.println("Id gestore: "+gestore.getId());
+		//	System.out.println("Nome gestore: "+gestore.getNome());
+		//	System.out.println("Recapito gestore: "+gestore.getRecapito());
+			
+			String idSegn=gestore.addSegnalazione(segn);
+			segnalazione_Entity new_segn=gestore.getSegnalazioneById(idSegn);
+			System.out.println("Segn data: "+new_segn.getDataTime());
+			
+			
+			
+			
+			
+			
+		}
+		catch(Exception e) {
+			
+		}
+		
 	}
 	
 }

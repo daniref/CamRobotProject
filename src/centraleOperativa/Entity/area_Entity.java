@@ -13,6 +13,22 @@ public class area_Entity {
 	//creazione del SINGLETON
 	private static area_Entity area=null;
 	
+	//metodo usato per l'accesso alla classe singleton
+	public static synchronized area_Entity getInstance(String idArea) throws PersistentException{
+
+		if(area==null) {
+			try {
+				area=new area_Entity(idArea);
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+				throw new PersistentException(e);
+			}
+		}
+		return area;
+
+	}
+	
 	//lista di tutti i robot appartenenti all'area
 	private static ArrayList<robot_Entity> listaRobot;
 	
@@ -40,22 +56,6 @@ public class area_Entity {
         		throw new PersistentException(e);
         	}
 		
-	}
-	
-	//metodo usato per l'accesso alla classe singleton
-	public static synchronized area_Entity getInstance(String idArea) throws PersistentException{
-
-		if(area==null) {
-			try {
-				area=new area_Entity(idArea);
-			}
-			catch(Exception e) {
-				e.printStackTrace();
-				throw new PersistentException(e);
-			}
-		}
-		return area;
-
 	}
 	
 	//------------inserisce nuovo robot nella lista e nel database
@@ -110,6 +110,7 @@ public class area_Entity {
 			}
 		}
 		return returnedRobot;
+		
 	}
 	
 }

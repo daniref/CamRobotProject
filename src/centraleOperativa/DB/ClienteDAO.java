@@ -31,7 +31,7 @@ public class ClienteDAO {
 	}
 	
 	//--------------Salva un nuovo cliente nel database
-	public static boolean save(centraleOperativa.DB.Cliente cliente) throws PersistentException {
+	public static boolean save(Cliente cliente) throws PersistentException {
 
 		PersistentSession session = centraleOperativa.DB.CamRobotPersistentManager.instance().getSession();
 		PersistentTransaction transaction = session.beginTransaction();

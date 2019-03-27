@@ -15,11 +15,29 @@ package centraleOperativa.DB;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.sql.Date;
+import java.sql.Time;
+
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Segnalazione")
 public class Segnalazione implements Serializable {
+
 	public Segnalazione() {
+	}
+	
+	public Segnalazione(String id, String stato, float valore_allarme,
+					Date data,Time ora, Gestore gestore,
+					Sensore sensore, Robot robot) {
+		this.id=id;
+		this.stato=stato;
+		this.valore_allarme=valore_allarme;
+		this.data=data;
+		this.ora=ora;
+		this.gestore=gestore;
+		this.sensore=sensore;
+		this.robot=robot;
+		
 	}
 	
 	private void this_setOwner(Object owner, int key) {
@@ -57,11 +75,10 @@ public class Segnalazione implements Serializable {
 	private float valore_allarme;
 	
 	@Column(name="data", nullable=false)	
-	@Temporal(TemporalType.DATE)	
-	private java.util.Date data;
+	private Date data;
 	
 	@Column(name="ora", nullable=false)	
-	private java.sql.Time ora;
+	private Time ora;
 	
 	@ManyToOne(targetEntity=Gestore.class, fetch=FetchType.LAZY)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
@@ -106,19 +123,19 @@ public class Segnalazione implements Serializable {
 		return valore_allarme;
 	}
 	
-	public void setData(java.util.Date value) {
+	public void setData(Date value) {
 		this.data = value;
 	}
 	
-	public java.util.Date getData() {
+	public Date getData() {
 		return data;
 	}
 	
-	public void setOra(java.sql.Time value) {
+	public void setOra(Time value) {
 		this.ora = value;
 	}
 	
-	public java.sql.Time getOra() {
+	public Time getOra() {
 		return ora;
 	}
 	
@@ -154,8 +171,6 @@ public class Segnalazione implements Serializable {
 	private Gestore getORM_Gestore() {
 		return gestore;
 	}
-	
-
 	
 	public Robot getRobot() {
 		return robot;
