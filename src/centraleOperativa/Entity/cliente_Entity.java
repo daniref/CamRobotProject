@@ -10,6 +10,7 @@ import centraleOperativa.DB.ClienteDAO;
 
 public class cliente_Entity {
 	
+	//attributi privati della classe
 	private String id;
 	private String nome;
 	private String cognome;
@@ -19,11 +20,14 @@ public class cliente_Entity {
 	private Date data_di_nascita;
 	private String luogo_di_nascita;
 		
+	//costruttore vuoto
 	public cliente_Entity() {
 	}
-		
+	
+	//costruttore con parametri
 	public cliente_Entity(String nome, String cognome, String username, String password, String recapito,
 			Date data_di_nascita, String luogo_di_nascita) throws PersistentException{
+
 		try {
 			this.id = ClienteDAO.getNextId();
 			this.nome = nome;
@@ -43,9 +47,10 @@ public class cliente_Entity {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+
 	}
 
-
+	//metodo per l'aggiunta di un nuovo cliente al db
 	public String addCliente() throws PersistentException{
 		
 		try {
@@ -68,9 +73,11 @@ public class cliente_Entity {
 			System.out.println("Errore nell'inserimento del nuovo cliente!");
 			e.printStackTrace();
 			throw new PersistentException(e);
-		}		
+		}	
+		
 	}
 	
+	//metodo che restituisce il recapito di un cliente attraverso l'id del cliente
 	public String getRecapitoById(String id) throws PersistentException{
 		
 		try {
@@ -82,6 +89,7 @@ public class cliente_Entity {
 		}		
 	}
 	
+	//metodo che restituisce un cliente attraverso il suo id
 	public void getClienteById(String id) throws PersistentException{
 		
 		try {
@@ -96,24 +104,27 @@ public class cliente_Entity {
 			this.password=new_cliente.getPassword();
 			this.recapito=new_cliente.getRecapito();
 			this.data_di_nascita=convertFromSQLDateToJAVADate(new_cliente.getData_di_nascita());
-			this.luogo_di_nascita=new_cliente.getLuogo_di_nascita();
-			
+			this.luogo_di_nascita=new_cliente.getLuogo_di_nascita();			
 		}
 		catch(Exception e) {
 			System.out.println("Cliente non presente!");
 			throw new PersistentException(e);
-			
 		}		
+	
 	}
 	
-	public static java.util.Date convertFromSQLDateToJAVADate(
-		            java.sql.Date sqlDate) {
-		        java.util.Date javaDate = null;
-		        if (sqlDate != null) {
-		            javaDate = new Date(sqlDate.getTime());
-		        }
-		        return javaDate;
-		    }
+	//metodo usato per la conversione da sql.date a util.date
+	public static java.util.Date convertFromSQLDateToJAVADate(java.sql.Date sqlDate) {
+		
+		java.util.Date javaDate = null;
+		if (sqlDate != null) {
+			javaDate = new Date(sqlDate.getTime());
+		}
+		return javaDate;
+	
+	}
+	
+	//metodi di get e set degli attributi privati della classe
 
 	public String getId() {
 		return id;

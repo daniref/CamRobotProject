@@ -22,13 +22,20 @@ public class Sensore implements Serializable {
 	public Sensore() {
 	}
 	
+	public Sensore(String id, float soglia, String tipologia, Robot robot) {
+		this.id=id;
+		this.soglia=soglia;
+		this.tipologia=tipologia;
+		this.robot=robot;		
+	}
+	
 	private void this_setOwner(Object owner, int key) {
 		if (key == ORMConstants.KEY_SENSORE_ROBOT) {
 			this.robot = (Robot) owner;
 		}
 		
-		else if (key == ORMConstants.KEY_SENSORE_SEGNALAZIONE_DI_ALLARME) {
-			this.segnalazione_di_allarme = (Segnalazione_di_allarme) owner;
+		else if (key == ORMConstants.KEY_SENSORE_SEGNALAZIONE) {
+			this.segnalazione = (Segnalazione) owner;
 		}
 	}
 	
@@ -57,9 +64,9 @@ public class Sensore implements Serializable {
 	@JoinColumns(value={ @JoinColumn(name="robotId", referencedColumnName="Id", nullable=false) }, foreignKey=@ForeignKey(name="FKSensore164434"))	
 	private Robot robot;
 	
-	@OneToOne(mappedBy="sensore", targetEntity=Segnalazione_di_allarme.class, fetch=FetchType.LAZY)	
+	@OneToOne(mappedBy="sensore", targetEntity=Segnalazione.class, fetch=FetchType.LAZY)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
-	private Segnalazione_di_allarme segnalazione_di_allarme;
+	private Segnalazione segnalazione;
 	
 	public void setId(String value) {
 		this.id = value;
@@ -106,21 +113,21 @@ public class Sensore implements Serializable {
 		return robot;
 	}
 	
-	public void setSegnalazione_di_allarme(Segnalazione_di_allarme value) {
-		if (this.segnalazione_di_allarme != value) {
-			Segnalazione_di_allarme lsegnalazione_di_allarme = this.segnalazione_di_allarme;
-			this.segnalazione_di_allarme = value;
+	public void setSegnalazione(Segnalazione value) {
+		if (this.segnalazione != value) {
+			Segnalazione lsegnalazione = this.segnalazione;
+			this.segnalazione = value;
 			if (value != null) {
-				segnalazione_di_allarme.setSensore(this);
+				segnalazione.setSensore(this);
 			}
-			if (lsegnalazione_di_allarme != null && lsegnalazione_di_allarme.getSensore() == this) {
-				lsegnalazione_di_allarme.setSensore(null);
+			if (lsegnalazione != null && lsegnalazione.getSensore() == this) {
+				lsegnalazione.setSensore(null);
 			}
 		}
 	}
 	
-	public Segnalazione_di_allarme getSegnalazione_di_allarme() {
-		return segnalazione_di_allarme;
+	public Segnalazione getSegnalazione() {
+		return segnalazione;
 	}
 	
 	public String toString() {

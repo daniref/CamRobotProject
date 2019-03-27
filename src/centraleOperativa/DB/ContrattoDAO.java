@@ -16,336 +16,136 @@ package centraleOperativa.DB;
 import org.orm.*;
 import org.hibernate.Query;
 import org.hibernate.LockMode;
+
+import java.sql.Date;
 import java.util.List;
 
 public class ContrattoDAO {
-	public static Contratto loadContrattoByORMID(String id) throws PersistentException {
-		try {
-			PersistentSession session = CamRobotPersistentManager.instance().getSession();
-			return loadContrattoByORMID(session, id);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
 	
-	public static Contratto getContrattoByORMID(String id) throws PersistentException {
-		try {
-			PersistentSession session = CamRobotPersistentManager.instance().getSession();
-			return getContrattoByORMID(session, id);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
+	//-------------Crea un nuovo Contratto-------------
+	public static Contratto createContratto(String id, Cliente utente, Robot robot, Date data_di_inizio, Date data_di_scadenza,
+			float canone) {
+
+		return new Contratto(id,utente,robot,data_di_inizio,data_di_scadenza,canone);
 	
-	public static Contratto loadContrattoByORMID(String id, org.hibernate.LockMode lockMode) throws PersistentException {
-		try {
-			PersistentSession session = CamRobotPersistentManager.instance().getSession();
-			return loadContrattoByORMID(session, id, lockMode);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
 	}
-	
-	public static Contratto getContrattoByORMID(String id, org.hibernate.LockMode lockMode) throws PersistentException {
-		try {
-			PersistentSession session = CamRobotPersistentManager.instance().getSession();
-			return getContrattoByORMID(session, id, lockMode);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static Contratto loadContrattoByORMID(PersistentSession session, String id) throws PersistentException {
-		try {
-			return (Contratto) session.load(Contratto.class, id);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static Contratto getContrattoByORMID(PersistentSession session, String id) throws PersistentException {
-		try {
-			return (Contratto) session.get(Contratto.class, id);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static Contratto loadContrattoByORMID(PersistentSession session, String id, org.hibernate.LockMode lockMode) throws PersistentException {
-		try {
-			return (Contratto) session.load(Contratto.class, id, lockMode);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static Contratto getContrattoByORMID(PersistentSession session, String id, org.hibernate.LockMode lockMode) throws PersistentException {
-		try {
-			return (Contratto) session.get(Contratto.class, id, lockMode);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static List queryContratto(String condition, String orderBy) throws PersistentException {
-		try {
-			PersistentSession session = CamRobotPersistentManager.instance().getSession();
-			return queryContratto(session, condition, orderBy);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static List queryContratto(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
-		try {
-			PersistentSession session = CamRobotPersistentManager.instance().getSession();
-			return queryContratto(session, condition, orderBy, lockMode);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static Contratto[] listContrattoByQuery(String condition, String orderBy) throws PersistentException {
-		try {
-			PersistentSession session = CamRobotPersistentManager.instance().getSession();
-			return listContrattoByQuery(session, condition, orderBy);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static Contratto[] listContrattoByQuery(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
-		try {
-			PersistentSession session = CamRobotPersistentManager.instance().getSession();
-			return listContrattoByQuery(session, condition, orderBy, lockMode);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static List queryContratto(PersistentSession session, String condition, String orderBy) throws PersistentException {
-		StringBuffer sb = new StringBuffer("From Contratto as Contratto");
-		if (condition != null)
-			sb.append(" Where ").append(condition);
-		if (orderBy != null)
-			sb.append(" Order By ").append(orderBy);
-		try {
-			Query query = session.createQuery(sb.toString());
-			return query.list();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static List queryContratto(PersistentSession session, String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
-		StringBuffer sb = new StringBuffer("From Contratto as Contratto");
-		if (condition != null)
-			sb.append(" Where ").append(condition);
-		if (orderBy != null)
-			sb.append(" Order By ").append(orderBy);
-		try {
-			Query query = session.createQuery(sb.toString());
-			query.setLockMode("Contratto", lockMode);
-			return query.list();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static Contratto[] listContrattoByQuery(PersistentSession session, String condition, String orderBy) throws PersistentException {
-		try {
-			List list = queryContratto(session, condition, orderBy);
-			return (Contratto[]) list.toArray(new Contratto[list.size()]);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static Contratto[] listContrattoByQuery(PersistentSession session, String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
-		try {
-			List list = queryContratto(session, condition, orderBy, lockMode);
-			return (Contratto[]) list.toArray(new Contratto[list.size()]);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static Contratto loadContrattoByQuery(String condition, String orderBy) throws PersistentException {
-		try {
-			PersistentSession session = CamRobotPersistentManager.instance().getSession();
-			return loadContrattoByQuery(session, condition, orderBy);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static Contratto loadContrattoByQuery(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
-		try {
-			PersistentSession session = CamRobotPersistentManager.instance().getSession();
-			return loadContrattoByQuery(session, condition, orderBy, lockMode);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static Contratto loadContrattoByQuery(PersistentSession session, String condition, String orderBy) throws PersistentException {
-		Contratto[] contrattos = listContrattoByQuery(session, condition, orderBy);
-		if (contrattos != null && contrattos.length > 0)
-			return contrattos[0];
-		else
-			return null;
-	}
-	
-	public static Contratto loadContrattoByQuery(PersistentSession session, String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
-		Contratto[] contrattos = listContrattoByQuery(session, condition, orderBy, lockMode);
-		if (contrattos != null && contrattos.length > 0)
-			return contrattos[0];
-		else
-			return null;
-	}
-	
-	public static java.util.Iterator iterateContrattoByQuery(String condition, String orderBy) throws PersistentException {
-		try {
-			PersistentSession session = CamRobotPersistentManager.instance().getSession();
-			return iterateContrattoByQuery(session, condition, orderBy);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static java.util.Iterator iterateContrattoByQuery(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
-		try {
-			PersistentSession session = CamRobotPersistentManager.instance().getSession();
-			return iterateContrattoByQuery(session, condition, orderBy, lockMode);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static java.util.Iterator iterateContrattoByQuery(PersistentSession session, String condition, String orderBy) throws PersistentException {
-		StringBuffer sb = new StringBuffer("From Contratto as Contratto");
-		if (condition != null)
-			sb.append(" Where ").append(condition);
-		if (orderBy != null)
-			sb.append(" Order By ").append(orderBy);
-		try {
-			Query query = session.createQuery(sb.toString());
-			return query.iterate();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static java.util.Iterator iterateContrattoByQuery(PersistentSession session, String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
-		StringBuffer sb = new StringBuffer("From Contratto as Contratto");
-		if (condition != null)
-			sb.append(" Where ").append(condition);
-		if (orderBy != null)
-			sb.append(" Order By ").append(orderBy);
-		try {
-			Query query = session.createQuery(sb.toString());
-			query.setLockMode("Contratto", lockMode);
-			return query.iterate();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static Contratto createContratto() {
-		return new Contratto();
-	}
-	
+
+	//--------------Salva un nuovo contratto nel database
 	public static boolean save(Contratto contratto) throws PersistentException {
+
+		PersistentSession session = centraleOperativa.DB.CamRobotPersistentManager.instance().getSession();
+		PersistentTransaction transaction = session.beginTransaction();
 		try {
 			CamRobotPersistentManager.instance().saveObject(contratto);
+			transaction.commit();
 			return true;
 		}
 		catch (Exception e) {
+			transaction.rollback();
 			e.printStackTrace();
 			throw new PersistentException(e);
 		}
+		finally {
+			session.close();
+		}
+		
 	}
 	
-	public static boolean delete(Contratto contratto) throws PersistentException {
+	//----------Calcola l'id più grande salvato nel db
+	public static String getMaxId() throws PersistentException {
+		
+		String max="cn0000";
+		PersistentSession session = centraleOperativa.DB.CamRobotPersistentManager.instance().getSession();
+		PersistentTransaction transaction = session.beginTransaction();
 		try {
-			CamRobotPersistentManager.instance().deleteObject(contratto);
-			return true;
+			String hql = "SELECT max(C.id) FROM Contratto C";
+			Query query = session.createQuery(hql);
+			if(query.list().get(0)!=null) {
+				max=(String)query.list().get(0);
+			}
+			transaction.commit();
+			return max;
 		}
 		catch (Exception e) {
+			transaction.rollback();
 			e.printStackTrace();
 			throw new PersistentException(e);
 		}
+		finally {
+		    session.close();
+		}
+		
 	}
 	
+	//----------Calcola l'id univoco da associare al nuovo contratto
+	public static String getNextId () throws PersistentException{
 
-	
-
-	
-	public static boolean refresh(Contratto contratto) throws PersistentException {
+		String nextMaxIdString="000";
 		try {
-			CamRobotPersistentManager.instance().getSession().refresh(contratto);
-			return true;
+			String currentMaxIdString = getMaxId();
+			int currentMaxIdInt = Integer.parseInt(currentMaxIdString.substring(2));
+			currentMaxIdInt++;
+			String nextMaxIdTemp = String.format("%04d", currentMaxIdInt);
+			nextMaxIdString="cn"+nextMaxIdTemp;
+			return nextMaxIdString;
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 			throw new PersistentException(e);
 		}
+	
 	}
 	
-	public static boolean evict(Contratto contratto) throws PersistentException {
+	//----------Cerca un contratto nel database fornendo l'id del contratto----------
+	public static Contratto getContrattoByIdContratto(String id) throws PersistentException{
+		
+		PersistentSession session = centraleOperativa.DB.CamRobotPersistentManager.instance().getSession();
+		PersistentTransaction transaction = session.beginTransaction();
+		Contratto returnedContratto = new Contratto();
 		try {
-			CamRobotPersistentManager.instance().getSession().evict(contratto);
-			return true;
+			String hql = "FROM Contratto C WHERE C.id='"+id+"'";
+			Query query = session.createQuery(hql);
+			transaction.commit();
+			if(!query.list().isEmpty()) {
+				returnedContratto=(Contratto)query.list().get(0);
+			}
+			return returnedContratto;
 		}
-		catch (Exception e) {
+		catch(Exception e) {
+			transaction.rollback();
 			e.printStackTrace();
 			throw new PersistentException(e);
 		}
+		finally {
+			    session.close();
+			}
+				
 	}
 	
-
+	//----------Cerca un contratto nel database fornendo l'id del robot----------
+	public static Contratto getContrattoByIdRobot(String id) throws PersistentException{
+		
+		PersistentSession session = centraleOperativa.DB.CamRobotPersistentManager.instance().getSession();
+		PersistentTransaction transaction = session.beginTransaction();
+		Contratto returnedContratto = new Contratto();
+		try {
+			String hql = "FROM Contratto C WHERE C.robot='"+id+"'";
+			Query query = session.createQuery(hql);
+			transaction.commit();
+			if(!query.list().isEmpty()) {
+				returnedContratto=(Contratto)query.list().get(0);
+			}
+			return returnedContratto;
+		}
+		catch(Exception e) {
+			transaction.rollback();
+			e.printStackTrace();
+			throw new PersistentException(e);
+		}
+		finally {
+			    session.close();
+			}
+				
+	}
+	
 }

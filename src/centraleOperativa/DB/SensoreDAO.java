@@ -16,336 +16,154 @@ package centraleOperativa.DB;
 import org.orm.*;
 import org.hibernate.Query;
 import org.hibernate.LockMode;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class SensoreDAO {
-	public static Sensore loadSensoreByORMID(String id) throws PersistentException {
-		try {
-			PersistentSession session = CamRobotPersistentManager.instance().getSession();
-			return loadSensoreByORMID(session, id);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
+	
+	public SensoreDAO() {
+		
+	}
+
+	//-------------Crea un nuovo Sensore-------------
+	public static Sensore createSensore(String id, float soglia, String tipologia, Robot robot) {
+
+		return new Sensore(id,soglia,tipologia,robot);
+	
 	}
 	
-	public static Sensore getSensoreByORMID(String id) throws PersistentException {
-		try {
-			PersistentSession session = CamRobotPersistentManager.instance().getSession();
-			return getSensoreByORMID(session, id);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static Sensore loadSensoreByORMID(String id, org.hibernate.LockMode lockMode) throws PersistentException {
-		try {
-			PersistentSession session = CamRobotPersistentManager.instance().getSession();
-			return loadSensoreByORMID(session, id, lockMode);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static Sensore getSensoreByORMID(String id, org.hibernate.LockMode lockMode) throws PersistentException {
-		try {
-			PersistentSession session = CamRobotPersistentManager.instance().getSession();
-			return getSensoreByORMID(session, id, lockMode);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static Sensore loadSensoreByORMID(PersistentSession session, String id) throws PersistentException {
-		try {
-			return (Sensore) session.load(Sensore.class, id);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static Sensore getSensoreByORMID(PersistentSession session, String id) throws PersistentException {
-		try {
-			return (Sensore) session.get(Sensore.class, id);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static Sensore loadSensoreByORMID(PersistentSession session, String id, org.hibernate.LockMode lockMode) throws PersistentException {
-		try {
-			return (Sensore) session.load(Sensore.class, id, lockMode);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static Sensore getSensoreByORMID(PersistentSession session, String id, org.hibernate.LockMode lockMode) throws PersistentException {
-		try {
-			return (Sensore) session.get(Sensore.class, id, lockMode);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static List querySensore(String condition, String orderBy) throws PersistentException {
-		try {
-			PersistentSession session = CamRobotPersistentManager.instance().getSession();
-			return querySensore(session, condition, orderBy);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static List querySensore(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
-		try {
-			PersistentSession session = CamRobotPersistentManager.instance().getSession();
-			return querySensore(session, condition, orderBy, lockMode);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static Sensore[] listSensoreByQuery(String condition, String orderBy) throws PersistentException {
-		try {
-			PersistentSession session = CamRobotPersistentManager.instance().getSession();
-			return listSensoreByQuery(session, condition, orderBy);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static Sensore[] listSensoreByQuery(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
-		try {
-			PersistentSession session = CamRobotPersistentManager.instance().getSession();
-			return listSensoreByQuery(session, condition, orderBy, lockMode);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static List querySensore(PersistentSession session, String condition, String orderBy) throws PersistentException {
-		StringBuffer sb = new StringBuffer("From Sensore as Sensore");
-		if (condition != null)
-			sb.append(" Where ").append(condition);
-		if (orderBy != null)
-			sb.append(" Order By ").append(orderBy);
-		try {
-			Query query = session.createQuery(sb.toString());
-			return query.list();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static List querySensore(PersistentSession session, String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
-		StringBuffer sb = new StringBuffer("From Sensore as Sensore");
-		if (condition != null)
-			sb.append(" Where ").append(condition);
-		if (orderBy != null)
-			sb.append(" Order By ").append(orderBy);
-		try {
-			Query query = session.createQuery(sb.toString());
-			query.setLockMode("Sensore", lockMode);
-			return query.list();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static Sensore[] listSensoreByQuery(PersistentSession session, String condition, String orderBy) throws PersistentException {
-		try {
-			List list = querySensore(session, condition, orderBy);
-			return (Sensore[]) list.toArray(new Sensore[list.size()]);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static Sensore[] listSensoreByQuery(PersistentSession session, String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
-		try {
-			List list = querySensore(session, condition, orderBy, lockMode);
-			return (Sensore[]) list.toArray(new Sensore[list.size()]);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static Sensore loadSensoreByQuery(String condition, String orderBy) throws PersistentException {
-		try {
-			PersistentSession session = CamRobotPersistentManager.instance().getSession();
-			return loadSensoreByQuery(session, condition, orderBy);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static Sensore loadSensoreByQuery(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
-		try {
-			PersistentSession session = CamRobotPersistentManager.instance().getSession();
-			return loadSensoreByQuery(session, condition, orderBy, lockMode);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static Sensore loadSensoreByQuery(PersistentSession session, String condition, String orderBy) throws PersistentException {
-		Sensore[] sensores = listSensoreByQuery(session, condition, orderBy);
-		if (sensores != null && sensores.length > 0)
-			return sensores[0];
-		else
-			return null;
-	}
-	
-	public static Sensore loadSensoreByQuery(PersistentSession session, String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
-		Sensore[] sensores = listSensoreByQuery(session, condition, orderBy, lockMode);
-		if (sensores != null && sensores.length > 0)
-			return sensores[0];
-		else
-			return null;
-	}
-	
-	public static java.util.Iterator iterateSensoreByQuery(String condition, String orderBy) throws PersistentException {
-		try {
-			PersistentSession session = CamRobotPersistentManager.instance().getSession();
-			return iterateSensoreByQuery(session, condition, orderBy);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static java.util.Iterator iterateSensoreByQuery(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
-		try {
-			PersistentSession session = CamRobotPersistentManager.instance().getSession();
-			return iterateSensoreByQuery(session, condition, orderBy, lockMode);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static java.util.Iterator iterateSensoreByQuery(PersistentSession session, String condition, String orderBy) throws PersistentException {
-		StringBuffer sb = new StringBuffer("From Sensore as Sensore");
-		if (condition != null)
-			sb.append(" Where ").append(condition);
-		if (orderBy != null)
-			sb.append(" Order By ").append(orderBy);
-		try {
-			Query query = session.createQuery(sb.toString());
-			return query.iterate();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static java.util.Iterator iterateSensoreByQuery(PersistentSession session, String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
-		StringBuffer sb = new StringBuffer("From Sensore as Sensore");
-		if (condition != null)
-			sb.append(" Where ").append(condition);
-		if (orderBy != null)
-			sb.append(" Order By ").append(orderBy);
-		try {
-			Query query = session.createQuery(sb.toString());
-			query.setLockMode("Sensore", lockMode);
-			return query.iterate();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public static Sensore createSensore() {
-		return new Sensore();
-	}
-	
+	//--------------Salva un nuovo sensore nel database
 	public static boolean save(Sensore sensore) throws PersistentException {
+
+		PersistentSession session = centraleOperativa.DB.CamRobotPersistentManager.instance().getSession();
+		PersistentTransaction transaction = session.beginTransaction();
 		try {
 			CamRobotPersistentManager.instance().saveObject(sensore);
+			transaction.commit();
 			return true;
 		}
 		catch (Exception e) {
+			transaction.rollback();
 			e.printStackTrace();
 			throw new PersistentException(e);
 		}
+		finally {
+			session.close();
+		}
+		
 	}
 	
-	public static boolean delete(Sensore sensore) throws PersistentException {
+	//----------Calcola l'id più grande salvato nel db
+	public static String getMaxId() throws PersistentException {
+		
+		String max="sn0000";
+		PersistentSession session = centraleOperativa.DB.CamRobotPersistentManager.instance().getSession();
+		PersistentTransaction transaction = session.beginTransaction();
 		try {
-			CamRobotPersistentManager.instance().deleteObject(sensore);
-			return true;
+			String hql = "SELECT max(S.id) FROM Sensore S";
+			Query query = session.createQuery(hql);
+			if(query.list().get(0)!=null) {
+				max=(String)query.list().get(0);
+			}
+			transaction.commit();
+			return max;
 		}
 		catch (Exception e) {
+			transaction.rollback();
 			e.printStackTrace();
 			throw new PersistentException(e);
 		}
+		finally {
+		    session.close();
+		}
+		
 	}
 	
+	//----------Calcola l'id univoco da associare al nuovo sensore
+	public static String getNextId () throws PersistentException{
 
-	
-
-	
-	public static boolean refresh(Sensore sensore) throws PersistentException {
+		String nextMaxIdString="000";
 		try {
-			CamRobotPersistentManager.instance().getSession().refresh(sensore);
-			return true;
+			String currentMaxIdString = getMaxId();
+			int currentMaxIdInt = Integer.parseInt(currentMaxIdString.substring(2));
+			currentMaxIdInt++;
+			String nextMaxIdTemp = String.format("%04d", currentMaxIdInt);
+			nextMaxIdString="sn"+nextMaxIdTemp;
+			return nextMaxIdString;
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 			throw new PersistentException(e);
 		}
+	
 	}
 	
-	public static boolean evict(Sensore sensore) throws PersistentException {
+	//----------Cerca un sensore nel database fornendo l'id-----------
+	public static Sensore getSensoreById(String id) throws PersistentException{
+		
+		PersistentSession session = centraleOperativa.DB.CamRobotPersistentManager.instance().getSession();
+		PersistentTransaction transaction = session.beginTransaction();
+		Sensore returnedSensore = new Sensore();
 		try {
-			CamRobotPersistentManager.instance().getSession().evict(sensore);
-			return true;
+			String hql = "FROM Sensore S WHERE S.id='"+id+"'";
+			Query query = session.createQuery(hql);
+			transaction.commit();
+			if(!query.list().isEmpty()) {
+				returnedSensore=(Sensore)query.list().get(0);
+			}
+			return returnedSensore;
 		}
-		catch (Exception e) {
+		catch(Exception e) {
+			transaction.rollback();
 			e.printStackTrace();
 			throw new PersistentException(e);
 		}
+		finally {
+			    session.close();
+			}
+				
 	}
 	
+	//---------Restituisci tutti i sensori associati ad un idRobot---------
+	public static ArrayList<Sensore> getSensoriListByIdRobot(String idRobot) throws PersistentException{
+		
+		PersistentSession session = centraleOperativa.DB.CamRobotPersistentManager.instance().getSession();
+		PersistentTransaction transaction = session.beginTransaction();
+		ArrayList<Sensore> sensoreList = new ArrayList<Sensore>();
+		try {
+			String hql = "FROM Sensore S WHERE S.robotId='"+idRobot+"'";
+			Query query = session.createQuery(hql);
+			transaction.commit();
+			if(!query.list().isEmpty()) {
+				sensoreList=(ArrayList<Sensore>)query.list();
+			}
+			return sensoreList;
+		}
+		catch(Exception e) {
+			transaction.rollback();
+			e.printStackTrace();
+			throw new PersistentException(e);
+		}
+		finally {
+			    session.close();
+			}
+			
+	}
+	
+	//------------------Restituisce la tipologia di un sensore----
+	public static String getTipologiaById (String id) throws PersistentException{
+		
+		try {
+			Sensore new_sensore = new Sensore();
+			new_sensore=getSensoreById(id);
+			return new_sensore.getTipologia();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			throw new PersistentException(e);
+		}
+		
+	}
 
 }

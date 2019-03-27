@@ -19,7 +19,7 @@ import javax.persistence.*;
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Robot")
 public class Robot implements Serializable {
-
+	
 	public Robot() {
 	}
 	
@@ -36,8 +36,8 @@ public class Robot implements Serializable {
 		if (key == ORMConstants.KEY_ROBOT_SENSORE) {
 			return ORM_sensore;
 		}
-		else if (key == ORMConstants.KEY_ROBOT_SEGNALAZIONE_DI_ALLARME) {
-			return ORM_segnalazione_di_allarme;
+		else if (key == ORMConstants.KEY_ROBOT_SEGNALAZIONE) {
+			return ORM_segnalazione;
 		}
 		
 		return null;
@@ -81,14 +81,14 @@ public class Robot implements Serializable {
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
 	private java.util.Set ORM_sensore = new java.util.HashSet();
 	
-	@OneToOne(mappedBy="robot", targetEntity=Keep_Alive.class, fetch=FetchType.LAZY)	
+	@OneToOne(mappedBy="robot", targetEntity=KeepAlive.class, fetch=FetchType.LAZY)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
-	private Keep_Alive keep_Alive;
+	private KeepAlive keepAlive;
 	
-	@OneToMany(mappedBy="robot", targetEntity=Segnalazione_di_allarme.class)	
+	@OneToMany(mappedBy="robot", targetEntity=Segnalazione.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
-	private java.util.Set ORM_segnalazione_di_allarme = new java.util.HashSet();
+	private java.util.Set ORM_segnalazione = new java.util.HashSet();
 	
 	public void setId(String value) {
 		this.id = value;
@@ -98,7 +98,6 @@ public class Robot implements Serializable {
 		return id;
 	}
 	
-
 	public String getORMID() {
 		return getId();
 	}
@@ -142,7 +141,7 @@ public class Robot implements Serializable {
 	public String getAreaId() {
 		return areaId;
 	}
-
+	
 	public void setContratto(Contratto value) {
 		if (this.contratto != value) {
 			Contratto lcontratto = this.contratto;
@@ -168,20 +167,29 @@ public class Robot implements Serializable {
 		return ORM_sensore;
 	}
 	
-
-	
-	public Keep_Alive getKeep_Alive() {
-		return keep_Alive;
+	public void setKeepAlive(KeepAlive value) {
+		if (this.keepAlive != value) {
+			KeepAlive lkeepAlive = this.keepAlive;
+			this.keepAlive = value;
+			if (value != null) {
+				keepAlive.setRobot(this);
+			}
+			if (lkeepAlive != null && lkeepAlive.getRobot() == this) {
+				lkeepAlive.setRobot(null);
+			}
+		}
 	}
 	
-	private void setORM_Segnalazione_di_allarme(java.util.Set value) {
-		this.ORM_segnalazione_di_allarme = value;
+	public KeepAlive getKeepAlive() {
+		return keepAlive;
 	}
 	
-	private java.util.Set getORM_Segnalazione_di_allarme() {
-		return ORM_segnalazione_di_allarme;
+	private void setORM_Segnalazione(java.util.Set value) {
+		this.ORM_segnalazione = value;
 	}
 	
-
-	
+	private java.util.Set getORM_Segnalazione() {
+		return ORM_segnalazione;
+	}
+		
 }
