@@ -2,7 +2,7 @@ package cliente.Boundary;
 
 
 import cliente.ProxyComunicazioneSincrona.*;
-
+import cliente.Boundary.*;
 
 
 import java.awt.EventQueue;
@@ -16,14 +16,13 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+
 import java.awt.Font;
+import java.awt.Color;
 
 public class TerminaleCliente {
 
 	private JFrame frame;
-	private JTextField txtIDSegnalazione;
 	private ArrayList<JLabel> ListaLabelSensore1 = new ArrayList<JLabel>();
 
 	/**
@@ -60,7 +59,7 @@ public class TerminaleCliente {
 	 */
 	private void initialize() throws MalformedURLException, RemoteException, NotBoundException {
 
-		frame = new JFrame("CLIENTE 1");
+		frame = new JFrame("Terminale Cliente");
 		frame.setBounds(100, 100, 450, 389);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -80,12 +79,9 @@ public class TerminaleCliente {
 		lblRiep.setVisible(false);
 		frame.getContentPane().add(lblRiep);
 		
-		txtIDSegnalazione = new JTextField();
-		txtIDSegnalazione.setBounds(134, 43, 116, 22);
-		frame.getContentPane().add(txtIDSegnalazione);
-		txtIDSegnalazione.setColumns(10);
-		
 		JButton btnLeggi = new JButton("Visualizza ultimi valori misurati");
+		btnLeggi.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnLeggi.setForeground(Color.BLUE);
 		btnLeggi.setBounds(31, 91, 376, 38);
 		btnLeggi.addActionListener(new ActionListener() {
 			@Override
@@ -114,47 +110,15 @@ public class TerminaleCliente {
 			});
 		frame.getContentPane().add(btnLeggi);
 		
-	
-		
-
-		
-
-		
-		
-		JLabel lblIdSegnalazione = new JLabel("Id Segnalazione");
-		lblIdSegnalazione.setBounds(33, 31, 103, 47);
-		frame.getContentPane().add(lblIdSegnalazione);
-		
-		JButton btnNewButton = new JButton("Notiifca\r\n Lettura");
+		JButton btnNewButton = new JButton("Notiifca\r\n Lettura SMS Segnalazione");
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String buffer=txtIDSegnalazione.getText();
-				if(buffer.length()==6){
-					if(buffer.substring(0, 2).compareTo("sg")==0){
-						try{
-							Integer.parseInt(buffer.substring(2));
-						    Cliente_CentraleOperativaProxy ccop= new Cliente_CentraleOperativaProxy();
-						    if(ccop.NotificaLetturaSegnalazione(buffer)) JOptionPane.showMessageDialog(frame, "Notifica inviata e segnalazione <"+buffer+"> chiusa regolarmente");
-						    else{ JOptionPane.showMessageDialog(frame, "Notifica inviata, ma la segnalazione <"+ buffer +"> e' stata risolta contattando un GESTORE ESTERNO");}
-
-							}
-						catch(Exception e){
-							JOptionPane.showMessageDialog(frame, "i caratteri che seguono sg devono essere numeri es: sg0004");						
-							}
-						}
-					else {
-						JOptionPane.showMessageDialog(frame, "i primi due caratteri devono essere 'sg'");						
-					}
-				}					
-				
-				else {
-					JOptionPane.showMessageDialog(frame, "Numero caratteri Segnalazione Errato - devono essere 6");
-					}
-
-				
+				Notifica n= new Notifica();
+				n.WindowNotifica();
 			}
 		});
-		btnNewButton.setBounds(280, 35, 127, 38);
+		btnNewButton.setBounds(31, 35, 376, 38);
 		frame.getContentPane().add(btnNewButton);
 		
 		

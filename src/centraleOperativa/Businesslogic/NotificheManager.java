@@ -5,9 +5,9 @@ public class NotificheManager {
 		super();
 	}
 
-	public boolean NotificaLetturaSegnalazione(String id) {
+	public boolean NotificaLetturaSegnalazione(String id,String tipo) {
 		//istanza g singleton gestore
-		if(id.compareTo("sg0001")==0) return true;
+		if(id.compareTo("sg0001")==0 && tipo.compareTo("T")==0)  return true;
 		else return false;
 		//WAIT
 		//g.cercasegnalazione(id); //cerco nella 5 lista  e se esiste ELIMINA

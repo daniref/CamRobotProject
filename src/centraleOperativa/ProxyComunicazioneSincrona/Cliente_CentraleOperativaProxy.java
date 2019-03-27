@@ -15,9 +15,9 @@ public class Cliente_CentraleOperativaProxy extends UnicastRemoteObject
 	}
 
 	@Override
-	public boolean Notifica(String s) throws RemoteException {
+	public boolean Notifica(String s,String t) throws RemoteException {
 		// TODO Auto-generated method stub
 		ClienteController cc=new ClienteController();
-		return cc.gestisciNotifica(s);
+		return cc.gestisciNotifica(s,t);
 	}
 }

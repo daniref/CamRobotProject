@@ -10,9 +10,9 @@ public class ClienteController {
 
 	
 	
-	public boolean gestisciNotifica(String idSegnalazione) {
+	public boolean gestisciNotifica(String idSegnalazione,String tipo) {
 		NotificheManager mm =new NotificheManager();
-		return mm.NotificaLetturaSegnalazione(idSegnalazione);
+		return mm.NotificaLetturaSegnalazione(idSegnalazione,tipo);
 	}
 	
 	

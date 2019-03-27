@@ -66,7 +66,7 @@ public class TerminaleAmministratore {
 	 * @throws JMSException 
 	 */
 	private void initialize() throws JMSException {
-		Started started=new Started();	
+		Started avviato=new Started();	
 		frmTerminaleAmministratore = new JFrame();
 		frmTerminaleAmministratore.getContentPane().setBackground(new Color(245, 245, 245));
 
@@ -97,8 +97,8 @@ public class TerminaleAmministratore {
 			public void actionPerformed(ActionEvent e) {
 				final Image imgOn = new ImageIcon(this.getClass().getResource("/onv.png")).getImage();
 				final Image imgOff = new ImageIcon(this.getClass().getResource("/offv.png")).getImage();
-				if(!started.isB()) {
-						started.setB(true);
+				if(!avviato.isB()) {
+						avviato.setB(true);
 						Amministratore_CentraleOperativaProxy acp= new Amministratore_CentraleOperativaProxy();
 						try {
 							acp.start();
@@ -125,7 +125,7 @@ public class TerminaleAmministratore {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					started.setB(false);
+					avviato.setB(false);
 					btnPower.setIcon(new ImageIcon(imgOff));
 					}
 		}
