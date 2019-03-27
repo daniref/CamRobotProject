@@ -50,16 +50,18 @@ public SensoreInterface(String ID,String T){
 		return misura;
 	}
 
-	public void setValue(float misura) {
+	public void setMisura(float misura) {
 		this.misura = misura;
 	}
 	 
 	public float Leggi() {
-		return ss.getValore();
+		float k=ss.getValore();
+		setMisura(k);
+		return k;
 		}
 	
 	public String toString() {
-		return ("ID: "+getID()+", Tipo: "+getTipoEsteso());
+		return (""+getTipoEsteso()+"("+getID()+")");
 	}
 
 };

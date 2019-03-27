@@ -57,13 +57,13 @@ public class FunzionamentoManager {
 		if (getFunzionamento()!=simulafunzionamento()) change();
 
 		System.out.print("[Funzionamento Manager] FUNZIONAMENTO: ");
-		if(getFunzionamento())System.out.println("["+getIdrobot()+"] OK");
-		else System.out.println("["+idrobot+"] KO");
+//		if(getFunzionamento())System.out.println("["+getIdrobot()+"] OK");
+//		else System.out.println("["+idrobot+"] KO");
 		
 		if(getFunzionamento()){
 				d.showFunzionamento(true);
 				
-				//proxyAsincr.GeneraKeep(id_robot);
+				proxyAsincr.GeneraKeep(getIdrobot());
 				}
 			else d.showFunzionamento(false);
 		}
