@@ -1,7 +1,6 @@
 package centraleOperativa.Businesslogic;
 
 
-import centraleOperativa.TESTSegnalazione.*;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -32,14 +31,14 @@ public class SegnalazioneManager {
 	public void trattaSegnalazione() {
 		String tipo=this.leggiTipologia();
 		String idg=this.tipoSensoreToGestore(tipo);
-		ArrayList<SegnalazioneTest> s=getUltimaSegnalazione(idg); //viene restituita l'ultima segnalazione provocata da un determinato sensore
+/*		ArrayList<SegnalazioneTest> s=getUltimaSegnalazione(idg); //viene restituita l'ultima segnalazione provocata da un determinato sensore
 		if (s.size()>0) {
 						if (!verificaCondizione(s.get(1))) {
 							SegnalazioneTest newSeg = new SegnalazioneTest("s01","APERTO",this.getValore(),this.getData_ora(),idg, this.getIdsensore());
 							setIdSegnalazione(newSeg.getId()); //setta id segnalazione che è stato restituito dall'entity
 							}
 						}
-	}
+	*/}
 	
 	
 	public String getIdSegnalazione() {
@@ -82,8 +81,9 @@ public class SegnalazioneManager {
 	}
 
 // metodo con cui si permette di chiedere al gestore con un certo id di restituire l'ultima segnalazione che ha gestito per quel sensore!
-public ArrayList <SegnalazioneTest> getUltimaSegnalazione(String idgestore){
-		ArrayList <SegnalazioneTest> lista = new ArrayList<SegnalazioneTest>();
+/*
+ public ArrayList <SegnalazioneTest> getUltimaSegnalazione(String idgestore){
+ 		ArrayList <SegnalazioneTest> lista = new ArrayList<SegnalazioneTest>();
 			//lista= getUltimaSegnalazione(idgestore, getIdensore()));
 		return lista;
 	}
@@ -98,7 +98,7 @@ public boolean verificaCondizione(SegnalazioneTest s) {
 	//		}
 		return false;
 	} 
-	
+*/	
 
 
 
@@ -139,7 +139,7 @@ public boolean verificaCondizione(SegnalazioneTest s) {
 	}
 
 	
-	public class ControlloStato extends Thread{
+/*	public class ControlloStato extends Thread{
 		SegnalazioneTest s;
 		
 		public ControlloStato(SegnalazioneTest s) {
@@ -147,7 +147,7 @@ public boolean verificaCondizione(SegnalazioneTest s) {
 		}
 		
 		
-	}
+	}*/
 
 
 }
