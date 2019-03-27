@@ -19,10 +19,33 @@ import javax.persistence.*;
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Gestore")
 public class Gestore implements Serializable {
+
 	public Gestore() {
+
 	}
 	
-
+	public Gestore(String id, String nome, String recapito) {
+		this.id=id;
+		this.nome=nome;
+		this.recapito=recapito;
+	}
+	
+	private java.util.Set this_getSet (int key) {
+		if (key == ORMConstants.KEY_GESTORE_SEGNALAZIONE) {
+			return ORM_segnalazione;
+		}
+		
+		return null;
+	}
+	
+	@Transient	
+	org.orm.util.ORMAdapter _ormAdapter = new org.orm.util.AbstractORMAdapter() {
+		public java.util.Set getSet(int key) {
+			return this_getSet(key);
+		}
+		
+	};
+	
 	@Column(name="id", nullable=false, unique=true, length=7)	
 	@Id	
 	@GeneratedValue(generator="GESTORE_ID_GENERATOR")	
@@ -35,10 +58,10 @@ public class Gestore implements Serializable {
 	@Column(name="recapito", nullable=false, length=13)	
 	private String recapito;
 	
-	@OneToMany(mappedBy="gestore", targetEntity=Segnalazione_di_allarme.class)	
+	@OneToMany(mappedBy="gestore", targetEntity=Segnalazione.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
-	private java.util.Set ORM_segnalazione_di_allarme = new java.util.HashSet();
+	private java.util.Set ORM_segnalazione = new java.util.HashSet();
 	
 	public void setId(String value) {
 		this.id = value;
@@ -67,7 +90,14 @@ public class Gestore implements Serializable {
 	public String getRecapito() {
 		return recapito;
 	}
-
-
+	
+	private void setORM_Segnalazione(java.util.Set value) {
+		this.ORM_segnalazione = value;
+	}
+	
+	private java.util.Set getORM_Segnalazione() {
+		return ORM_segnalazione;
+	}
+	
 	
 }

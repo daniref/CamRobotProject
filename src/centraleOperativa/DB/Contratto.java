@@ -14,7 +14,7 @@
 package centraleOperativa.DB;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 import javax.persistence.*;
 @Entity
@@ -54,12 +54,10 @@ public class Contratto implements Serializable {
 	private Robot robot;
 	
 	@Column(name="`data di inizio`", nullable=false)	
-	@Temporal(TemporalType.DATE)	
-	private java.util.Date data_di_inizio;
+	private java.sql.Date data_di_inizio;
 	
 	@Column(name="`data di scadenza`", nullable=false)	
-	@Temporal(TemporalType.DATE)	
-	private java.util.Date data_di_scadenza;
+	private java.sql.Date data_di_scadenza;
 	
 	@Column(name="canone", nullable=false)	
 	private float canone;
@@ -76,19 +74,19 @@ public class Contratto implements Serializable {
 		return getId();
 	}
 	
-	public void setData_di_inizio(java.util.Date value) {
+	public void setData_di_inizio(java.sql.Date value) {
 		this.data_di_inizio = value;
 	}
 	
-	public java.util.Date getData_di_inizio() {
+	public java.sql.Date getData_di_inizio() {
 		return data_di_inizio;
 	}
 	
-	public void setData_di_scadenza(java.util.Date value) {
+	public void setData_di_scadenza(java.sql.Date value) {
 		this.data_di_scadenza = value;
 	}
 	
-	public java.util.Date getData_di_scadenza() {
+	public java.sql.Date getData_di_scadenza() {
 		return data_di_scadenza;
 	}
 	

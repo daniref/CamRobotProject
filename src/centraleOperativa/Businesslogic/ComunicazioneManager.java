@@ -6,7 +6,7 @@ public class ComunicazioneManager {
 	String idrobot;
 	public ComunicazioneManager(String m, String idr) { 
 		this.msg=m;
-		String idrobot=idr;
+	//	String idrobot=idr;
 		}
 	
 	public void ContattaProprietario()	{
