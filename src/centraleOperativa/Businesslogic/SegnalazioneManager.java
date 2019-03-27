@@ -1,5 +1,8 @@
 package centraleOperativa.Businesslogic;
 
+
+import centraleOperativa.TESTSegnalazione.*;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -8,7 +11,7 @@ public class SegnalazioneManager {
 	private String idsensore;
 	private float valore;
 	private Date data_ora;
-	//private ArrayList <Segnalazione> segnalazioni;
+	private String idSegnalazione;
 
 /*
   1) leggi tipologia del sensore che ha causato l'allarme
@@ -25,16 +28,42 @@ public class SegnalazioneManager {
 		this.data_ora= dataora;
 	}
 	
-	public boolean verificaSegnalazionePendente() {
-		
-	String tipo=this.leggiTipologia();
-	String idg=this.tipoSensoreToGestore(tipo);
-	richiestaListaSegnalazioni(idg);
-	//cerca se condizione su questa lista!(id_sensore)
-	//	  3) vai dal gestore corrispondente e fatti dare la lista delle segnalazioni che sta "gestendo"
-	//	  4) verifica se è presente in questa lista una segnalazione precedente
-		return true;
+	
+	public void trattaSegnalazione() {
+		String tipo=this.leggiTipologia();
+		String idg=this.tipoSensoreToGestore(tipo);
+		ArrayList<SegnalazioneTest> s=getUltimaSegnalazione(idg); //viene restituita l'ultima segnalazione provocata da un determinato sensore
+		if (s.size()>0) {
+						if (!verificaCondizione(s.get(1))) {
+							SegnalazioneTest newSeg = new SegnalazioneTest("s01","APERTO",this.getValore(),this.getData_ora(),idg, this.getIdsensore());
+							setIdSegnalazione(newSeg.getId()); //setta id segnalazione che è stato restituito dall'entity
+							}
+						}
 	}
+	
+	
+	public String getIdSegnalazione() {
+		return this.idSegnalazione;
+	}
+
+	public void setIdSegnalazione(String idseg) {
+		this.idSegnalazione=idseg;
+	}
+
+	//deve essere creato un nuovo oggetto di tipo Segnalazione!
+/*
+ 		campi di Segnalazione D'Allarme
+		id segnalazione
+		stato=Aperto
+		valore allarme
+		data
+		ora
+		Id Gestore
+		Id Sensore
+*/
+	//Segnalazione s=new Segnalazione(getIdrobot(),getIdrensore(),idgestore, getValore(), "APERTO",data,ora);
+	
+	
 	
 	//Metodo in cui si permette di ricavare la tipologia di allarme che è stato generato
 	public String leggiTipologia() {
@@ -52,8 +81,14 @@ public class SegnalazioneManager {
 		}
 	}
 
+// metodo con cui si permette di chiedere al gestore con un certo id di restituire l'ultima segnalazione che ha gestito per quel sensore!
+public ArrayList <SegnalazioneTest> getUltimaSegnalazione(String idgestore){
+		ArrayList <SegnalazioneTest> lista = new ArrayList<SegnalazioneTest>();
+			//lista= getUltimaSegnalazione(idgestore, getIdensore()));
+		return lista;
+	}
 	
-public boolean esistesegnalazioneprecedente() {
+public boolean verificaCondizione(SegnalazioneTest s) {
 	//  se esiste una segnalazione nella lista che è stat
 	//	seleziona tutte le segnalazioni di quel sensore nella lista associata a quel gestore
 	//	per ognuno vai a calcolare la differenza 
@@ -64,26 +99,9 @@ public boolean esistesegnalazioneprecedente() {
 		return false;
 	} 
 	
-// metodo che a partire dall'id di un gestore determina tutte le segnalazini non chiuse che sta gestendo!
-  	public void richiestaListaSegnalazioni(String idgestore){
-		//setSegnalazioni(getListaSegnalazioni(idgestore));
-	}
 
-	
-	public void creaSegnalazione(String idgestore) {
-		//deve essere creato un nuovo oggetto di tipo Segnalazione!
-/*		campi di Segnalazione D'Allarme
-			id segnalazione
-			stato=Aperto
-			valore allarme
-			data
-			ora
-			Id Gestore
-			Id Sensore
-	*/
-		//Segnalazione s=new Segnalazione(getIdrobot(),getIdrensore(),idgestore, getValore(), "APERTO",data,ora);
-		
-		}
+
+
 
 
 
@@ -120,12 +138,16 @@ public boolean esistesegnalazioneprecedente() {
 		this.data_ora = data_ora;
 	}
 
-/*	public void setSegnalazioni(ArrayList<Segnalazione> ss) {
-		this.segnalazioni=ss;
+	
+	public class ControlloStato extends Thread{
+		SegnalazioneTest s;
+		
+		public ControlloStato(SegnalazioneTest s) {
+			this.s=s;
+		}
+		
+		
 	}
 
-	public ArrayList<Segnalazione> getSegnalazioni(){
-		return segnalazioni;
-	}
-	*/
+
 }

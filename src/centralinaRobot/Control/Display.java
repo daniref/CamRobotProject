@@ -2,16 +2,16 @@ package centralinaRobot.Control;
 
 import java.awt.Font;
 import java.awt.Image;
-import java.text.DecimalFormat;
+import java.awt.Toolkit;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import amministratore.Boundary.TerminaleAmministratore;
 import centralinaRobot.Sense.SensoreInterface;
 
 
@@ -46,6 +46,8 @@ public class Display {
 		frame.setBounds(100, 100, 688, 333+70*Sens.size());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(TerminaleAmministratore.class.getResource("/logo.png")));
+
 		//logo:
 		JLabel lblLabelimg = new JLabel("");
 		Image img = new ImageIcon(this.getClass().getResource("/logo2.png")).getImage();

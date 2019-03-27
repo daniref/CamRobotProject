@@ -36,10 +36,14 @@ public class CentraleOperativaController {
 		//Verifica Dati
 		if(checkMess.VerificaCoerenzaDati()){
 			System.out.println("Verifica Superata");
+			
 			SegnalazioneManager segnManag=new SegnalazioneManager(idrobot,idsensore,valore,dataora);			//gestisci segnalazione
-			if(segnManag.verificaSegnalazionePendente()) {
-			//	segnManag.creaSegnalazione();
-			}
+			segnManag.trattaSegnalazione();
+			String ids=segnManag.getIdSegnalazione();
+			//MESSAGGIO AL PROPRIETARIO: idsegnalazione; idsensore; dataora;
+			String messaggioProprietario =(ids+";"+idsensore+";"+valore+";"+dataora+";");
+			ComunicazioneManager cm= new ComunicazioneManager(messaggioProprietario,idrobot);
+			cm.ContattaProprietario();
 		}
 		else {
 			System.out.println("\n\nErrore! Dati ricevuti non corretti. Il messaggio ricevuto da '"+idrobot+"' e' stato ignorato!\n\n");
