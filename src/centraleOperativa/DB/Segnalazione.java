@@ -75,7 +75,6 @@ public class Segnalazione implements Serializable {
 	private float valore_allarme;
 	
 	@Column(name="data", nullable=false)	
-	@Temporal(TemporalType.DATE)	
 	private Date data;
 	
 	@Column(name="ora", nullable=false)	

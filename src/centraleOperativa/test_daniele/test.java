@@ -174,13 +174,18 @@ public class test {
 							new Date(),idGestore,
 							"sn0004","rb0002");
 			gestore_Entity gestore = gestore_Entity.getInstance(idGestore);
-		//	System.out.println("Id gestore: "+gestore.getId());
-		//	System.out.println("Nome gestore: "+gestore.getNome());
-		//	System.out.println("Recapito gestore: "+gestore.getRecapito());
+			System.out.println("Id gestore: "+gestore.getId());
+			System.out.println("Nome gestore: "+gestore.getNome());
+			System.out.println("Recapito gestore: "+gestore.getRecapito());
 			
 			String idSegn=gestore.addSegnalazione(segn);
 			segnalazione_Entity new_segn=gestore.getSegnalazioneById(idSegn);
 			System.out.println("Segn data: "+new_segn.getDataTime());
+			new_segn.setStato("RISOLTA");
+			gestore.updateSegnalazione(new_segn);
+			segnalazione_Entity upsegn = gestore.getSegnalazioneById(idSegn);
+			System.out.println("Stato agg: "+upsegn.getStato());
+			
 			
 			
 			

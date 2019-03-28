@@ -73,7 +73,6 @@ public class Cliente implements Serializable {
 	private String recapito;
 	
 	@Column(name="`data di nascita`", nullable=false)	
-	@Temporal(TemporalType.DATE)	
 	private Date data_di_nascita;
 	
 	@Column(name="`luogo di nascita`", nullable=false, length=20)	
