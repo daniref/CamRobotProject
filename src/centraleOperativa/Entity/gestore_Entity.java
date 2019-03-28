@@ -18,22 +18,26 @@ public class gestore_Entity {
 	
 	//metodo usato per l'accesso alla classe singleton
 	public static synchronized gestore_Entity getInstance(String idGestore) throws PersistentException{
-		int indice_gestore=0;
-		if(gestori.get(indice_gestore)==null) {
-			try {
-				gestori.add(indice_gestore, new gestore_Entity(idGestore));
-			
-			}
-			catch(Exception e) {
-				e.printStackTrace();
-				throw new PersistentException(e);
-			}
-		}
-		else {
-			return null;
-		}
 
-		return gestori.get(indice_gestore);
+		if(gestori==null) {
+			gestori=new ArrayList<gestore_Entity>();	
+		}
+		ArrayList<gestore_Entity> gesList = getListaGestori();
+		gestore_Entity returnedGestore = new gestore_Entity();
+		boolean trovato=false;
+		int i=0;
+		while(i<gestori.size() && !trovato) {
+			if(gestori.get(i).getId().compareTo(idGestore)==0) {
+				trovato=true;
+				returnedGestore=gestori.get(i);
+			}
+		}
+		if(trovato==false) {
+			gestore_Entity new_gest=new gestore_Entity(idGestore);
+			gestori.add(new_gest);
+			returnedGestore=new_gest;
+		}
+		return returnedGestore;
 
 	}
 	
@@ -44,6 +48,12 @@ public class gestore_Entity {
 	
 	//lista di tutte le segnalazioni appartenenti al gestore
 	private static ArrayList<segnalazione_Entity> listaSegnalazioni;
+	
+	//costruttore vuoto
+	private gestore_Entity() {
+		
+		
+	}
 
 	//costruttore privato
 	private gestore_Entity(String idGestore) throws PersistentException{
@@ -119,11 +129,32 @@ public class gestore_Entity {
 		
 	}
 	
+	//------------aggiorna una segnalazione nella lista e nel database
+	public boolean updateSegnalazione(segnalazione_Entity segnalazione) throws PersistentException {
+
+		try {
+			listaSegnalazioni.set(listaSegnalazioni.indexOf(getSegnalazioneById(segnalazione.getId())),segnalazione);
+			segnalazione.addSegnalazione();
+			return true;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			throw new PersistentException(e);
+		}
+		
+	}
+	
 	//metodo che restituisce la lista di robot dell'area
 	public static ArrayList<segnalazione_Entity> getListaSegnalazioni() {
 
 		return listaSegnalazioni;
 	
+	}
+	
+	public static ArrayList<gestore_Entity> getListaGestori(){
+		
+		return gestori;
+		
 	}
 	
 	//metodo che cerca nella lista dell'area un robot attraverso il suo id e lo restituisce

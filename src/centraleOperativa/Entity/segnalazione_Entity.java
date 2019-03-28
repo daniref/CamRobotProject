@@ -4,6 +4,7 @@ import java.sql.Time;
 import java.util.Date;
 import java.util.TimeZone;
 import org.orm.*;
+
 import centraleOperativa.DB.*;
 
 public class segnalazione_Entity {

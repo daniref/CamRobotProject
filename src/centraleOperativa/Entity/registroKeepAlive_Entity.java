@@ -1,11 +1,11 @@
 package centraleOperativa.Entity;
 
-import centraleOperativa.Entity.*;
 import centraleOperativa.DB.CamRobotPersistentManager;
 import centraleOperativa.DB.KeepAlive;
 import centraleOperativa.DB.KeepAliveDAO;
 import centraleOperativa.DB.Robot;
 import centraleOperativa.DB.RobotDAO;
+import centraleOperativa.Entity.*;
 
 import java.util.ArrayList;
 import java.util.Date;

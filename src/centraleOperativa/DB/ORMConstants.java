@@ -1,3 +1,4 @@
+package centraleOperativa.DB;
 /**
  * "Visual Paradigm: DO NOT MODIFY THIS FILE!"
  * 
@@ -11,8 +12,6 @@
  * Licensee: 
  * License Type: Evaluation
  */
-package centraleOperativa.DB;
-
 public interface ORMConstants extends org.orm.util.ORMBaseConstants {
 	final int KEY_CLIENTE_CONTRATTO = -2077073079;
 	

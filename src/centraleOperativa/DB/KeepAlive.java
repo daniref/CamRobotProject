@@ -1,3 +1,4 @@
+package centraleOperativa.DB;
 /**
  * "Visual Paradigm: DO NOT MODIFY THIS FILE!"
  * 
@@ -11,13 +12,10 @@
  * Licensee: 
  * License Type: Evaluation
  */
-package centraleOperativa.DB;
-
 import java.io.Serializable;
-import javax.persistence.*;
-import java.sql.Time;
 import java.sql.Date;
-
+import java.sql.Time;
+import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="KeepAlive")
@@ -63,33 +61,20 @@ public class KeepAlive implements Serializable {
 		return getId();
 	}
 	
-	public void setData(java.sql.Date value) {
+	public void setData(Date value) {
 		this.data = value;
 	}
 	
-	public java.sql.Date getData() {
+	public Date getData() {
 		return data;
 	}
 	
-	public void setOra(java.sql.Time value) {
+	public void setOra(Time value) {
 		this.ora = value;
 	}
 	
-	public java.sql.Time getOra() {
+	public Time getOra() {
 		return ora;
-	}
-	
-	public void setRobot(Robot value) {
-		if (this.robot != value) {
-			Robot lrobot = this.robot;
-			this.robot = value;
-			if (value != null) {
-				robot.setKeepAlive(this);
-			}
-			if (lrobot != null && lrobot.getKeepAlive() == this) {
-				lrobot.setKeepAlive(null);
-			}
-		}
 	}
 	
 	public Robot getRobot() {

@@ -128,7 +128,6 @@ public class SegnalazioneDAO {
 		try {
 			String hql = "FROM Segnalazione S WHERE S.gestore.id='"+idGestore+"'";
 			Query query = session.createQuery(hql);
-			System.out.println("Query: "+(Segnalazione)query.list().get(0));
 			transaction.commit();
 			if(!query.list().isEmpty()) {
 				segnalazioniList=(ArrayList<Segnalazione>)query.list();

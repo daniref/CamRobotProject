@@ -3,6 +3,7 @@ package centraleOperativa.Entity;
 import java.util.Date;
 import java.util.TimeZone;
 import org.orm.*;
+
 import centraleOperativa.DB.*;
 
 public class keepAlive_Entity {

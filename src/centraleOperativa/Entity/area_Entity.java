@@ -1,8 +1,9 @@
 package centraleOperativa.Entity;
 
-import centraleOperativa.Entity.*;
 import centraleOperativa.DB.Robot;
 import centraleOperativa.DB.RobotDAO;
+import centraleOperativa.Entity.*;
+
 import java.util.ArrayList;
 
 import org.orm.PersistentException;

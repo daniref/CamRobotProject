@@ -166,19 +166,7 @@ public class Robot implements Serializable {
 	private java.util.Set getORM_Sensore() {
 		return ORM_sensore;
 	}
-	
-	public void setKeepAlive(KeepAlive value) {
-		if (this.keepAlive != value) {
-			KeepAlive lkeepAlive = this.keepAlive;
-			this.keepAlive = value;
-			if (value != null) {
-				keepAlive.setRobot(this);
-			}
-			if (lkeepAlive != null && lkeepAlive.getRobot() == this) {
-				lkeepAlive.setRobot(null);
-			}
-		}
-	}
+
 	
 	public KeepAlive getKeepAlive() {
 		return keepAlive;
@@ -191,5 +179,6 @@ public class Robot implements Serializable {
 	private java.util.Set getORM_Segnalazione() {
 		return ORM_segnalazione;
 	}
-		
+
+	
 }

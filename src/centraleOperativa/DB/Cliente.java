@@ -1,3 +1,4 @@
+package centraleOperativa.DB;
 /**
  * "Visual Paradigm: DO NOT MODIFY THIS FILE!"
  * 
@@ -11,21 +12,16 @@
  * Licensee: 
  * License Type: Evaluation
  */
-package centraleOperativa.DB;
-
 import java.io.Serializable;
 import java.sql.Date;
-
 import javax.persistence.*;
-
-//import centraleOperativa.DB.ormmapping.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Cliente")
 public class Cliente implements Serializable {
 	public Cliente() {
 	}
-		
+	
 	public Cliente(String id, String nome, String cognome, String username, String password, String recapito,
 			Date data_di_nascita, String luogo_di_nascita) {
 	
@@ -54,7 +50,7 @@ public class Cliente implements Serializable {
 		}
 		
 	};
-
+	
 	@Column(name="Id", nullable=false, unique=true, length=7)	
 	@Id	
 	@GeneratedValue(generator="CLIENTE_ID_GENERATOR")	
@@ -77,7 +73,7 @@ public class Cliente implements Serializable {
 	private String recapito;
 	
 	@Column(name="`data di nascita`", nullable=false)	
-	private java.sql.Date data_di_nascita;
+	private Date data_di_nascita;
 	
 	@Column(name="`luogo di nascita`", nullable=false, length=20)	
 	private String luogo_di_nascita;
@@ -139,11 +135,11 @@ public class Cliente implements Serializable {
 		return recapito;
 	}
 	
-	public void setData_di_nascita(java.sql.Date value) {
+	public void setData_di_nascita(Date value) {
 		this.data_di_nascita = value;
 	}
 	
-	public java.sql.Date getData_di_nascita() {
+	public Date getData_di_nascita() {
 		return data_di_nascita;
 	}
 	
@@ -162,5 +158,7 @@ public class Cliente implements Serializable {
 	private java.util.Set getORM_Contratto() {
 		return ORM_contratto;
 	}
-		
+	
+
+	
 }

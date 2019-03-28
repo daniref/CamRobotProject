@@ -24,7 +24,7 @@ public class robot_Entity {
 	//costruttore vuoto
 	public robot_Entity() {
 		
-	}
+	} 
 
 	//costruttore con parametri
 	public robot_Entity(String stato,String condizione, String funzionamento, 

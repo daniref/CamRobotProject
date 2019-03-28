@@ -1,3 +1,4 @@
+package centraleOperativa.DB;
 /**
  * "Visual Paradigm: DO NOT MODIFY THIS FILE!"
  * 
@@ -11,17 +12,13 @@
  * Licensee: 
  * License Type: Evaluation
  */
-package centraleOperativa.DB;
-
 import java.io.Serializable;
 import java.sql.Date;
-
 import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Contratto")
 public class Contratto implements Serializable {
-
 	public Contratto() {
 	}
 	
@@ -34,9 +31,25 @@ public class Contratto implements Serializable {
 		this.data_di_scadenza = data_di_scadenza;
 		this.canone = canone;
 	}
-
-
-
+	
+	private void this_setOwner(Object owner, int key) {
+		if (key == ORMConstants.KEY_CONTRATTO_ROBOT) {
+			this.robot = (Robot) owner;
+		}
+		
+		else if (key == ORMConstants.KEY_CONTRATTO_UTENTE) {
+			this.utente = (Cliente) owner;
+		}
+	}
+	
+	@Transient	
+	org.orm.util.ORMAdapter _ormAdapter = new org.orm.util.AbstractORMAdapter() {
+		public void setOwner(Object owner, int key) {
+			this_setOwner(owner, key);
+		}
+		
+	};
+	
 	@Column(name="Id", nullable=false, unique=true, length=7)	
 	@Id	
 	@GeneratedValue(generator="CONTRATTO_ID_GENERATOR")	
@@ -54,10 +67,10 @@ public class Contratto implements Serializable {
 	private Robot robot;
 	
 	@Column(name="`data di inizio`", nullable=false)	
-	private java.sql.Date data_di_inizio;
+	private Date data_di_inizio;
 	
 	@Column(name="`data di scadenza`", nullable=false)	
-	private java.sql.Date data_di_scadenza;
+	private Date data_di_scadenza;
 	
 	@Column(name="canone", nullable=false)	
 	private float canone;
@@ -74,19 +87,19 @@ public class Contratto implements Serializable {
 		return getId();
 	}
 	
-	public void setData_di_inizio(java.sql.Date value) {
+	public void setData_di_inizio(Date value) {
 		this.data_di_inizio = value;
 	}
 	
-	public java.sql.Date getData_di_inizio() {
+	public Date getData_di_inizio() {
 		return data_di_inizio;
 	}
 	
-	public void setData_di_scadenza(java.sql.Date value) {
+	public void setData_di_scadenza(Date value) {
 		this.data_di_scadenza = value;
 	}
 	
-	public java.sql.Date getData_di_scadenza() {
+	public Date getData_di_scadenza() {
 		return data_di_scadenza;
 	}
 	
@@ -115,7 +128,6 @@ public class Contratto implements Serializable {
 		return robot;
 	}
 	
-
 	public Cliente getUtente() {
 		return utente;
 	}

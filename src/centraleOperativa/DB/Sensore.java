@@ -29,18 +29,26 @@ public class Sensore implements Serializable {
 		this.robot=robot;		
 	}
 	
+	private java.util.Set this_getSet (int key) {
+		if (key == ORMConstants.KEY_SENSORE_SEGNALAZIONE) {
+			return ORM_segnalazione;
+		}
+		
+		return null;
+	}
+	
 	private void this_setOwner(Object owner, int key) {
 		if (key == ORMConstants.KEY_SENSORE_ROBOT) {
 			this.robot = (Robot) owner;
-		}
-		
-		else if (key == ORMConstants.KEY_SENSORE_SEGNALAZIONE) {
-			this.segnalazione = (Segnalazione) owner;
 		}
 	}
 	
 	@Transient	
 	org.orm.util.ORMAdapter _ormAdapter = new org.orm.util.AbstractORMAdapter() {
+		public java.util.Set getSet(int key) {
+			return this_getSet(key);
+		}
+		
 		public void setOwner(Object owner, int key) {
 			this_setOwner(owner, key);
 		}
@@ -56,7 +64,7 @@ public class Sensore implements Serializable {
 	@Column(name="soglia", nullable=false, length=5)	
 	private float soglia;
 	
-	@Column(name="tipologia", nullable=false, length=20)	
+	@Column(name="tipologia", nullable=false, length=1)	
 	private String tipologia;
 	
 	@ManyToOne(targetEntity=Robot.class, fetch=FetchType.LAZY)	
@@ -64,9 +72,10 @@ public class Sensore implements Serializable {
 	@JoinColumns(value={ @JoinColumn(name="robotId", referencedColumnName="Id", nullable=false) }, foreignKey=@ForeignKey(name="FKSensore164434"))	
 	private Robot robot;
 	
-	@OneToOne(mappedBy="sensore", targetEntity=Segnalazione.class, fetch=FetchType.LAZY)	
+	@OneToMany(mappedBy="sensore", targetEntity=Segnalazione.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
-	private Segnalazione segnalazione;
+	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
+	private java.util.Set ORM_segnalazione = new java.util.HashSet();
 	
 	public void setId(String value) {
 		this.id = value;
@@ -96,8 +105,6 @@ public class Sensore implements Serializable {
 		return tipologia;
 	}
 	
-
-	
 	public Robot getRobot() {
 		return robot;
 	}
@@ -113,25 +120,13 @@ public class Sensore implements Serializable {
 		return robot;
 	}
 	
-	public void setSegnalazione(Segnalazione value) {
-		if (this.segnalazione != value) {
-			Segnalazione lsegnalazione = this.segnalazione;
-			this.segnalazione = value;
-			if (value != null) {
-				segnalazione.setSensore(this);
-			}
-			if (lsegnalazione != null && lsegnalazione.getSensore() == this) {
-				lsegnalazione.setSensore(null);
-			}
-		}
+	private void setORM_Segnalazione(java.util.Set value) {
+		this.ORM_segnalazione = value;
 	}
 	
-	public Segnalazione getSegnalazione() {
-		return segnalazione;
+	private java.util.Set getORM_Segnalazione() {
+		return ORM_segnalazione;
 	}
-	
-	public String toString() {
-		return String.valueOf(getId());
-	}
+
 	
 }
