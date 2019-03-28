@@ -132,7 +132,7 @@ public class SensoreDAO {
 		PersistentTransaction transaction = session.beginTransaction();
 		ArrayList<Sensore> sensoreList = new ArrayList<Sensore>();
 		try {
-			String hql = "FROM Sensore S WHERE S.robotId='"+idRobot+"'";
+			String hql = "FROM Sensore S WHERE S.robot='"+idRobot+"'";
 			Query query = session.createQuery(hql);
 			transaction.commit();
 			if(!query.list().isEmpty()) {

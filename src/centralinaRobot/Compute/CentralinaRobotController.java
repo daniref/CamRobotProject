@@ -10,7 +10,7 @@ import javax.jms.JMSException;
 
 
 public class CentralinaRobotController {
-	private final static String idR="rb0001"; //id robot univoco per ogni controller!
+	private final static String idR="rb0002"; //id robot univoco per ogni controller!
 	
 	private final static ArrayList<SensoreInterface> Sensori= new ArrayList<SensoreInterface>();
 	private static ArrayList<Float> SensoriSoglie= new ArrayList<Float>();	
@@ -53,10 +53,15 @@ public class CentralinaRobotController {
 		SetupManager sm=new SetupManager();
 		datisensoriDB=sm.loadDataDB(idR);
 		String [] splitdati =new String[3];
-		for(int i=0;i<datisensoriDB.size();i++) {
-			splitdati=datisensoriDB.get(i).split(";");	
-			Sensori.add(new SensoreInterface(splitdati[0],splitdati[1]));
-			SensoriSoglie.add(Float.valueOf(splitdati[2]));
+		if(datisensoriDB!=null) {
+			for(int i=0;i<datisensoriDB.size();i++) {
+				splitdati=datisensoriDB.get(i).split(";");	
+				Sensori.add(new SensoreInterface(splitdati[0],splitdati[1]));
+				SensoriSoglie.add(Float.valueOf(splitdati[2]));
+			}
+		}
+		else {
+			System.out.println("e mo so cazzz'");
 		}
 }
 

@@ -103,12 +103,12 @@ public class Display {
 			
 			jl3 = new JLabel("("+Sens.get(i).getID()+")"); //ID misurato
 			jl3.setFont(new Font("Tahoma", Font.BOLD, 18));
-			jl3.setBounds(350, 253+50*i, 80, 35);
+			jl3.setBounds(330, 253+50*i,100, 35);
 			frame.getContentPane().add(jl3);
 			VettIDSens.add(jl3);
 			
 			
-			jl4 = new JLabel(String.format ("%.2f",soglie.get(i))); //ID misurato
+			jl4 = new JLabel(String.format ("%.2f",soglie.get(i))); //soglia
 			jl4.setFont(new Font("Tahoma", Font.BOLD, 18));
 			jl4.setBounds(545, 253+50*i, 150, 35);
 			frame.getContentPane().add(jl4);

@@ -55,7 +55,7 @@ public class robot_Entity {
 							this.indirizzo,
 							this.areaId);
 			RobotDAO.save(robot);
-			System.out.println("Aggiunto nuovo robot!");
+		//	System.out.println("Aggiunto nuovo robot!");
 			return this.id;
 		}
 		catch(Exception e) {

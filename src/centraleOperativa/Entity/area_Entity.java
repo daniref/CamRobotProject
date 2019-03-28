@@ -65,6 +65,7 @@ public class area_Entity {
 		try {
 			listaRobot.add(new_robot);
 			new_robot.addRobot();
+			System.out.println("E' stato aggiunto un nuovo robot con id "+new_robot.getId());
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -78,6 +79,7 @@ public class area_Entity {
 			robot_Entity old_robot=getRobotById(robot.getId());
 			listaRobot.set(listaRobot.indexOf(old_robot),robot);
 			robot.addRobot();
+			System.out.println("Dati del robot "+robot.getId()+" aggiornati!");
 		}
 		catch(Exception e) {
 			e.printStackTrace();

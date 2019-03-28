@@ -7,9 +7,12 @@ import com.googlecode.javacv.CanvasFrame;
 import com.googlecode.javacv.FrameGrabber.Exception;
 import com.googlecode.javacv.OpenCVFrameGrabber;
 import com.googlecode.javacv.cpp.opencv_core.IplImage;
+import com.sun.glass.events.WindowEvent;
+
 import javax.swing.JButton;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.Color;
@@ -42,6 +45,8 @@ final String urlHotspotRedmi4pro ="http://192.168.43.1:8080/video?dummy=param.mj
 		    canvasFrame.getCanvas().setForeground(Color.WHITE);
 		    canvasFrame.setCanvasSize(iPimg.width(), iPimg.height());
 
+	
+		    
 		    while (canvasFrame.isVisible() && (iPimg = frameGrabber.grab()) != null) {
 		        canvasFrame.showImage(iPimg);
 		    }
@@ -53,6 +58,6 @@ final String urlHotspotRedmi4pro ="http://192.168.43.1:8080/video?dummy=param.mj
 	    canvasFrame.dispose();
 		
 	}
-   
+ 
 }
 }

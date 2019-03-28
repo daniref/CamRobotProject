@@ -30,16 +30,18 @@ public class SegnalazioneManager {
 		this.idSegnalazione="error";
 	}
 	
-	
 	public void trattaSegnalazione() {
 		
 		this.tipologia=this.leggiTipologia();
 		this.idgestore=this.tipoSensoreToGestore(tipologia);
-		ArrayList<segnalazione_Entity> s=new ArrayList<segnalazione_Entity>();
 		try {
 			gestore_Entity gest= gestore_Entity.getInstance(this.idgestore);
-			if (s.size()>0) {
-				if (!verificaCondizione(s.get(0))) {
+			segnalazione_Entity s = new segnalazione_Entity();
+			System.out.println("DEBUG          -1        "+s.getId());
+			s=gest.getUltimaSegnalazioneByIdSensore(this.idsensore);
+			System.out.println("DEBUG          0        "+s.getId());
+			if (s.getId()!=null) {
+				if (!verificaCondizione(s)) {
 					try {
 						segnalazione_Entity newSeg = new segnalazione_Entity(this.valore,this.data_ora,this.idgestore,this.idsensore,this.idRobot);
 						this.idSegnalazione=gest.addSegnalazione(newSeg);
@@ -48,8 +50,18 @@ public class SegnalazioneManager {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					}
 				}
+			}
+			else {
+				try {
+					segnalazione_Entity newSeg = new segnalazione_Entity(this.valore,this.data_ora,this.idgestore,this.idsensore,this.idRobot);
+					this.idSegnalazione=gest.addSegnalazione(newSeg);
+					
+				} catch (PersistentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		} catch (PersistentException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -94,10 +106,12 @@ public class SegnalazioneManager {
 */	
 public boolean verificaCondizione(segnalazione_Entity s) {
 		Date orario_corrente=new Date();
-		if(orario_corrente.getTime()-s.getDataTime().getTime()<1800000) return true;
+		System.out.println("[VERIFICA CONDIZIONE] orario della segnalazione: "+s.getDataTime());
+		System.out.println("[VERIFICA CONDIZIONE] orario corrente: "+orario_corrente);
+		System.out.println("[VERIFICA CONDIZIONE] differenza: "+orario_corrente.compareTo(s.getDataTime()));
+		if(orario_corrente.compareTo(s.getDataTime())<1800000) return true;
 		return false;
 }
-
 
 
 
@@ -155,43 +169,54 @@ public boolean verificaCondizione(segnalazione_Entity s) {
 	
 	//da portare in gestore_entity
 	public void ControlloNotifica() {
-		Thread ThreadNotifica=new Thread()
-			{
-				public void run() {
-						try {
-							gestore_Entity ge=gestore_Entity.getInstance(idgestore);
-							wait();
-							ge.getSegnalazioneById(idSegnalazione).setStato("IN ATTESA");
-							//ge.updateSegnalazione();
-							notifyAll();
-							sleep(120000);															// attende 2 minuti
-							wait();
-							segnalazione_Entity se= gestore_Entity.getSegnalazioneById(idSegnalazione); 		// lettura fatta col semaforo!
-							if(se.getStato().compareTo("IN ATTESA")==0) {
-								se.setStato("GESTORE ESTERNO");
-							//	ge.updateSegnalazione(se);
-								notifyAll();
-								ComunicazioneManager cM = new ComunicazioneManager("",idRobot,idgestore);
-								String indi=cM.recuperaIndirizzo();
-								String telEm=cM.recuperaNumeroEmergenza();
-								ServizioDiComunicazioneInterface sci=null;
-								String msg="Indirizzo da raggiungere: "+indi+"; Allarme scattato: "+tipologia+"; Valore rilevato: "+valore+"; Orario: "+data_ora;
-								sci.contattaProprietario(msg, telEm);
-								System.out.println("E' stata inoltrato il seguente messaggio: <"+msg+"> al numero: <"+telEm+">");
-							}
-							else {
-								notifyAll();
-								//System.out.println("La segnalazione è stata chiusa attraverso la notifica del Cliente");
-							}
-							
-							}
-						catch(InterruptedException | PersistentException e){
-							e.printStackTrace();
-						}
-					}
+		System.out.println("FUNZIONE CONTROLLO NOTIFICA           INIZIO");
+
+		Thread ThreadNotifica=new Thread(){
+			public void run() {
 				
-			};
+				boolean comunica=false;
+				
+				try {
+					gestore_Entity ge=gestore_Entity.getInstance(idgestore);
+					synchronized(this) {
+					segnalazione_Entity se= gestore_Entity.getSegnalazioneById(idSegnalazione); 
+					se.setStato("IN ATTESA");
+					ge.updateSegnalazione(se);
+					notifyAll();
+					}
+					System.out.println("THREAD. GET NAME           PRE-ATTESA"+Thread.currentThread().getName());
+					sleep(10000);										// attende 2 minuti
+					System.out.println("THREAD. GET NAME           POST-ATTESA"+Thread.currentThread().getName());
+					synchronized(this) {
+						segnalazione_Entity se= new segnalazione_Entity();
+						se=gestore_Entity.getSegnalazioneById(idSegnalazione); 		// lettura fatta col semaforo!
+						if(se.getStato().compareTo("IN ATTESA")==0) {
+							se.setStato("GESTORE ESTERNO");
+							ge.updateSegnalazione(se);
+							comunica=true;
+						}
+						else {
+							//System.out.println("La segnalazione è stata chiusa attraverso la notifica del Cliente");
+						}
+					notifyAll();
+					}
+					if(comunica) {
+						ComunicazioneManager cM = new ComunicazioneManager("",idRobot,idgestore);
+						String indi=cM.recuperaIndirizzo();
+						String telEm=cM.recuperaNumeroEmergenza();
+						ServizioDiComunicazioneInterface sci=null;
+						String msg="Indirizzo da raggiungere: "+indi+"; Allarme scattato: "+tipologia+"; Valore rilevato: "+valore+"; Orario: "+data_ora;
+						sci.contattaProprietario(msg, telEm);
+						System.out.println("E' stata inoltrato il seguente messaggio: <"+msg+"> al numero: <"+telEm+">");
+					}
+				}
+				catch(InterruptedException | PersistentException e){
+					e.printStackTrace();
+				}
+			}
+				
+		};
 			ThreadNotifica.start();
-		}
+	}
 }
 

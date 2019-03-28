@@ -178,6 +178,34 @@ public class gestore_Entity {
 		return returnedSegnalazione;
 		
 	}
+	
+	//metodo per la ricerca dell'ultima segnalazione associata ad un sensore
+	public static synchronized segnalazione_Entity getUltimaSegnalazioneByIdSensore(String id) {
+		
+		ArrayList<segnalazione_Entity> segnalazioniList = getListaSegnalazioni();
+		segnalazione_Entity s = new segnalazione_Entity();
+		segnalazione_Entity returnedSegnalazione = new segnalazione_Entity();
+		int i=0;
+		boolean trovato=false;
+		while(i<segnalazioniList.size() && !trovato) {
+			s = segnalazioniList.get(i);
+			if(s.getIdSensore().compareTo(id)==0) {
+				if(returnedSegnalazione.getId()!=null) {
+					if(returnedSegnalazione.getDataTime().compareTo(s.getDataTime())<0) {
+						returnedSegnalazione=s;
+					}
+				}
+				else {
+					returnedSegnalazione=s;
+				}
+			}
+			else {
+				i++;
+			}
+		}		
+		return returnedSegnalazione;
+		
+	}
 
 	//metodi get e set per gli attributi privati della classe
 	

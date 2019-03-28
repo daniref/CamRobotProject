@@ -39,24 +39,33 @@ public class CentraleOperativaController {
 			System.out.println("Verifica Superata");
 			
 			SegnalazioneManager segnManag=new SegnalazioneManager(idrobot,idsensore,valore,dataora);			//gestisci segnalazione
+			System.out.println("DEBUG 0");
 			segnManag.trattaSegnalazione();
+			System.out.println("DEBUG 1");
 			String ids=segnManag.getIdSegnalazione();
-			
+			System.out.println("DEBUG 2");
 			if(ids.compareTo("error")!=0) { //se è stata creata una nuova segnalazione (in tal caso si modifica il valore iniziale di "idsegnalazione")
 			//MESSAGGIO AL PROPRIETARIO: idsegnalazione; idsensore; dataora;
 				String messaggioProprietario =(ids+";"+idsensore+";"+valore+";"+dataora+";"+segnManag.getTipologia()+";");
 				ComunicazioneManager cm= new ComunicazioneManager(messaggioProprietario,idrobot);
 				String recapito=cm.recuperaRecapito();
+
 				if(recapito!=null) {
-					ServizioDiComunicazioneInterface sc = null; //si inizializza a null in quanto ci si affida ad un Servizio esterno che va ad implementare questa funzione!
+					System.out.println("[CENTRALE OPERATIVA CONTROLLER] ecco il recapito    "+recapito);
+
+					ServizioDiComunicazioneInterface sc = new ServizioDiComunicazioneInterface(); //si inizializza a null in quanto ci si affida ad un Servizio esterno che va ad implementare questa funzione!
 					sc.contattaProprietario(messaggioProprietario, recapito);
+					System.out.println("Ci sono arrivato                      dfsd");
 					segnManag.ControlloNotifica(); 				// setta ad IN ATTESA , aspetta 2 minuti, verifica notifica dal cliente, (se necessario) contatta gestore esterno
 				}
 			}
+			else {
+				System.out.println("Non è stato creata alcuna nuova segnalazione perchè già presente (<30 min)");
 			}
+		}
 		else {
 			System.out.println("\n\nErrore! Dati ricevuti non corretti. Il messaggio ricevuto da '"+idrobot+"' e' stato ignorato!\n\n");
-			}
+		}
 	}
 		
 	

@@ -1,6 +1,10 @@
 package centraleOperativa.Boundary;
 
-public interface ServizioDiComunicazioneInterface {
+public class ServizioDiComunicazioneInterface {
 
-		public void contattaProprietario(String messaggio, String recapito);
+public ServizioDiComunicazioneInterface() {}
+	
+	public static void contattaProprietario(String messaggio, String recapito) {
+			System.out.println("[SERVIZIO COMUNICAZIONE ESTERNO] si invia <"+messaggio+"> al numero "+recapito);;
+		}
 }

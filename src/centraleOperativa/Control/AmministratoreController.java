@@ -8,6 +8,8 @@ import centraleOperativa.ProxyComunicazioneAsincrona.CentraleOperativaProxy;
 public class AmministratoreController {
 	static TimerProxy tp1;
 	static TimerProxy tp2;
+	static TimerProxy tp3;
+
 	//CREAZIONE DEL 'SINGLETON'
 	private static AmministratoreController AmmCon=null;
 	
@@ -30,14 +32,16 @@ public class AmministratoreController {
 		CentraleOperativaProxy proxyAsincrona= CentraleOperativaProxy.getIstance();
 		proxyAsincrona.setup();	//proxy che fa in modo di ricevere le segnalazioni d'allarme
 		tp1 = new TimerProxy(0,proxyAsincrona.getConsumerAllarmi());
-		tp2 = new TimerProxy(1,proxyAsincrona.getConsumerKeep());
+		tp3 = new TimerProxy(0,proxyAsincrona.getConsumerAllarmi());
+		//tp2 = new TimerProxy(1,proxyAsincrona.getConsumerKeep());
 		tp1.start();
-		tp2.start();
+		//tp2.start();
 	}
 	
 	public void gestisciStop() throws JMSException {
 		tp1.stoppa();
-		tp2.stoppa();
+		tp3.stoppa();
+		//tp2.stoppa();
 		CentraleOperativaProxy proxyAsincrona= CentraleOperativaProxy.getIstance();
 		proxyAsincrona.chiudi();
 	}

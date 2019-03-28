@@ -42,16 +42,14 @@ public class KeepAliveManager {
 		try {
 			area_Entity ae= area_Entity.getInstance("ar0001");
 			robot_Entity re= new robot_Entity();
-			wait();
-			re=ae.getRobotById(idrobot);
-			notifyAll();
-			if(re.getStato().compareTo("OK")!=0) {
-				re.setStato("OK");
-				wait();
-				ae.updateRobot(re);
-				notifyAll();
+			synchronized(this) {
+				re=ae.getRobotById(idrobot);
+				if(re.getFunzionamento().compareTo("OK")!=0) {
+					re.setFunzionamento("OK");
+					ae.updateRobot(re);
+				}
 			}
-		} catch (PersistentException | InterruptedException e) {
+		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

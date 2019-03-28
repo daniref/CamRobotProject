@@ -13,24 +13,24 @@ public class NotificheManager {
 	public boolean NotificaLetturaSegnalazione(String id,String tipo) {
 		//istanza g singleton gestore
 		gestore_Entity ge;
-		try {
-			ge = gestore_Entity.getInstance(tipoSensoreToGestore(tipo));
-			segnalazione_Entity se= new segnalazione_Entity();
-			wait();
-			se=ge.getSegnalazioneById(id);
-			if(se.getStato().compareTo("IN ATTESA")==0) {
-				se.setStato("RISOLTA");
-				//ge.updateSegnalazione(se);
-				notifyAll();
-				return true;
+			synchronized(this) { 
+				try {
+					ge = gestore_Entity.getInstance(tipoSensoreToGestore(tipo));
+					segnalazione_Entity se= new segnalazione_Entity();
+					se=ge.getSegnalazioneById(id);
+					if(se.getStato().compareTo("IN ATTESA")==0) {
+						se.setStato("RISOLTA");
+						ge.updateSegnalazione(se);
+						return true;
+					}
+				} catch (PersistentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
 			}
-		} catch (PersistentException | InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		notifyAll();
-		return false;
+			return false;
+			
 		}
 
 	
