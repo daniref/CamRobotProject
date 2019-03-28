@@ -18,7 +18,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Color;
+import javax.swing.ImageIcon;
 
 public class TerminaleCliente {
 
@@ -119,8 +121,27 @@ public class TerminaleCliente {
 				n.WindowNotifica();
 			}
 		});
-		btnNewButton.setBounds(31, 35, 376, 38);
+		btnNewButton.setBounds(31, 35, 324, 38);
 		frame.getContentPane().add(btnNewButton);
+		
+		JButton btnCl = new JButton("");
+		btnCl.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+					try {
+						CameraIP cip=new CameraIP();
+						cip.windowCamera();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+			}
+		});
+		final Image imgCam = new ImageIcon(this.getClass().getResource("/cam.png")).getImage();
+		btnCl.setIcon(new ImageIcon(imgCam));
+
+		btnCl.setBounds(358, 13, 70, 70);
+		frame.getContentPane().add(btnCl);
 		
 		
 		
@@ -141,5 +162,4 @@ public class TerminaleCliente {
 		
 		return true;
 	}
-	
 }
