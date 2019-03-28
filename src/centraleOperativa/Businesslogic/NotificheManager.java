@@ -20,7 +20,7 @@ public class NotificheManager {
 			se=ge.getSegnalazioneById(id);
 			if(se.getStato().compareTo("IN ATTESA")==0) {
 				se.setStato("RISOLTA");
-				//ge.updateSegnalazione(se);
+				ge.updateSegnalazione(se);
 				notifyAll();
 				return true;
 			}

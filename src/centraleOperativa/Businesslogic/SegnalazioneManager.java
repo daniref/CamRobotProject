@@ -161,15 +161,16 @@ public boolean verificaCondizione(segnalazione_Entity s) {
 						try {
 							gestore_Entity ge=gestore_Entity.getInstance(idgestore);
 							wait();
-							ge.getSegnalazioneById(idSegnalazione).setStato("IN ATTESA");
-							//ge.updateSegnalazione();
+							segnalazione_Entity s= ge.getSegnalazioneById(idSegnalazione);		//ho già creato una segnalazione (che ha lo stato iniziale a "APERTA")
+							s.setStato("IN ATTESA");											//si setta lo stato di quella segnalazione a "IN ATTESA"
+							ge.updateSegnalazione(s);											//update in gestore -> e db
 							notifyAll();
-							sleep(120000);															// attende 2 minuti
+							sleep(120000);														//si attendono 2 minuti
 							wait();
-							segnalazione_Entity se= gestore_Entity.getSegnalazioneById(idSegnalazione); 		// lettura fatta col semaforo!
-							if(se.getStato().compareTo("IN ATTESA")==0) {
-								se.setStato("GESTORE ESTERNO");
-							//	ge.updateSegnalazione(se);
+							s= gestore_Entity.getSegnalazioneById(idSegnalazione); 				//wait - action- notify (semaphore)
+							if(s.getStato().compareTo("IN ATTESA")==0) {
+								s.setStato("GESTORE ESTERNO");
+								ge.updateSegnalazione(s);
 								notifyAll();
 								ComunicazioneManager cM = new ComunicazioneManager("",idRobot,idgestore);
 								String indi=cM.recuperaIndirizzo();
