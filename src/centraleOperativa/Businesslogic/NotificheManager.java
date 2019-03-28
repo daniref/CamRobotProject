@@ -25,14 +25,15 @@ public class NotificheManager {
 					}
 				} catch (PersistentException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					e.printStackTrace();		
 				}
-			
+				
 			}
 			return false;
-			
-		}
 
+			
+	
+	}
 	
 	
 	public String tipoSensoreToGestore(String tipo_sensore) {

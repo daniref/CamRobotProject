@@ -168,12 +168,53 @@ public boolean verificaCondizione(segnalazione_Entity s) {
 
 	
 	//da portare in gestore_entity
+	/**
+	 * 
+	 */
 	public void ControlloNotifica() {
+
 		System.out.println("FUNZIONE CONTROLLO NOTIFICA           INIZIO");
 
 		Thread ThreadNotifica=new Thread(){
 			public void run() {
-				
+/*=======
+		Thread ThreadNotifica=new Thread()
+			{
+				public void run() {
+						try {
+							gestore_Entity ge=gestore_Entity.getInstance(idgestore);
+							wait();
+							segnalazione_Entity s= ge.getSegnalazioneById(idSegnalazione);		//ho già creato una segnalazione (che ha lo stato iniziale a "APERTA")
+							s.setStato("IN ATTESA");											//si setta lo stato di quella segnalazione a "IN ATTESA"
+							ge.updateSegnalazione(s);											//update in gestore -> e db
+							notifyAll();
+							sleep(120000);														//si attendono 2 minuti
+							wait();
+							s= gestore_Entity.getSegnalazioneById(idSegnalazione); 				//wait - action- notify (semaphore)
+							if(s.getStato().compareTo("IN ATTESA")==0) {
+								s.setStato("GESTORE ESTERNO");
+								ge.updateSegnalazione(s);
+								notifyAll();
+								ComunicazioneManager cM = new ComunicazioneManager("",idRobot,idgestore);
+								String indi=cM.recuperaIndirizzo();
+								String telEm=cM.recuperaNumeroEmergenza();
+								ServizioDiComunicazioneInterface sci=null;
+								String msg="Indirizzo da raggiungere: "+indi+"; Allarme scattato: "+tipologia+"; Valore rilevato: "+valore+"; Orario: "+data_ora;
+								sci.contattaProprietario(msg, telEm);
+								System.out.println("E' stata inoltrato il seguente messaggio: <"+msg+"> al numero: <"+telEm+">");
+							}
+							else {
+								notifyAll();
+								//System.out.println("La segnalazione è stata chiusa attraverso la notifica del Cliente");
+							}
+							
+							}
+						catch(InterruptedException | PersistentException e){
+							e.printStackTrace();
+						}
+					}
+>>>>>>> branch 'master' of https://github.com/daniref/CamRobotProject.git
+*/				
 				boolean comunica=false;
 				
 				try {
