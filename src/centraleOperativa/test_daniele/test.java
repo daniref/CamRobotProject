@@ -169,7 +169,7 @@ public class test {
 //-----------TEST 7 Inserimento di una segnalazione nel db e nella lista del gestore
 		try {
 			float valore_misurato=57.745f;
-			String idGestore="gs0001";
+			String idGestore="gs0002";
 			segnalazione_Entity segn = new segnalazione_Entity(valore_misurato,
 							new Date(),idGestore,
 							"sn0004","rb0002");
