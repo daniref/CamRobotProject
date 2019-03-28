@@ -2,6 +2,7 @@ package centraleOperativa.Control;
 
 import java.util.Date;
 
+import centraleOperativa.Boundary.ServizioDiComunicazioneInterface;
 import centraleOperativa.Businesslogic.*;
 
 public class CentraleOperativaController {
@@ -40,22 +41,30 @@ public class CentraleOperativaController {
 			SegnalazioneManager segnManag=new SegnalazioneManager(idrobot,idsensore,valore,dataora);			//gestisci segnalazione
 			segnManag.trattaSegnalazione();
 			String ids=segnManag.getIdSegnalazione();
+			
+			if(ids.compareTo("error")!=0) { //se è stata creata una nuova segnalazione (in tal caso si modifica il valore iniziale di "idsegnalazione")
 			//MESSAGGIO AL PROPRIETARIO: idsegnalazione; idsensore; dataora;
-			String messaggioProprietario =(ids+";"+idsensore+";"+valore+";"+dataora+";");
-			ComunicazioneManager cm= new ComunicazioneManager(messaggioProprietario,idrobot);
-			cm.ContattaProprietario();
-		}
+				String messaggioProprietario =(ids+";"+idsensore+";"+valore+";"+dataora+";"+segnManag.getTipologia()+";");
+				ComunicazioneManager cm= new ComunicazioneManager(messaggioProprietario,idrobot);
+				String recapito=cm.recuperaRecapito();
+				if(recapito!=null) {
+					ServizioDiComunicazioneInterface sc = null; //si inizializza a null in quanto ci si affida ad un Servizio esterno che va ad implementare questa funzione!
+					sc.contattaProprietario(messaggioProprietario, recapito);
+					segnManag.ControlloNotifica(); 				// setta ad IN ATTESA , aspetta 2 minuti, verifica notifica dal cliente, (se necessario) contatta gestore esterno
+				}
+			}
+			}
 		else {
 			System.out.println("\n\nErrore! Dati ricevuti non corretti. Il messaggio ricevuto da '"+idrobot+"' e' stato ignorato!\n\n");
 			}
 	}
 		
-
-
 	
 	public void gestisciKeep(String idrobot, Date dataora) {
-		System.out.println("CENTRALE_GESTISCI-KEEP");
-
+		KeepAliveManager kam=new KeepAliveManager(idrobot,dataora);
+		kam.RegistraKeep();
+		kam.aggiornaFunzionamentoRobot();
+		
 	}
 	
 }
