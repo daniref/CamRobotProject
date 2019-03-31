@@ -22,9 +22,7 @@ implements ProxyAmministratore{
 		System.out.println("[Amministratore_CentraleOperativaProxy-CENTRALE] ");
 		AmministratoreController ac=AmministratoreController.getIstance();
 		try {
-			System.out.println("[Amministratore_CentraleOperativaProxy-CENTRALE] chiama gestisci start");
 			ac.gestisciStart();
-			System.out.println("[Amministratore_CentraleOperativaProxy-CENTRALE] torna gestisci start");
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

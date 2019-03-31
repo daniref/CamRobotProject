@@ -97,7 +97,7 @@ public class TerminaleCliente {
 				    for(int i=0;i<buffer.size();i++) {
 			    		ListaLabelSensore1.get(i).setText(buffer.get(i));
 			    		System.out.println(buffer.get(i));
-			    		frame.setBounds(1000, 100, 450, 300);
+			    		frame.setBounds(1000, 100, 450, 196+50*buffer.size());
 			    		ListaLabelSensore1.get(i).setVisible(true);
 						    }	
 				} catch (MalformedURLException | RemoteException | NotBoundException e1) {

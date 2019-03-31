@@ -20,6 +20,7 @@ public class gestore_Entity {
 	public static synchronized gestore_Entity getInstance(String idGestore) throws PersistentException{
 
 		if(gestori==null) {
+			System.out.println("DEBUG(singleton gestore)(getinstance)          non e' presente alcun gestore          ");
 			gestori=new ArrayList<gestore_Entity>();	
 		}
 		ArrayList<gestore_Entity> gesList = getListaGestori();
@@ -31,6 +32,7 @@ public class gestore_Entity {
 				trovato=true;
 				returnedGestore=gestori.get(i);
 			}
+			i++;
 		}
 		if(trovato==false) {
 			gestore_Entity new_gest=new gestore_Entity(idGestore);
@@ -38,7 +40,6 @@ public class gestore_Entity {
 			returnedGestore=new_gest;
 		}
 		return returnedGestore;
-
 	}
 	
 	//attributi privati della classe
@@ -181,16 +182,24 @@ public class gestore_Entity {
 	
 	//metodo per la ricerca dell'ultima segnalazione associata ad un sensore
 	public static synchronized segnalazione_Entity getUltimaSegnalazioneByIdSensore(String id) {
-		
+		System.out.println("DEBUG(gestore-singleton)(getUltimaSegnalazioneByIdSensore)          0        ");
+
 		ArrayList<segnalazione_Entity> segnalazioniList = getListaSegnalazioni();
+		System.out.println("DEBUG(gestore-singleton)(getUltimaSegnalazioneByIdSensore)          1        ");
 		segnalazione_Entity s = new segnalazione_Entity();
 		segnalazione_Entity returnedSegnalazione = new segnalazione_Entity();
+		System.out.println("DEBUG(gestore-singleton)(getUltimaSegnalazioneByIdSensore)          2        ");
 		int i=0;
-		boolean trovato=false;
-		while(i<segnalazioniList.size() && !trovato) {
-			s = segnalazioniList.get(i);
+		while(i<segnalazioniList.size()) {
+					System.out.println("DEBUG(gestore-singleton)(getUltimaSegnalazioneByIdSensore)          3."+i+" (loop ricerca nelle segnalazioni)");
+					s = segnalazioniList.get(i);
+					System.out.println("DEBUG(gestore-singleton)(getUltimaSegnalazioneByIdSensore)          3."+i+" (loop ricerca nelle segnalazioni)+ id segnalazione trovata"+s.getIdSensore());
 			if(s.getIdSensore().compareTo(id)==0) {
+				System.out.println("DEBUG(gestore-singleton)(getUltimaSegnalazioneByIdSensore)          3."+i+".1 (loop ricerca nelle segnalazioni - verifica se id è uguale)+ id segnalazione trovata"+s.getIdSensore());
+
 				if(returnedSegnalazione.getId()!=null) {
+					System.out.println("DEBUG(gestore-singleton)(getUltimaSegnalazioneByIdSensore)          3."+i+".2 (loop ricerca nelle segnalazioni - verifica se id è uguale)"+s.getIdSensore());
+
 					if(returnedSegnalazione.getDataTime().compareTo(s.getDataTime())<0) {
 						returnedSegnalazione=s;
 					}
@@ -199,9 +208,7 @@ public class gestore_Entity {
 					returnedSegnalazione=s;
 				}
 			}
-			else {
-				i++;
-			}
+		i++;
 		}		
 		return returnedSegnalazione;
 		
