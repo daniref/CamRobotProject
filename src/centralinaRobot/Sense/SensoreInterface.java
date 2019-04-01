@@ -13,7 +13,6 @@ public SensoreInterface(String ID,String T){
 		this.tipo=T;
 		this.ss= new SensoreSimulation(T);//id,tipo,soglia,valore
 		//creazione thread Demone per la lettura del valore
-		ss.setDaemon(true);
 		ss.start();
 	}
 	
@@ -46,6 +45,15 @@ public SensoreInterface(String ID,String T){
 	}	
 
 
+	public void setPausaSimulazione() {
+		ss.setPause(true);
+	}
+
+	public void refreshFunzionamentoSimulazione() {
+		ss.setPause(false);
+		
+	}
+	
 	public float getMisura() {
 		return misura;
 	}

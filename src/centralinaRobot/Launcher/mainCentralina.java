@@ -28,7 +28,9 @@ public class mainCentralina {
 		final String urCentralinalCliente= "rmi://localhost:"+PortaCentralinaCliente+"/BC";
 
 		CentralinaRobotController c = CentralinaRobotController.getCentralinaRobot();
+
 		c.configuration();		
+
 		System.out.println("*****CENTRALINA <"+ c.getID()+">*****");
 		   try {
 			   //la centralina riceve i messaggi dal cliente sulla porta 4000!
@@ -42,7 +44,7 @@ public class mainCentralina {
 		   
 
 			
-			Display disp = new Display(c.getSensori(),c.getID(),CentralinaRobotController.getSensoriSoglie());
+			Display disp = Display.getInstance(c.getSensori(),c.getID(),CentralinaRobotController.getSensoriSoglie());
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
@@ -52,11 +54,8 @@ public class mainCentralina {
 					}
 				}
 			});
-			System.out.println("[DEBUG][main_centralina][0]-controller creato");
-			TimerInterface t1 = new TimerInterface(0,disp);	//timer che scatena monitoraggio
-			TimerInterface t2 = new TimerInterface(1, disp);	//Timer che scatena il controllo funzionamento
-			t1.start();
-			t2.start();
+			//avvia i thread che funzionano per il monitoraggio
+			c.start();
 			
 		}
 }

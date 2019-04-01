@@ -67,8 +67,9 @@ public ArrayList<Number> LetturaValori(){
 	return valoriletti;
 }
 	
-public void Monitora(Display d) throws JMSException{
+public void Monitora() throws JMSException{
 	float valore;
+	Display d= Display.getInstance(Sensori,idRobot , SensoriSoglie);
 	//	per ogni sensore gestito dalla centralina viene letto il valore e la soglia
 	for(int i=0;i<Sensori.size();i++){
 		valore=Sensori.get(i).Leggi();

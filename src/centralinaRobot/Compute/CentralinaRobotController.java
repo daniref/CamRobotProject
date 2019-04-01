@@ -9,9 +9,12 @@ import javax.jms.JMSException;
 
 
 
+
 public class CentralinaRobotController {
 	private final static String idR="rb0002"; //id robot univoco per ogni controller!
-	
+	static TimerInterface t1;
+	static TimerInterface t2;
+	boolean avviato;
 	private final static ArrayList<SensoreInterface> Sensori= new ArrayList<SensoreInterface>();
 	private static ArrayList<Float> SensoriSoglie= new ArrayList<Float>();	
 
@@ -47,6 +50,7 @@ public class CentralinaRobotController {
 
 	//dati ottenuti dal server
 	public void configuration(){
+
 		IDRobot=idR; 
 		//si va a fare una richiesta con RMI in cui si caricano i Sensori Interface con i valori che ci sono sul db!
 		ArrayList<String> datisensoriDB= new ArrayList<String>();
@@ -61,15 +65,15 @@ public class CentralinaRobotController {
 			}
 		}
 		else {
-			System.out.println("e mo so cazzz'");
+			System.out.println("Non ci sono sensori associati al robot <"+idR+">");
 		}
 }
 
 	
-	public void Misura(Display d) throws JMSException{
+	public void Misura() throws JMSException{
 	//	System.out.println("[Controller]crea manager segnalazioni con idrobot "+ getID() + "Sensori e Soglie");
         ManagerMon=new MonitoraggioManager(getID(),Sensori, SensoriSoglie); //carica soglie!
-		ManagerMon.Monitora(d);
+		ManagerMon.Monitora();
 	}
 	
 	
@@ -80,10 +84,42 @@ public class CentralinaRobotController {
 		
 	}
 	
-	public void ControllaFunz(Display d) throws JMSException{
+	public void ControllaFunz() throws JMSException{
 		System.out.println("[Controller]crea un nuovo manager con idrobot="+ getID());
 		FunzionamentoManager mf=new FunzionamentoManager(getID());
-		mf.CheckFunzionamento(d);
+		if(!mf.CheckFunzionamento())stop();	//se il funzionamento non è corretto, allora stoppa la generazione dei valori sul display!
 	}
-	
+
+	//metodo utilizzato per creare e mandare in run i due threads
+	public void start(){
+		System.out.println("[Controller]Il robot <"+getID()+"> sta per essere riavviato!");
+		for(int i=0;i<Sensori.size();i++) {
+			Sensori.get(i).refreshFunzionamentoSimulazione();
+		}
+		t1 = new TimerInterface(0);		//timer che scatena monitoraggio
+		t2 = new TimerInterface(1);		//Timer che scatena il controllo funzionamento
+		t1.start();
+		t2.start();
+		this.avviato=true;
+	}
+
+	//metodo utilizzato per interrompere i due thread che 
+	public void stop(){
+
+		System.out.println("[Controller]Il robot <"+getID()+"> sta per essere riavviato!");
+		for(int i=0;i<Sensori.size();i++) {
+			Sensori.get(i).setPausaSimulazione();
+			}
+		t1.stoppa();			//si interrompe il run del thread che scatena monitoraggio dei sensori
+		t2.stoppa();			//si interrompe il run del thread che scatena il controllo del funzionamento
+		this.avviato=false;
+		}
+	public boolean isAvviato() {
+		return avviato;
+	}
+	public void setAvviato(boolean avviato) {
+		this.avviato = avviato;
+	}
+
+
 }

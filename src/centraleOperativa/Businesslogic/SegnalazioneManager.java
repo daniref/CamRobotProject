@@ -31,16 +31,16 @@ public class SegnalazioneManager {
 	}
 	
 	public void trattaSegnalazione() {
-		System.out.println("DEBUG(SegnalazioneManager)(trattasegnalazione)          -4        ");
+		System.out.println("DEBUG(SegnalazioneManager)(trattasegnalazione)          -6        ");
 
 		this.tipologia=this.leggiTipologia();
-		System.out.println("DEBUG(SegnalazioneManager)(trattasegnalazione)          -3        ");
+		System.out.println("DEBUG(SegnalazioneManager)(trattasegnalazione)          -5        ");
 		this.idgestore=this.tipoSensoreToGestore(tipologia);
-		System.out.println("DEBUG(SegnalazioneManager)(trattasegnalazione)          -2        ");
+		System.out.println("DEBUG(SegnalazioneManager)(trattasegnalazione)          -4        ");
 		try {
-			System.out.println("DEBUG(SegnalazioneManager)(trattasegnalazione)          -1        ");
+			System.out.println("DEBUG(SegnalazioneManager)(trattasegnalazione)          -3        ");
 			gestore_Entity gest= gestore_Entity.getInstance(this.idgestore);
-			System.out.println("DEBUG(SegnalazioneManager)(trattasegnalazione)          0        ");
+			System.out.println("DEBUG(SegnalazioneManager)(trattasegnalazione)          -2        ");
 			segnalazione_Entity s = new segnalazione_Entity();
 			System.out.println("DEBUG(SegnalazioneManager)(trattasegnalazione)          -1        "+s.getId());
 			s=gest.getUltimaSegnalazioneByIdSensore(this.idsensore);
@@ -48,7 +48,7 @@ public class SegnalazioneManager {
 			if (s.getId()!=null) {
 				System.out.println("DEBUG(SegnalazioneManager)(trattasegnalazione)       1   c'è già una segnalazione per quel sensore      ");
 
-				if (!verificaCondizione(s)) {
+				if (!verificaCondizione(s,4)) { //dimmi se sono passati più di 4 minuti dalla precedente segnalazione con quell'id!
 					System.out.println("DEBUG(SegnalazioneManager)(trattasegnalazione)    2   quela segnalazione è stata generata poiù di 3 minuti  fa        ");
 					try {
 						segnalazione_Entity newSeg = new segnalazione_Entity(this.valore,this.data_ora,this.idgestore,this.idsensore,this.idRobot);
@@ -115,12 +115,14 @@ public class SegnalazioneManager {
 		return lista;
 	}
 */
-public boolean verificaCondizione(segnalazione_Entity s) {
+public boolean verificaCondizione(segnalazione_Entity s,int minuti) {
 		Date orario_corrente=new Date();
 		System.out.println("[VERIFICA CONDIZIONE] orario della segnalazione: "+s.getDataTime());
 		System.out.println("[VERIFICA CONDIZIONE] orario corrente: "+orario_corrente);
-		System.out.println("[VERIFICA CONDIZIONE] differenza: "+orario_corrente.compareTo(s.getDataTime()));
-		if(orario_corrente.compareTo(s.getDataTime())<1800000) return true;
+		System.out.println("[VERIFICA CONDIZIONE] differenza: "+ (orario_corrente.getTime()-s.getDataTime().getTime()));
+		if(orario_corrente.getTime()-s.getDataTime().getTime()<(minuti*60*1000)) return true;
+		//getTime restituisce il numero di millisecondi trascorsi dal 01/01/1970 00:00:00.
+		//dunque la differenza tra queste due date è espressa in millisecondi.
 		return false;
 }
 

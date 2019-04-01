@@ -7,12 +7,11 @@ import centralinaRobot.Control.*;
 
 public class TimerInterface extends Thread {
 	private int tipo; //timer monitoraggio(0), timer Keep (1)
-	Display Dis;
+    private volatile boolean exit = false;
 
-	public TimerInterface(int t, Display D){
+	public TimerInterface(int t){
 		super();
 		this.tipo=t;
-	this.Dis=D;
 	}
 	
 	
@@ -21,7 +20,7 @@ public class TimerInterface extends Thread {
 		do {
 			try {
 				System.out.println("***MONITORAAA***");
-				monitora(Dis);
+				monitora();
 				Thread.sleep(4500);
 
 				}
@@ -29,12 +28,12 @@ public class TimerInterface extends Thread {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				} 
-		}while(true);
+		}while(!exit);
 		}
 	else {
 		do {
 			try {
-				 verifica(Dis);
+				 verifica();
 				System.out.println("***CHECK FUNZIONAMENTO***");
 				Thread.sleep(2000);
 				}
@@ -42,18 +41,23 @@ public class TimerInterface extends Thread {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				}
-		}while(true);
+		}while(!exit);
 		}
 }
 	
-	public void monitora(Display d) throws JMSException {
+	
+	 public void stoppa(){
+	        exit = true;
+	    }
+	
+	public void monitora() throws JMSException {
 		CentralinaRobotController r=CentralinaRobotController.getCentralinaRobot();
-		r.Misura(d);
+		r.Misura();
 	}
 
-	public void verifica(Display d) throws JMSException {
+	public void verifica() throws JMSException {
 		CentralinaRobotController r=CentralinaRobotController.getCentralinaRobot();
-		r.ControllaFunz(d);
+		r.ControllaFunz();
 	}
 	
 	};

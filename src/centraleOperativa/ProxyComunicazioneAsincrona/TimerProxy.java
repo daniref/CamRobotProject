@@ -14,19 +14,19 @@ import centraleOperativa.Control.*;
 
 public class TimerProxy extends Thread{
 	private int tipo;
-	int tempo;
+	double tempo;
 	MessageConsumer consumer;
     private volatile boolean exit = false;
 
 	
-	public TimerProxy(int t, MessageConsumer c){
+	public TimerProxy(int t, MessageConsumer c,double secondi){
 		this.tipo=t;
 		this.consumer=c;
-
+		this.tempo=secondi;
 	}
-	public TimerProxy(int t,int temp){
+	public TimerProxy(int t,double minuti){
 		this.tipo=t;
-		int tempo=temp;
+		tempo= minuti*60;
 	}
 	
 	public void run(){
@@ -36,7 +36,7 @@ public class TimerProxy extends Thread{
 						while (!exit) {
 							System.out.println("[Thread Scheduling segnalazioni d'allarme");					
 							RiceviSegnalazione(consumer);
-							Thread.sleep(2,3*1000);
+							Thread.sleep((long)(tempo*1000));
 				   			}
 						System.out.println("Thread che schedula le segnalazioni d'allarme chiuso");
 						}
@@ -51,7 +51,7 @@ public class TimerProxy extends Thread{
 						while (!exit) {
 							System.out.println("[Thread Scheduling keep alive");					
 							RiceviKeep(consumer);
-							Thread.sleep(5,5*1000);
+							Thread.sleep((long)(tempo*1000));
 							}
 						System.out.println("Thread che schedula i keep alive chiuso");
 						}	
@@ -63,8 +63,8 @@ public class TimerProxy extends Thread{
 					try {
 						while (!exit) {
 							System.out.println("[Thread]Controllo malfunzionamento");					
-							ControllaMalfunzionamenti(this.tempo);
-							Thread.sleep((long) (tempo*60*1000));
+							ControllaMalfunzionamenti((int)(this.tempo));
+							Thread.sleep((long)(tempo*1000));
 							}
 						System.out.println("Thread che verifica i malfunzionamenti chiuso");
 						}	

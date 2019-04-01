@@ -18,8 +18,9 @@ public class CentralinaCentraleProxy {
 
 	
 	public ArrayList<String> LoadDataDB(String idr) throws MalformedURLException, RemoteException, NotBoundException {
-		
+
 		try{
+
 			ProxyCentralinaCentrale proxy;
 			proxy = (ProxyCentralinaCentrale)Naming.lookup(urlCentraleCentralina);
 			ArrayList<String> buffer= new ArrayList<String>();

@@ -31,8 +31,8 @@ public class AmministratoreController {
 	public void gestisciStart() throws JMSException {
 		CentraleOperativaProxy proxyAsincrona= CentraleOperativaProxy.getIstance();
 		proxyAsincrona.setup();	//proxy che fa in modo di ricevere le segnalazioni d'allarme
-		tp1 = new TimerProxy(0,proxyAsincrona.getConsumerAllarmi());
-		tp2 = new TimerProxy(1,proxyAsincrona.getConsumerKeep());
+		tp1 = new TimerProxy(0,proxyAsincrona.getConsumerAllarmi(),6.6); //ogni 2.3 secondi si controllano gli allarmi (in realtà c'è un thread sui sensori interface che aggiorna il valore ogni 6 secondi
+		tp2 = new TimerProxy(1,proxyAsincrona.getConsumerKeep(),8.2);	 //ogni 7.2 secondi si controlla il funzionamento
 		tp3 = new TimerProxy(3,5); 									//ogni 1 minuto parte un controllo sui Keep!
 		tp1.start();
 		tp2.start();

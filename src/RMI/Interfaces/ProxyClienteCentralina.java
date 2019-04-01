@@ -6,4 +6,5 @@ import java.util.ArrayList;
 
 public interface ProxyClienteCentralina extends Remote {
 	   public ArrayList<String> MonitoraggioRemoto() throws RemoteException;
+	   public boolean refresh() throws RemoteException;
 }
