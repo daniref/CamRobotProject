@@ -53,19 +53,20 @@ public class FunzionamentoManager {
 		return true;
 	}
 
-	public void CheckFunzionamento(Display d) throws JMSException{
+	public boolean CheckFunzionamento() throws JMSException{
+		
+		Display d= Display.getInstance();
 		if (getFunzionamento()!=simulafunzionamento()) change();
-
-		System.out.print("[Funzionamento Manager] FUNZIONAMENTO: ");
-//		if(getFunzionamento())System.out.println("["+getIdrobot()+"] OK");
-//		else System.out.println("["+idrobot+"] KO");
 		
 		if(getFunzionamento()){
-				d.showFunzionamento(true);
-				
+				d.showFunzionamento(true);	
 				proxyAsincr.GeneraKeep(getIdrobot());
+				return true;
 				}
-			else d.showFunzionamento(false);
+			else {
+				d.showFunzionamento(false);
+				return false;
+			}
 		}
 	
 	}

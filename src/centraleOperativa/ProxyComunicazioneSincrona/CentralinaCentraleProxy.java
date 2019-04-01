@@ -25,9 +25,3 @@ implements ProxyCentralinaCentrale{
 	}
 
 }
-
-
-/*	CentralinaRobotController cgc= CentralinaRobotController.getCentralinaRobot();
-		MonitoraggioManager mm =new MonitoraggioManager(cgc.getID(), cgc.getSensori(), cgc.getSensoriSoglie());
-		ArrayList<String> buff= new ArrayList<String>();
-		buff=mm.MonitoraggioRemoto();*/

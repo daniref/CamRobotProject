@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import amministratore.Boundary.TerminaleAmministratore;
+import centralinaRobot.Compute.CentralinaRobotController;
 import centralinaRobot.Sense.SensoreInterface;
 
 
@@ -29,11 +30,24 @@ public class Display {
     private JLabel lblImmFunzionamento;
 	private final Image imgFunctError = new ImageIcon(this.getClass().getResource("/incorrect.png")).getImage();
 	private final Image imgFunctOK = new ImageIcon(this.getClass().getResource("/correct.png")).getImage();
-
-    	
-    //private static DisplaySingl DisplayInstance;
-
-   public Display (ArrayList<SensoreInterface> Sens, String id_r, ArrayList <Float> ss){
+	
+	//CREAZIONE DEL 'SINGLETON'
+	private static Display display=null;
+	
+	//metodo usato per l'accesso alla classe singleton
+	public static synchronized Display getInstance(ArrayList<SensoreInterface> Sens, String id_r, ArrayList <Float> ss){
+			if(display==null){
+				display= new Display(Sens,id_r,ss);
+			}
+			return display;
+		}
+	//non vine MAI richiamata la prima volta.!
+	public static synchronized Display getInstance(){
+			return display;
+		}
+		
+   //costruttore privato
+   private Display (ArrayList<SensoreInterface> Sens, String id_r, ArrayList <Float> ss){
     	initialize(Sens,id_r,ss);
     	clock();
     }  

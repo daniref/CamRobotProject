@@ -20,7 +20,7 @@ public class segnalazione_Entity {
 	
 	//costruttore vuoto
 	public segnalazione_Entity() {
-		
+		super();
 	}
 	
 	//costruttore con parametri

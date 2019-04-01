@@ -23,5 +23,15 @@ public class Cliente_CentralinaRobotProxy extends UnicastRemoteObject
 		buff=mm.MonitoraggioRemoto();
 		return buff;
 	}
+
+	@Override
+	public boolean refresh() throws RemoteException {
+		CentralinaRobotController cgc= CentralinaRobotController.getCentralinaRobot();
+		if(!cgc.isAvviato()) {
+				cgc.start();
+				return true;
+		}
+		return false;
+	}
 	
 }

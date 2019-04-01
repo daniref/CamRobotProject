@@ -16,8 +16,10 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Color;
 import javax.swing.ImageIcon;
@@ -62,7 +64,7 @@ public class TerminaleCliente {
 	private void initialize() throws MalformedURLException, RemoteException, NotBoundException {
 
 		frame = new JFrame("Terminale Cliente");
-		frame.setBounds(1000, 100, 450, 196);
+		frame.setBounds(1000, 100, 521, 228);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
@@ -77,14 +79,14 @@ public class TerminaleCliente {
 		}	
 		
 		JLabel lblRiep = new JLabel("Riepilogo");
-		lblRiep.setBounds(12, 142, 81, 47);
+		lblRiep.setBounds(12, 177, 81, 47);
 		lblRiep.setVisible(false);
 		frame.getContentPane().add(lblRiep);
 		
 		JButton btnLeggi = new JButton("Visualizza ultimi valori misurati");
 		btnLeggi.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnLeggi.setForeground(Color.BLUE);
-		btnLeggi.setBounds(31, 91, 376, 38);
+		btnLeggi.setBounds(30, 109, 337, 38);
 		btnLeggi.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -97,7 +99,8 @@ public class TerminaleCliente {
 				    for(int i=0;i<buffer.size();i++) {
 			    		ListaLabelSensore1.get(i).setText(buffer.get(i));
 			    		System.out.println(buffer.get(i));
-			    		frame.setBounds(1000, 100, 450, 300);
+
+			    		frame.setBounds(1000, 100, 521, 228+40*buffer.size());
 			    		ListaLabelSensore1.get(i).setVisible(true);
 						    }	
 				} catch (MalformedURLException | RemoteException | NotBoundException e1) {
@@ -121,7 +124,7 @@ public class TerminaleCliente {
 				n.WindowNotifica();
 			}
 		});
-		btnNewButton.setBounds(31, 35, 324, 38);
+		btnNewButton.setBounds(30, 30, 337, 38);
 		frame.getContentPane().add(btnNewButton);
 		
 		JButton btnCl = new JButton("");
@@ -140,8 +143,36 @@ public class TerminaleCliente {
 		final Image imgCam = new ImageIcon(this.getClass().getResource("/cam.png")).getImage();
 		btnCl.setIcon(new ImageIcon(imgCam));
 
-		btnCl.setBounds(358, 13, 70, 70);
+		btnCl.setBounds(414, 95, 70, 70);
 		frame.getContentPane().add(btnCl);
+		
+		JButton buttonRefresh = new JButton("");
+		buttonRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			    Cliente_CentralinaRobotProxy ccrp= new Cliente_CentralinaRobotProxy();
+			    try {
+					if(ccrp.refresh()) JOptionPane.showMessageDialog(frame, "Il CamRobot e' stato riavviato ed e' tornato funzionante");
+					else  JOptionPane.showMessageDialog(frame, "Il CamRobot funziona regolarmente");
+				} catch (HeadlessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (MalformedURLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NotBoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}						
+
+			}
+		});
+		buttonRefresh.setBounds(414, 12, 70, 70);
+		final Image imgRefresh = new ImageIcon(this.getClass().getResource("/b-refresh.png")).getImage();
+		buttonRefresh.setIcon(new ImageIcon(imgRefresh));
+		frame.getContentPane().add(buttonRefresh);
 		
 		
 		

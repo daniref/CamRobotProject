@@ -14,7 +14,7 @@ public class SetupManager {
 
 
 	public ArrayList<String> loadDataDB(String idrobot){
-		
+
 		ArrayList<String> BufferString= new ArrayList<String>();
 		 CentralinaCentraleProxy ccp= new CentralinaCentraleProxy();
 		 try {
