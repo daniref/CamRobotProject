@@ -50,8 +50,6 @@ public class SensoreSimulation extends Thread{
 	}
 	
 	
-	
-	
 	public boolean isPause() {
 		return pause;
 	}

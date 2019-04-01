@@ -85,11 +85,11 @@ public class CentraleOperativaController {
 	//nel caso che ci siano robot ON da cui non si ricevono keep da più di "minuti" 
 	//allora si contatta il prorpietario e si avvisa che quel robot è fuori Servizio
 	//NB in realtà si controlla che tale intervallo di tempo si a minuti < intervallo <= 2*minuti)
-	public void gestisciMalfunzionamenti(Date d,int minuti) {
+	public void gestisciMalfunzionamenti(Date d,int minuti_in_secondi) {
 		System.out.println("Controllo maldunzionamenti alle ora: "+d);
 		MalfunzionamentiManager mm= new MalfunzionamentiManager();
 		ArrayList<String> robotFuoriUso = new ArrayList<String>();
-		robotFuoriUso=mm.ControllaMalfunzionamenti(d,minuti); 				
+		robotFuoriUso=mm.ControllaMalfunzionamenti(d,minuti_in_secondi); 				
 		for(int i=0; i<robotFuoriUso.size();i++) {
 			if(mm.checkRobotON(robotFuoriUso.get(i))) {
 				String messaggioProprietario =(robotFuoriUso.get(i)+" provvisoriamente non funzionante");

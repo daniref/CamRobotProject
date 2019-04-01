@@ -4,6 +4,7 @@ package centraleOperativa.ProxyComunicazioneAsincrona;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -115,10 +116,12 @@ public class TimerProxy extends Thread{
 	
 	//metodo necessario per controllare eventuali malunzionamenti da robot ON che non inviano più dei Keep Alive
 	//dunque tale malfunzionamento deve essere comunicato al proprietario
-	public void ControllaMalfunzionamenti(int minuti){
-		Date d= new Date();
+	public void ControllaMalfunzionamenti(int minuti_in_secondi){
+	    //  TimeZone.getDefault();
+	    //  TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+	      Date d= new Date();
 		CentraleOperativaController coc=CentraleOperativaController.getIstance();
-		coc.gestisciMalfunzionamenti(d,minuti);
+		coc.gestisciMalfunzionamenti(d,minuti_in_secondi);
 	}
 	
 	
