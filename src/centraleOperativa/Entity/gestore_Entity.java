@@ -6,6 +6,7 @@ import java.util.TimeZone;
 
 import org.orm.PersistentException;
 
+import centraleOperativa.Businesslogic.GestoreManager;
 import centraleOperativa.DB.Gestore;
 import centraleOperativa.DB.GestoreDAO;
 import centraleOperativa.DB.Segnalazione;
@@ -37,10 +38,9 @@ public class gestore_Entity {
 
 	//lista di liste delle segnalazioni appartenenti al gestore
 	private ArrayList<segnalazione_Entity> listaSegnalazioni=new ArrayList<segnalazione_Entity>();;
-	
 
 	//costruttore privato
-	public gestore_Entity(String idGestore) throws PersistentException{
+	public  gestore_Entity(String idGestore) throws PersistentException{
 		//while(listaSegnalazioni.size()>0)listaSegnalazioni.remove(0);
 		try {
 			//riempimento lista di segnalazioni
@@ -62,8 +62,8 @@ public class gestore_Entity {
         			}
         		
         		getGestoreById(idGestore);
-        		System.out.println("E' stata caricata la lista di "+segnalazioneList.size()+" segnalazioni dal db relativa al gestore "+ idGestore);
-        		System.out.println("Ripeto, ci sono  "+listaSegnalazioni.size()+" segnalazioni caricate in locale per il gestore "+ idGestore);
+        	//	System.out.println("E' stata caricata la lista di "+segnalazioneList.size()+" segnalazioni dal db relativa al gestore "+ idGestore);
+        	//	System.out.println("Ripeto, ci sono  "+listaSegnalazioni.size()+" segnalazioni caricate in locale per il gestore "+ idGestore);
         		
 		}
         	catch(Exception e) {

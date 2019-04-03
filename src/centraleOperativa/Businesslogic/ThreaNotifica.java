@@ -17,13 +17,13 @@ public class ThreaNotifica extends Thread{
 		this.idsegnalazione=ids;
 		this.idgestore=idg;
 		this.idrobot=idr;
-		System.out.println("[DEBUG-THREAD-NOTIFICA]creato nuovo thread per la segnalazione<"+ids +"> gestita da <"+idg+">");
+		//System.out.println("[DEBUG-THREAD-NOTIFICA]creato nuovo thread per la segnalazione<"+ids +"> gestita da <"+idg+">");
 	}
 
 
 	public void run(){
 		boolean comunica=false;
-		   			System.out.println("[DEBUG-THREAD-NOTIFICA] start Monitoraggio");					
+		   		//	System.out.println("[DEBUG-THREAD-NOTIFICA] start Monitoraggio");					
 					try {
 						Thread.sleep(15000);
 						GestoreManager g= GestoreManager.getInstance();
