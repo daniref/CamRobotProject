@@ -60,7 +60,7 @@ public class TimerProxy extends Thread{
 						e.printStackTrace();
 						}
 					 }
-			default:{ //tipo diverso da 1 e 2...
+			default:{ //tipo diverso da 0 e 1...
 					try {
 						while (!exit) {
 							System.out.println("[Thread]Controllo malfunzionamento");					

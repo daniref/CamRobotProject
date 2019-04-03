@@ -31,31 +31,19 @@ public class SegnalazioneManager {
 	}
 	
 	public void trattaSegnalazione() {
-		System.out.println("DEBUG(SegnalazioneManager)(trattasegnalazione)          -6        ");
-
 		this.tipologia=this.leggiTipologia();
-		System.out.println("DEBUG(SegnalazioneManager)(trattasegnalazione)          -5        ");
 		this.idgestore=this.tipoSensoreToGestore(tipologia);
-		System.out.println("DEBUG(SegnalazioneManager)(trattasegnalazione)          -4        ");
 		try {
-			System.out.println("DEBUG(SegnalazioneManager)(trattasegnalazione)          -3        ");
-			gestore_Entity gest= gestore_Entity.getInstance(this.idgestore);
-			System.out.println("DEBUG(SegnalazioneManager)(trattasegnalazione)          -2        ");
+			GestoreManager g= GestoreManager.getInstance();
+			gestore_Entity gest=g.getGestore(this.idgestore);
 			segnalazione_Entity s = new segnalazione_Entity();
-			System.out.println("DEBUG(SegnalazioneManager)(trattasegnalazione)          -1        "+s.getId());
 			s=gest.getUltimaSegnalazioneByIdSensore(this.idsensore);
-			System.out.println("DEBUG(SegnalazioneManager)(trattasegnalazione)          0        "+s.getId());
 			if (s.getId()!=null) {
-				System.out.println("DEBUG(SegnalazioneManager)(trattasegnalazione)       1   c'è già una segnalazione per quel sensore      ");
 
 				if (!verificaCondizione(s,4)) { //dimmi se sono passati più di 4 minuti dalla precedente segnalazione con quell'id!
-					System.out.println("DEBUG(SegnalazioneManager)(trattasegnalazione)    2   quela segnalazione è stata generata poiù di 3 minuti  fa        ");
 					try {
 						segnalazione_Entity newSeg = new segnalazione_Entity(this.valore,this.data_ora,this.idgestore,this.idsensore,this.idRobot);
-						System.out.println("DEBUG(SegnalazioneManager)(trattasegnalazione)    3   creo una nuova segnalazione        ");
 						this.idSegnalazione=gest.addSegnalazione(newSeg);
-						System.out.println("DEBUG(SegnalazioneManager)(trattasegnalazione)    4  agggiungo questa segnalazione al gestore corrispondente        ");
-						
 					} catch (PersistentException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -63,13 +51,9 @@ public class SegnalazioneManager {
 				}
 			}
 			else {
-				System.out.println("DEBUG(SegnalazioneManager)(trattasegnalazione)       1.1   non c'è alcuna segnalazione per quel sensore      ");
 				try {
 					segnalazione_Entity newSeg = new segnalazione_Entity(this.valore,this.data_ora,this.idgestore,this.idsensore,this.idRobot);
-					System.out.println("DEBUG(SegnalazioneManager)(trattasegnalazione)    2.1   creo una nuova segnalazione        ");
-				this.idSegnalazione=gest.addSegnalazione(newSeg);
-				System.out.println("DEBUG(SegnalazioneManager)(trattasegnalazione)    3.1  agggiungo questa segnalazione al gestore corrispondente        ");
-				
+					this.idSegnalazione=gest.addSegnalazione(newSeg);
 				} catch (PersistentException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -117,12 +101,7 @@ public class SegnalazioneManager {
 */
 public boolean verificaCondizione(segnalazione_Entity s,int minuti) {
 		Date orario_corrente=new Date();
-		System.out.println("[VERIFICA CONDIZIONE] orario della segnalazione: "+s.getDataTime());
-		System.out.println("[VERIFICA CONDIZIONE] orario corrente: "+orario_corrente);
-		System.out.println("[VERIFICA CONDIZIONE] differenza: "+ (orario_corrente.getTime()-s.getDataTime().getTime()));
 		if(orario_corrente.getTime()-s.getDataTime().getTime()<(minuti*60*1000)) return true;
-		//getTime restituisce il numero di millisecondi trascorsi dal 01/01/1970 00:00:00.
-		//dunque la differenza tra queste due date è espressa in millisecondi.
 		return false;
 }
 
@@ -130,9 +109,10 @@ public boolean verificaCondizione(segnalazione_Entity s,int minuti) {
 public void setAttesa(){
 		 gestore_Entity ge;
 		try {
-			ge = gestore_Entity.getInstance(idgestore);
+			GestoreManager g= GestoreManager.getInstance();
+			ge=g.getGestore(idgestore);
 			 segnalazione_Entity se= new segnalazione_Entity();
-			 se= gestore_Entity.getSegnalazioneById(idSegnalazione); 
+			 se= ge.getSegnalazioneById(idSegnalazione); 
 			 se.setStato("IN ATTESA");
 			 ge.updateSegnalazione(se);
 		} catch (PersistentException e) {

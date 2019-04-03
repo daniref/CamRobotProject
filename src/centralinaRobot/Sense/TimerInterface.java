@@ -30,7 +30,8 @@ public class TimerInterface extends Thread {
 				} 
 		}while(!exit);
 		}
-	else {
+
+		else {
 		do {
 			try {
 				 verifica();

@@ -29,13 +29,14 @@ public class CameraIP  {
 
 public static void windowCamera() throws Exception {
 //final String urlcasaNapoli ="http://192.168.1.93:8080/video?dummy=param.mjpg";
-final String urlTecchio ="http://100.102.35.143:8080/video?dummy=param.mjpg"; //<---- NON VA!
-final String urlHotspotRedmi4pro ="http://192.168.43.1:8080/video?dummy=param.mjpg";
-final String urlLapio ="http://192.168.0.102:8080/video?dummy=param.mjpg"; 
-final String urlCamLapio="http://192.168.0.104:8081/video?dummy=param.mjpg";
-final String urlMontoro="http://192.168.1.205:8080/video?dummy=param.mjpg";
 
-	OpenCVFrameGrabber frameGrabber = new OpenCVFrameGrabber(urlMontoro); 
+	//final String urlTecchio ="http://100.102.39.168:8081/video.mjpg?";//http://100.102.39.168:8081/"; //utilizzando il software Yawcam!
+final String urlHotspotRedmi4pro ="http://192.168.43.1:8080/video?dummy=param.mjpg";
+
+//final String urlLapio ="http://192.168.0.102:8080/video?dummy=param.mjpg"; 
+//final String urlCamLapio="http://192.168.0.104:8081/video?dummy=param.mjpg";
+
+	OpenCVFrameGrabber frameGrabber = new OpenCVFrameGrabber(urlHotspotRedmi4pro); 
     frameGrabber.setFormat("mjpeg");
     CanvasFrame canvasFrame = null;
     try {

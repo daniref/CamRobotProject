@@ -23,6 +23,11 @@ public class segnalazione_Entity {
 		super();
 	}
 	
+	@Override
+	public String toString() {
+		return " [id=" + id + "]";
+	}
+
 	//costruttore con parametri
 	public segnalazione_Entity(float valore_allarme,
 			Date dataTime, String idGestore,

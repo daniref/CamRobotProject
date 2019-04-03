@@ -26,9 +26,10 @@ public class ThreaNotifica extends Thread{
 		   			System.out.println("[DEBUG-THREAD-NOTIFICA] start Monitoraggio");					
 					try {
 						Thread.sleep(15000);
-						 gestore_Entity ge=gestore_Entity.getInstance(idgestore);
+						GestoreManager g= GestoreManager.getInstance();
+						gestore_Entity ge=g.getGestore(idgestore);
 						 segnalazione_Entity se= new segnalazione_Entity();
-						 se= gestore_Entity.getSegnalazioneById(idsegnalazione); 
+						 se= ge.getSegnalazioneById(idsegnalazione); 
 							if(se.getStato().compareTo("IN ATTESA")==0) {
 								se.setStato("GESTORE ESTERNO");
 								ge.updateSegnalazione(se);
