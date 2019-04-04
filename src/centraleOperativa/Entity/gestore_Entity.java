@@ -6,6 +6,7 @@ import java.util.TimeZone;
 
 import org.orm.PersistentException;
 
+import centraleOperativa.Businesslogic.GestoreManager;
 import centraleOperativa.DB.Gestore;
 import centraleOperativa.DB.GestoreDAO;
 import centraleOperativa.DB.Segnalazione;
@@ -14,54 +15,35 @@ import centraleOperativa.DB.SegnalazioneDAO;
 public class gestore_Entity {
 	
 	//creazione del SINGLETON
-	private static ArrayList<gestore_Entity> gestori=null;
+	private static gestore_Entity gestore=null;
+	
 	
 	//metodo usato per l'accesso alla classe singleton
-	public static synchronized gestore_Entity getInstance(String idGestore) throws PersistentException{
+/*	public static synchronized gestore_Entity getInstance(String idGestore) throws PersistentException{
 
-		if(gestori==null) {
-			System.out.println("DEBUG(singleton gestore)(getinstance)          non e' presente alcun gestore          ");
-			gestori=new ArrayList<gestore_Entity>();	
+		if(gestore==null) {
+			System.out.println("Prima costruzione di gestore "+idGestore);
+			gestore=new gestore_Entity(idGestore);
 		}
-		ArrayList<gestore_Entity> gesList = getListaGestori();
-		gestore_Entity returnedGestore = new gestore_Entity();
-		boolean trovato=false;
-		int i=0;
-		while(i<gestori.size() && !trovato) {
-			if(gestori.get(i).getId().compareTo(idGestore)==0) {
-				trovato=true;
-				returnedGestore=gestori.get(i);
-			}
-			i++;
+		return gestore;
 		}
-		if(trovato==false) {
-			gestore_Entity new_gest=new gestore_Entity(idGestore);
-			gestori.add(new_gest);
-			returnedGestore=new_gest;
-		}
-		return returnedGestore;
-	}
+	*/
+
+	
 	
 	//attributi privati della classe
-	private String id;
-	private String nome;
-	private String recapito;
-	
-	//lista di tutte le segnalazioni appartenenti al gestore
-	private static ArrayList<segnalazione_Entity> listaSegnalazioni;
-	
-	//costruttore vuoto
-	private gestore_Entity() {
-		
-		
-	}
+	private String id;					
+	private String nome;					
+	private String recapito;					
+
+	//lista di liste delle segnalazioni appartenenti al gestore
+	private ArrayList<segnalazione_Entity> listaSegnalazioni=new ArrayList<segnalazione_Entity>();;
 
 	//costruttore privato
-	private gestore_Entity(String idGestore) throws PersistentException{
-
+	public  gestore_Entity(String idGestore) throws PersistentException{
+		//while(listaSegnalazioni.size()>0)listaSegnalazioni.remove(0);
 		try {
 			//riempimento lista di segnalazioni
-			listaSegnalazioni=new ArrayList<segnalazione_Entity>();
         		ArrayList<Segnalazione> segnalazioneList = new ArrayList<Segnalazione>();
         		SegnalazioneDAO seg=new SegnalazioneDAO();
         		segnalazioneList=seg.getSegnalazioniListByIdGestore(idGestore);
@@ -77,8 +59,12 @@ public class gestore_Entity {
         			new_segnalazione.setIdRobot(s.getRobot().getId());
         			new_segnalazione.setIdSensore(s.getSensore().getId());
         			listaSegnalazioni.add(new_segnalazione);
-        		}
+        			}
+        		
         		getGestoreById(idGestore);
+        	//	System.out.println("E' stata caricata la lista di "+segnalazioneList.size()+" segnalazioni dal db relativa al gestore "+ idGestore);
+        	//	System.out.println("Ripeto, ci sono  "+listaSegnalazioni.size()+" segnalazioni caricate in locale per il gestore "+ idGestore);
+        		
 		}
         	catch(Exception e) {
         		e.printStackTrace();
@@ -105,8 +91,8 @@ public class gestore_Entity {
 			Gestore new_gestore=new Gestore();
 			new_gestore=GestoreDAO.getGestoreById(idGestore);
 			this.id=new_gestore.getId();
-			this.nome=new_gestore.getNome();
-			this.recapito=new_gestore.getRecapito();			
+			this.nome= new_gestore.getNome();
+			this.recapito= new_gestore.getRecapito();			
 		}
 		catch(Exception e) {
 			System.out.println("Cliente non presente!");
@@ -119,6 +105,8 @@ public class gestore_Entity {
 	public String addSegnalazione(segnalazione_Entity new_segnalazione) throws PersistentException {
 
 		try {
+			
+			//listaSegnalazioni.get(i).add(new_segnalazione);
 			listaSegnalazioni.add(new_segnalazione);
 			new_segnalazione.addSegnalazione();
 			return new_segnalazione.getId();
@@ -146,28 +134,20 @@ public class gestore_Entity {
 	}
 	
 	//metodo che restituisce la lista di robot dell'area
-	public static ArrayList<segnalazione_Entity> getListaSegnalazioni() {
-
+	public ArrayList<segnalazione_Entity> getListaSegnalazioni() {
 		return listaSegnalazioni;
-	
 	}
 	
-	public static ArrayList<gestore_Entity> getListaGestori(){
-		
-		return gestori;
-		
-	}
 	
 	//metodo che cerca nella lista dell'area un robot attraverso il suo id e lo restituisce
-	public static segnalazione_Entity getSegnalazioneById(String id) {
+	public segnalazione_Entity getSegnalazioneById(String id) {
 		
-		ArrayList<segnalazione_Entity> segnalazioniList = getListaSegnalazioni();
 		segnalazione_Entity s = new segnalazione_Entity();
 		segnalazione_Entity returnedSegnalazione = new segnalazione_Entity();
 		int i=0;
 		boolean trovato=false;
-		while(i<segnalazioniList.size() && !trovato) {
-			s = segnalazioniList.get(i);
+		while(i<listaSegnalazioni.size() && !trovato) {
+			s = listaSegnalazioni.get(i);
 			if(s.getId().compareTo(id)==0) {
 				trovato=true;
 				returnedSegnalazione=s;
@@ -181,25 +161,15 @@ public class gestore_Entity {
 	}
 	
 	//metodo per la ricerca dell'ultima segnalazione associata ad un sensore
-	public static synchronized segnalazione_Entity getUltimaSegnalazioneByIdSensore(String id) {
-		System.out.println("DEBUG(gestore-singleton)(getUltimaSegnalazioneByIdSensore)          0        ");
-
-		ArrayList<segnalazione_Entity> segnalazioniList = getListaSegnalazioni();
-		System.out.println("DEBUG(gestore-singleton)(getUltimaSegnalazioneByIdSensore)          1        ");
+	public synchronized segnalazione_Entity getUltimaSegnalazioneByIdSensore(String id) {
 		segnalazione_Entity s = new segnalazione_Entity();
 		segnalazione_Entity returnedSegnalazione = new segnalazione_Entity();
-		System.out.println("DEBUG(gestore-singleton)(getUltimaSegnalazioneByIdSensore)          2        ");
 		int i=0;
-		while(i<segnalazioniList.size()) {
-					System.out.println("DEBUG(gestore-singleton)(getUltimaSegnalazioneByIdSensore)          3."+i+" (loop ricerca nelle segnalazioni)");
-					s = segnalazioniList.get(i);
-					System.out.println("DEBUG(gestore-singleton)(getUltimaSegnalazioneByIdSensore)          3."+i+" (loop ricerca nelle segnalazioni)+ id segnalazione trovata"+s.getIdSensore());
+		while(i<listaSegnalazioni.size()) {
+					s = listaSegnalazioni.get(i);
 			if(s.getIdSensore().compareTo(id)==0) {
-				System.out.println("DEBUG(gestore-singleton)(getUltimaSegnalazioneByIdSensore)          3."+i+".1 (loop ricerca nelle segnalazioni - verifica se id è uguale)+ id segnalazione trovata"+s.getIdSensore());
 
 				if(returnedSegnalazione.getId()!=null) {
-					System.out.println("DEBUG(gestore-singleton)(getUltimaSegnalazioneByIdSensore)          3."+i+".2 (loop ricerca nelle segnalazioni - verifica se id è uguale)"+s.getIdSensore());
-
 					if(returnedSegnalazione.getDataTime().compareTo(s.getDataTime())<0) {
 						returnedSegnalazione=s;
 					}
@@ -238,6 +208,13 @@ public class gestore_Entity {
 
 	public void setRecapito(String recapito) {
 		this.recapito = recapito;
+	}
+
+	public void StampaLista() {
+		System.out.println("*****LISTA DEL GESTORE "+id+" **************");
+		for(int i=0;i<listaSegnalazioni.size();i++) {
+				System.out.println(listaSegnalazioni.get(i));
+		}
 	}
 	
 }

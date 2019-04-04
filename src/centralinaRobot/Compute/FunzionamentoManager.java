@@ -49,7 +49,7 @@ public class FunzionamentoManager {
 	public boolean simulafunzionamento() {
 		Random random=new Random();
 		int t= random.nextInt(100);
-		if(t>85) return false;
+		if(t>95) return false;	
 		return true;
 	}
 

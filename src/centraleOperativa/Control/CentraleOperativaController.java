@@ -30,21 +30,18 @@ public class CentraleOperativaController {
 	public void gestisciSegnalazione(String idrobot, String idsensore,float valore, Date dataora) {
 		CoerenzaMessaggioManager checkMess=new CoerenzaMessaggioManager(idrobot);  //datacheck
 		//String notificaGestore=null;
-		System.out.println("CENTRALE_GESTISCISEGNALAZIONE");
-		System.out.println("idRobot:" + idrobot);
-		System.out.println("idsensore:" + idsensore);
-		System.out.println("valore:" + valore);
-		System.out.println("dara-ora:" + dataora);
+//		System.out.println("CENTRALE_GESTISCISEGNALAZIONE");
+//		System.out.println("idRobot:" + idrobot);
+//		System.out.println("idsensore:" + idsensore);
+//		System.out.println("valore:" + valore);
+//		System.out.println("dara-ora:" + dataora);
 		//Verifica Dati
 		if(checkMess.VerificaCoerenzaDati()){
-			System.out.println("Verifica Superata");
+			System.out.println("La segnalazione d'allarme proviene dal robot <"+idrobot+"> REGISTRATO ed ON ");
 			
 			SegnalazioneManager segnManag=new SegnalazioneManager(idrobot,idsensore,valore,dataora);			//gestisci segnalazione
-			System.out.println("DEBUG (CentraleOperativaController)(gestisciSegnalazione)0");
 			segnManag.trattaSegnalazione();
-			System.out.println("DEBUG (CentraleOperativaController)(gestisciSegnalazione)1");
 			String ids=segnManag.getIdSegnalazione();
-			System.out.println("DEBUG (CentraleOperativaController)(gestisciSegnalazione)2");
 			if(ids.compareTo("error")!=0) { //se è stata creata una nuova segnalazione (in tal caso si modifica il valore iniziale di "idsegnalazione")
 			//MESSAGGIO AL PROPRIETARIO: idsegnalazione; idsensore; dataora;
 				String messaggioProprietario =(ids+";"+idsensore+";"+valore+";"+dataora+";"+segnManag.getTipologia()+";");
@@ -52,8 +49,7 @@ public class CentraleOperativaController {
 				String recapito=cm.recuperaRecapito();
 
 				if(recapito!=null) {
-					System.out.println("[CENTRALE OPERATIVA CONTROLLER] ecco il recapito    "+recapito);
-
+				//	System.out.println("[CENTRALE OPERATIVA CONTROLLER] ecco il recapito    "+recapito);
 					ServizioDiComunicazioneInterface sc = new ServizioDiComunicazioneInterface(); //si inizializza a null in quanto ci si affida ad un Servizio esterno che va ad implementare questa funzione!
 					sc.contattaProprietario(messaggioProprietario, recapito);
 					segnManag.setAttesa(); 													//setta la segnalazione a IN ATTESA

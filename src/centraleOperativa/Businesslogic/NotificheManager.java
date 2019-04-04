@@ -1,5 +1,7 @@
 package centraleOperativa.Businesslogic;
 
+import java.util.ArrayList;
+
 import org.orm.PersistentException;
 
 import centraleOperativa.Entity.gestore_Entity;
@@ -15,7 +17,13 @@ public class NotificheManager {
 		gestore_Entity ge;
 			synchronized(this) { 
 				try {
-					ge = gestore_Entity.getInstance(tipoSensoreToGestore(tipo));
+					GestoreManager g= GestoreManager.getInstance();
+					ge=g.getGestore(tipoSensoreToGestore(tipo));
+//					ge = gestore_Entity.getInstance(tipoSensoreToGestore(tipo));
+					ArrayList<segnalazione_Entity> kk=ge.getListaSegnalazioni();
+					for(int i=0;i<kk.size();i++) {
+						System.out.print(kk.get(i).getId());
+					}
 					segnalazione_Entity se= new segnalazione_Entity();
 					se=ge.getSegnalazioneById(id);
 					if(se.getStato().compareTo("IN ATTESA")==0) {

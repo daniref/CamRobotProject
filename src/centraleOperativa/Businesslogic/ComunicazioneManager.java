@@ -48,7 +48,8 @@ public class ComunicazioneManager {
 public String recuperaNumeroEmergenza()	{
 	
 	try {
-		gestore_Entity ge=gestore_Entity.getInstance(idgestore);
+		GestoreManager g= GestoreManager.getInstance();
+		gestore_Entity ge=g.getGestore(idgestore);
 		return ge.getRecapito();
 		//
 	} catch (PersistentException e) {

@@ -57,7 +57,7 @@ public class Display {
     private void initialize(ArrayList<SensoreInterface> Sens, String id_robot, ArrayList<Float> soglie){
 		frame = new JFrame("DISPLAY - Centralina");
 
-		frame.setBounds(100, 100, 688, 333+70*Sens.size());
+		frame.setBounds(100, 100, 688, 333+50*Sens.size());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(TerminaleAmministratore.class.getResource("/logo.png")));

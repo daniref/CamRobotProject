@@ -29,15 +29,12 @@ public class MalfunzionamentiManager {
 			lista=registrok.getListaKeepAlive();
 			for(int i=0;i<lista.size();i++) {
 				   long diff=d.getTime()-lista.get(i).getDataTime().getTime()+2*60*60*1000;
-				   System.out.println((i+1)+") KEEP: Data keep: ["+lista.get(i).getDataTime()+"] differenza di tempo: " +diff);
 				   if(diff>(minuti_in_secondi*1000)) {
 
 					   	if(diff<=(2*minuti_in_secondi*1000)) {
-					   		System.out.println("Per il robot <"+lista.get(i).getIdRobot()+"> sono passati più di "+(minuti_in_secondi/30)+"min. dall' ultimo keep--VECCHIO (contatta proprietario)");
 					   		buffer_idRobot.add(lista.get(i).getIdRobot());
 					   		}
 					   	else {
-					   		System.out.println("Per il robot <"+lista.get(i).getIdRobot()+"> sono passati più di "+(minuti_in_secondi/30)+"min. dall' ultimo keep--OBSOLETO");
 					   		//il keep deve essere cancellato dalla lista xk significa che il robot è disattivato e già è stato inviato un messaggio al proprietario
 							//buffer_idRobot.add(lista.get(i).getIdRobot());
 							}

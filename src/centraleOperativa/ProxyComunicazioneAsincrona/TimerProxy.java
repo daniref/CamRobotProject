@@ -35,11 +35,11 @@ public class TimerProxy extends Thread{
 			case 0: { //se tipo==0 -> monitoragio
 				   	try {
 						while (!exit) {
-							System.out.println("[Thread Scheduling segnalazioni d'allarme");					
+						//	System.out.println("[Thread Scheduling segnalazioni d'allarme");					
 							RiceviSegnalazione(consumer);
 							Thread.sleep((long)(tempo*1000));
 				   			}
-						System.out.println("Thread che schedula le segnalazioni d'allarme chiuso");
+				//		System.out.println("Thread che schedula le segnalazioni d'allarme chiuso");
 						}
 				   	catch (JMSException | InterruptedException | ParseException e) {
 						e.printStackTrace();
@@ -50,24 +50,24 @@ public class TimerProxy extends Thread{
 			case 1: { //tipo ==1(keep)
 					try {
 						while (!exit) {
-							System.out.println("[Thread Scheduling keep alive");					
+							//System.out.println("[Thread Scheduling keep alive");					
 							RiceviKeep(consumer);
 							Thread.sleep((long)(tempo*1000));
 							}
-						System.out.println("Thread che schedula i keep alive chiuso");
+						//System.out.println("Thread che schedula i keep alive chiuso");
 						}	
 					 catch (JMSException | InterruptedException | ParseException e) {
 						e.printStackTrace();
 						}
 					 }
-			default:{ //tipo diverso da 1 e 2...
+			default:{ //tipo diverso da 0 e 1...
 					try {
 						while (!exit) {
-							System.out.println("[Thread]Controllo malfunzionamento");					
+						//	System.out.println("[Thread]Controllo malfunzionamento");					
 							ControllaMalfunzionamenti((int)(this.tempo));
 							Thread.sleep((long)(tempo*1000));
 							}
-						System.out.println("Thread che verifica i malfunzionamenti chiuso");
+					//	System.out.println("Thread che verifica i malfunzionamenti chiuso");
 						}	
 					 catch (InterruptedException e) {
 						e.printStackTrace();

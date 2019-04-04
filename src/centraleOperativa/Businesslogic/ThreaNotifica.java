@@ -17,18 +17,19 @@ public class ThreaNotifica extends Thread{
 		this.idsegnalazione=ids;
 		this.idgestore=idg;
 		this.idrobot=idr;
-		System.out.println("[DEBUG-THREAD-NOTIFICA]creato nuovo thread per la segnalazione<"+ids +"> gestita da <"+idg+">");
+		//System.out.println("[DEBUG-THREAD-NOTIFICA]creato nuovo thread per la segnalazione<"+ids +"> gestita da <"+idg+">");
 	}
 
 
 	public void run(){
 		boolean comunica=false;
-		   			System.out.println("[DEBUG-THREAD-NOTIFICA] start Monitoraggio");					
+		   		//	System.out.println("[DEBUG-THREAD-NOTIFICA] start Monitoraggio");					
 					try {
 						Thread.sleep(15000);
-						 gestore_Entity ge=gestore_Entity.getInstance(idgestore);
+						GestoreManager g= GestoreManager.getInstance();
+						gestore_Entity ge=g.getGestore(idgestore);
 						 segnalazione_Entity se= new segnalazione_Entity();
-						 se= gestore_Entity.getSegnalazioneById(idsegnalazione); 
+						 se= ge.getSegnalazioneById(idsegnalazione); 
 							if(se.getStato().compareTo("IN ATTESA")==0) {
 								se.setStato("GESTORE ESTERNO");
 								ge.updateSegnalazione(se);
