@@ -1,4 +1,4 @@
-package centraleOperativa.Businesslogic;
+package centraleOperativa.Entity;
 
 import java.util.ArrayList;
 

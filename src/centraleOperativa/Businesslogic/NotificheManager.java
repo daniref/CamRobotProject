@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.orm.PersistentException;
 
+import centraleOperativa.Entity.GestoreManager;
 import centraleOperativa.Entity.gestore_Entity;
 import centraleOperativa.Entity.segnalazione_Entity;
 

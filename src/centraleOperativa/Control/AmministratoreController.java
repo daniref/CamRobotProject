@@ -5,7 +5,7 @@ import javax.jms.JMSException;
 import org.orm.PersistentException;
 
 import centraleOperativa.ProxyComunicazioneAsincrona.TimerProxy;
-import centraleOperativa.Businesslogic.GestoreManager;
+import centraleOperativa.Entity.GestoreManager;
 import centraleOperativa.Entity.gestore_Entity;
 import centraleOperativa.ProxyComunicazioneAsincrona.CentraleOperativaProxy;
 

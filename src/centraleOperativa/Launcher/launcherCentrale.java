@@ -10,7 +10,6 @@ import javax.jms.JMSException;
 
 import org.orm.PersistentException;
 
-import centraleOperativa.Businesslogic.GestoreManager;
 import centraleOperativa.DB.Segnalazione;
 import centraleOperativa.DB.SegnalazioneDAO;
 import centraleOperativa.Entity.gestore_Entity;

@@ -6,7 +6,6 @@ import java.util.TimeZone;
 
 import org.orm.PersistentException;
 
-import centraleOperativa.Businesslogic.GestoreManager;
 import centraleOperativa.DB.Gestore;
 import centraleOperativa.DB.GestoreDAO;
 import centraleOperativa.DB.Segnalazione;

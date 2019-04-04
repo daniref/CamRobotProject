@@ -69,7 +69,7 @@ public class TerminaleAmministratore {
 		frmTerminaleAmministratore = new JFrame();
 		frmTerminaleAmministratore.getContentPane().setBackground(new Color(245, 245, 245));
 
-		frmTerminaleAmministratore.setIconImage(Toolkit.getDefaultToolkit().getImage(TerminaleAmministratore.class.getResource("/logo.png")));
+		frmTerminaleAmministratore.setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/admin.png")));
 		frmTerminaleAmministratore.setTitle("Terminale Amministratore");
 		frmTerminaleAmministratore.setBounds(100, 100, 450, 300);
 		frmTerminaleAmministratore.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

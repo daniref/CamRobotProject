@@ -2,6 +2,7 @@ package centraleOperativa.Businesslogic;
 
 import org.orm.PersistentException;
 
+import centraleOperativa.Entity.GestoreManager;
 import centraleOperativa.Entity.area_Entity;
 import centraleOperativa.Entity.cliente_Entity;
 import centraleOperativa.Entity.contratto_Entity;
