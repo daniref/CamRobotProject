@@ -5,7 +5,7 @@ import javax.jms.JMSException;
 import org.orm.PersistentException;
 
 import centraleOperativa.ProxyComunicazioneAsincrona.TimerProxy;
-import centraleOperativa.Entity.GestoreManager;
+import centraleOperativa.Entity.managerGestori_Entity;
 import centraleOperativa.Entity.gestore_Entity;
 import centraleOperativa.ProxyComunicazioneAsincrona.CentraleOperativaProxy;
 
@@ -42,7 +42,7 @@ public class AmministratoreController {
 		tp2.start();
 		tp3.start();
 		try {
-			GestoreManager g=GestoreManager.getInstance();
+			managerGestori_Entity g=managerGestori_Entity.getInstance();
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -54,7 +54,7 @@ public class AmministratoreController {
 		tp2.stoppa();
 		tp3.stoppa();
 		try {
-			GestoreManager g=GestoreManager.getInstance();
+			managerGestori_Entity g=managerGestori_Entity.getInstance();
 			g.getGestore("gs0001").StampaLista();
 			g.getGestore("gs0002").StampaLista();
 			g.getGestore("gs0003").StampaLista();

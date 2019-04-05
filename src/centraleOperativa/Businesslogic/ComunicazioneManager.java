@@ -2,7 +2,7 @@ package centraleOperativa.Businesslogic;
 
 import org.orm.PersistentException;
 
-import centraleOperativa.Entity.GestoreManager;
+import centraleOperativa.Entity.managerGestori_Entity;
 import centraleOperativa.Entity.area_Entity;
 import centraleOperativa.Entity.cliente_Entity;
 import centraleOperativa.Entity.contratto_Entity;
@@ -49,7 +49,7 @@ public class ComunicazioneManager {
 public String recuperaNumeroEmergenza()	{
 	
 	try {
-		GestoreManager g= GestoreManager.getInstance();
+		managerGestori_Entity g= managerGestori_Entity.getInstance();
 		gestore_Entity ge=g.getGestore(idgestore);
 		return ge.getRecapito();
 		//

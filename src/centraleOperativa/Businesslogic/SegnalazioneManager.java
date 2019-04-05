@@ -6,7 +6,7 @@ import java.util.Date;
 
 import org.orm.PersistentException;
 
-import centraleOperativa.Entity.GestoreManager;
+import centraleOperativa.Entity.managerGestori_Entity;
 import centraleOperativa.Entity.gestore_Entity;
 import centraleOperativa.Entity.segnalazione_Entity;
 import centraleOperativa.Entity.sensore_Entity;
@@ -35,7 +35,7 @@ public class SegnalazioneManager {
 		this.tipologia=this.leggiTipologia();
 		this.idgestore=this.tipoSensoreToGestore(tipologia);
 		try {
-			GestoreManager g= GestoreManager.getInstance();
+			managerGestori_Entity g= managerGestori_Entity.getInstance();
 			gestore_Entity gest=g.getGestore(this.idgestore);
 			segnalazione_Entity s = new segnalazione_Entity();
 			s=gest.getUltimaSegnalazioneByIdSensore(this.idsensore);
@@ -110,7 +110,7 @@ public boolean verificaCondizione(segnalazione_Entity s,int minuti) {
 public void setAttesa(){
 		 gestore_Entity ge;
 		try {
-			GestoreManager g= GestoreManager.getInstance();
+			managerGestori_Entity g= managerGestori_Entity.getInstance();
 			ge=g.getGestore(idgestore);
 			 segnalazione_Entity se= new segnalazione_Entity();
 			 se= ge.getSegnalazioneById(idSegnalazione); 

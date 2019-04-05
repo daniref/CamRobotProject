@@ -4,7 +4,7 @@ package centraleOperativa.Businesslogic;
 import org.orm.PersistentException;
 
 import centraleOperativa.Boundary.ServizioDiComunicazioneInterface;
-import centraleOperativa.Entity.GestoreManager;
+import centraleOperativa.Entity.managerGestori_Entity;
 import centraleOperativa.Entity.gestore_Entity;
 import centraleOperativa.Entity.segnalazione_Entity;
 
@@ -27,7 +27,7 @@ public class ThreaNotifica extends Thread{
 		   		//	System.out.println("[DEBUG-THREAD-NOTIFICA] start Monitoraggio");					
 					try {
 						Thread.sleep(15000);
-						GestoreManager g= GestoreManager.getInstance();
+						managerGestori_Entity g= managerGestori_Entity.getInstance();
 						gestore_Entity ge=g.getGestore(idgestore);
 						 segnalazione_Entity se= new segnalazione_Entity();
 						 se= ge.getSegnalazioneById(idsegnalazione); 

@@ -7,21 +7,21 @@ import org.orm.PersistentException;
 import centraleOperativa.Entity.gestore_Entity;
 
 //singleton
-public class GestoreManager {
+public class managerGestori_Entity {
 
-	private static GestoreManager gestoremanager=null;
+	private static managerGestori_Entity gestoremanager=null;
 	ArrayList<gestore_Entity> gestori= new ArrayList<gestore_Entity>(4);
 	
-	public static synchronized GestoreManager getInstance() throws PersistentException{
+	public static synchronized managerGestori_Entity getInstance() throws PersistentException{
 
 		if(gestoremanager==null) {
-			gestoremanager=new GestoreManager();	
+			gestoremanager=new managerGestori_Entity();	
 		}
 		return gestoremanager;
 		}
 	
 	
-	private GestoreManager() throws PersistentException {
+	private managerGestori_Entity() throws PersistentException {
 		System.out.println("Costruttore Gestore Manager");
 		gestore_Entity pronto_socc= new gestore_Entity("gs0001");
 		gestori.add(pronto_socc);

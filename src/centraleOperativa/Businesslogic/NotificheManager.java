@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.orm.PersistentException;
 
-import centraleOperativa.Entity.GestoreManager;
+import centraleOperativa.Entity.managerGestori_Entity;
 import centraleOperativa.Entity.gestore_Entity;
 import centraleOperativa.Entity.segnalazione_Entity;
 
@@ -18,7 +18,7 @@ public class NotificheManager {
 		gestore_Entity ge;
 			synchronized(this) { 
 				try {
-					GestoreManager g= GestoreManager.getInstance();
+					managerGestori_Entity g= managerGestori_Entity.getInstance();
 					ge=g.getGestore(tipoSensoreToGestore(tipo));
 //					ge = gestore_Entity.getInstance(tipoSensoreToGestore(tipo));
 					ArrayList<segnalazione_Entity> kk=ge.getListaSegnalazioni();
