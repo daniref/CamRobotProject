@@ -8,13 +8,13 @@ import centraleOperativa.Entity.managerGestori_Entity;
 import centraleOperativa.Entity.gestore_Entity;
 import centraleOperativa.Entity.segnalazione_Entity;
 
-public class ThreaNotifica extends Thread{
+public class ThreadNotifica extends Thread{
 
 	private String idsegnalazione; 
 	private String idgestore;
 	private String idrobot;
 
-	public ThreaNotifica(String idr,String ids, String idg){
+	public ThreadNotifica(String idr,String ids, String idg){
 		this.idsegnalazione=ids;
 		this.idgestore=idg;
 		this.idrobot=idr;

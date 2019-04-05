@@ -53,7 +53,7 @@ public class CentraleOperativaController {
 					ServizioDiComunicazioneInterface sc = new ServizioDiComunicazioneInterface(); //si inizializza a null in quanto ci si affida ad un Servizio esterno che va ad implementare questa funzione!
 					sc.contattaProprietario(messaggioProprietario, recapito);
 					segnManag.setAttesa(); 													//setta la segnalazione a IN ATTESA
-					ThreaNotifica t=new ThreaNotifica(idrobot,ids,segnManag.getIdgestore()); //aspetta 2 minuti, verifica notifica dal cliente, (se necessario) contatta gestore esterno
+					ThreadNotifica t=new ThreadNotifica(idrobot,ids,segnManag.getIdgestore()); //aspetta 2 minuti, verifica notifica dal cliente, (se necessario) contatta gestore esterno
 					t.start();
 					}
 			}
