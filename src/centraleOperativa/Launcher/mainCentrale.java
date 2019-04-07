@@ -16,7 +16,7 @@ import centraleOperativa.Entity.gestore_Entity;
 import centraleOperativa.Entity.segnalazione_Entity;
 import centraleOperativa.ProxyComunicazioneSincrona.*;
 
-public class launcherCentrale {
+public class mainCentrale {
 
 	public static void main(String argv[]) throws JMSException{
 		final int PortaCentraleAmministratore=6100;
