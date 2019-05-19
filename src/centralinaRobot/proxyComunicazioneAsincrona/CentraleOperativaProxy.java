@@ -23,8 +23,8 @@ public class CentraleOperativaProxy {
     private static String queueKeep = "Queue - KeepAlive";
 
     public void GeneraKeep(String idrobot) throws JMSException{
-				String dataora=(new SimpleDateFormat( "dd:MM:yyyy-HH:mm:ss")).format( Calendar.getInstance().getTime());
-				String msg_to_send=(idrobot+";"+dataora+".");
+				String dataora=(new SimpleDateFormat("dd:MM:yyyy-HH:mm:ss")).format( Calendar.getInstance().getTime());
+				String msg_to_send=(idrobot+";"+dataora);
 		    	// Creazione di una connessione JMS con il server, reperibile all'indirizzo 'url'
 		    	ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
 		    	Connection connection = connectionFactory.createConnection();
@@ -44,8 +44,8 @@ public class CentraleOperativaProxy {
 		    }
     
     public void GeneraAllarme(String idrobot, String idsensore, float val) throws JMSException{
-				String dataora=(new SimpleDateFormat( "dd:MM:yyyy-HH:mm:ss")).format( Calendar.getInstance().getTime());
-				String msg_to_send=(idrobot+";"+idsensore+";"+String.format("%.2f", val).replace(",", ".")+";"+dataora+".");
+				String dataora=(new SimpleDateFormat("dd:MM:yyyy-HH:mm:ss")).format( Calendar.getInstance().getTime());
+				String msg_to_send=(idrobot+";"+idsensore+";"+String.format("%.2f", val).replace(",", ".")+";"+dataora);
 				
 		    	// Creazione di una connessione JMS con il server, reperibile all'indirizzo 'url'
 		    	ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);

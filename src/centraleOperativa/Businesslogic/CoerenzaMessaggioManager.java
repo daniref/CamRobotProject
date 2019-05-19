@@ -1,11 +1,14 @@
 package centraleOperativa.Businesslogic;
 
+import org.orm.PersistentException;
+
+import centraleOperativa.Entity.area_Entity;
+import centraleOperativa.Entity.robot_Entity;
 
 //import centrale.entity.robot;
 public class CoerenzaMessaggioManager {
 
-	private String stato;
-	private String condizione;
+
 	private String idR;
 
 	public String getIdR() {
@@ -15,56 +18,31 @@ public class CoerenzaMessaggioManager {
 
 	public CoerenzaMessaggioManager(String idr) {
 		this.idR=idr;
-		this.stato=LeggiStato();
-		this.condizione=LeggiCondizione();
+
 	}
 	
 	public boolean VerificaCoerenzaDati() {
 /*'d_robot deve appartenere effettivamente ad un robot del sistema che si trova nello stato REGISTRATO e nella condizione ON)*/
-
-		return ((this.getStato()=="REGISTRATO") && (this.getCondizione()=="ON"));
-		/*		robot_Entity r= new robot_Entity();
-		r.getStatoById(idRobot)
-	*/	
+			area_Entity area;
+			try {
+				area = area_Entity.getInstance("ar0001");
+				robot_Entity robot = area.getRobotById(getIdR());
+				
+				boolean a=robot.getStato().compareTo("REGISTRATO")==0;
+				boolean b=robot.getCondizione().compareTo("ON")==0;
+				if(a&&b)return true;
+				else return false;
+			} catch (PersistentException e) {
+				// TODO Auto-generated catch block
+				return false;				
+				//e.printStackTrace();
+			}
+			
+		
 	}
 	
 	
-	public String getStato() {
-		return stato;
-	}
-
-
-
-	public String getCondizione() {
-		return condizione;
-	}
-
-
-
-	public void setStato(String stato) {
-		this.stato = stato;
-	}
-
-
-
-	public void setCondizione(String condizione) {
-		this.condizione = condizione;
-	}
-
-
-
-	public String LeggiStato() {
-/*		robot_Entity r= new robot_Entity();
-		setStato(r.getStatoById(this.getIdR());
-*/		
-		return "REGISTRATO";
-	}
 	
-	public String LeggiCondizione() {
-/*		robot_Entity r= new robot_Entity();
-		setCondizione(r.getCondizioneById(this.getIdR()));
-*/
-		return "ON";
-	}
 	
 }
+

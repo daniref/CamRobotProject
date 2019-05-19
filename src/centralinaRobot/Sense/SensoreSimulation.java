@@ -10,11 +10,12 @@ public class SensoreSimulation extends Thread{
 	private static int INIT; //15 gradi iniziali
 	private static int RANGE;	
 	private static int ADJ=RANGE;
-	
+	private boolean pause;
 	static Random ran = new Random();
 	
 
 	public SensoreSimulation(String T){
+		pause=false;
 		switch(T) {
 			case "F": //il rilevatore di FUMO restituisce la concentrazione di monossido di carbonio presente nell’aria (ppm)
 					  //http://www.las.provincia.venezia.it/discscien/chimica/iperqualitaria/inquinanti/monossidocarbonio1.htm
@@ -48,20 +49,32 @@ public class SensoreSimulation extends Thread{
 		this.valore=v;
 	}
 	
-	@Override
-	public void run(){
-	do {
-	  try{
-		//ogni tot secondi il valore è aggiornato
-		Thread.sleep(6000);
-		setValore((float)Math.random()*(RANGE)-ADJ+valore);	
-		
-	//	setValore(ran.nextInt(RANGE)-ADJ+valore);
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-	}while(true);
+	
+	public boolean isPause() {
+		return pause;
 	}
 
+	public void setPause(boolean pause) {
+		this.pause = pause;
+	}
+
+	@Override
+	public void run(){
+		  try{				  
+			do {
+			//System.out.println("[Sensore Simulation]RUN...");
+			Thread.sleep(2000);
+				while(!pause) {
+				//	System.out.println("[Sensore Simulation]Aggiornamento valore...");
+					//se non è stato messo in pausa, ogni 6 secondi il valore è aggiornato
+					Thread.sleep(6000);
+					setValore((float)Math.random()*(RANGE)-ADJ+valore);	
+				  	};
+			}while(true);
+					  	
+		  }
+		  catch(Exception e){
+			  e.printStackTrace();
+		  }
+	}
 }

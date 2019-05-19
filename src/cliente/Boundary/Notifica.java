@@ -64,7 +64,7 @@ public class Notifica {
 		JLabel lblSelezionaTipologia = new JLabel("Seleziona Tipologia");
 		lblSelezionaTipologia.setBounds(12, 85, 167, 30);
 		frmFormInvioNotifiche.getContentPane().add(lblSelezionaTipologia);
-		String[] opzioni = {"Termometro", "Rilevatore di Fumo", "Sensore di Prossimità"};
+		String[] opzioni = {"Termometro", "Rilevatore di Fumo", "Sensore di Prossimità","Sensore Generico"};
 		JComboBox comboBox = new JComboBox(opzioni);
 		comboBox.setBounds(169, 77, 167, 38);
 		frmFormInvioNotifiche.getContentPane().add(comboBox);

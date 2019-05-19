@@ -15,12 +15,14 @@ import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.List;
 
 import javax.swing.JButton;
 
 import javax.jms.JMSException;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
+import javax.swing.UIManager;
 
 
 public class TerminaleAmministratore {
@@ -68,14 +70,17 @@ public class TerminaleAmministratore {
 		Started avviato=new Started();	
 		frmTerminaleAmministratore = new JFrame();
 		frmTerminaleAmministratore.getContentPane().setBackground(new Color(245, 245, 245));
-
-		frmTerminaleAmministratore.setIconImage(Toolkit.getDefaultToolkit().getImage(TerminaleAmministratore.class.getResource("/logo.png")));
+		ImageIcon icona= new ImageIcon("/admin.png");
+		frmTerminaleAmministratore.setIconImage(Toolkit.getDefaultToolkit().getImage(TerminaleAmministratore.class.getResource("/admin.png"))); //getImage(icona));
+		// frmTerminaleAmministratore.setIconImages((List<? extends Image>) (new ImageIcon(this.getClass().getResource("/admin.png")));;
+		//setIcon(new ImageIcon(this.getClass().getResource("/offv.png")));
 		frmTerminaleAmministratore.setTitle("Terminale Amministratore");
 		frmTerminaleAmministratore.setBounds(100, 100, 450, 300);
 		frmTerminaleAmministratore.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmTerminaleAmministratore.getContentPane().setLayout(null);
 		
 		txtCentraleOperativa = new JTextField();
+		txtCentraleOperativa.setToolTipText("");
 		txtCentraleOperativa.setBackground(new Color(245, 245, 245));
 		txtCentraleOperativa.setFont(new Font("Tahoma", Font.PLAIN, 28));
 		txtCentraleOperativa.setForeground(Color.BLUE);
@@ -86,7 +91,7 @@ public class TerminaleAmministratore {
 		
 		JButton btnPower = new JButton("");
 		btnPower.setForeground(new Color(245, 245, 245));
-		btnPower.setBackground(new Color(245, 245, 245));
+		btnPower.setBackground((new Color(245, 245, 245)));
 		btnPower.setIcon(new ImageIcon(this.getClass().getResource("/offv.png")));
 
 		btnPower.setFont(new Font("Tahoma", Font.BOLD, 18));

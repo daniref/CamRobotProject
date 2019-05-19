@@ -32,6 +32,20 @@ public class Cliente_CentralinaRobotProxy {
 	} 
 
 	
+	public boolean refresh() throws MalformedURLException, RemoteException, NotBoundException {
+		
+		try{
+			ProxyClienteCentralina proxy;
+			proxy = (ProxyClienteCentralina)Naming.lookup(urlCentralinaCliente);
+			return proxy.refresh();
+			}
+		catch (Exception e1) {
+			System.out.println("Eccezione RMI Monitoraggio Remoto: " + e1);
+			e1.printStackTrace();
+		}
+	return false;
+	} 
+	
 }
 
 

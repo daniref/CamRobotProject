@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import amministratore.Boundary.TerminaleAmministratore;
+import centralinaRobot.Compute.CentralinaRobotController;
 import centralinaRobot.Sense.SensoreInterface;
 
 
@@ -29,11 +30,24 @@ public class Display {
     private JLabel lblImmFunzionamento;
 	private final Image imgFunctError = new ImageIcon(this.getClass().getResource("/incorrect.png")).getImage();
 	private final Image imgFunctOK = new ImageIcon(this.getClass().getResource("/correct.png")).getImage();
-
-    	
-    //private static DisplaySingl DisplayInstance;
-
-   public Display (ArrayList<SensoreInterface> Sens, String id_r, ArrayList <Float> ss){
+	
+	//CREAZIONE DEL 'SINGLETON'
+	private static Display display=null;
+	
+	//metodo usato per l'accesso alla classe singleton
+	public static synchronized Display getInstance(ArrayList<SensoreInterface> Sens, String id_r, ArrayList <Float> ss){
+			if(display==null){
+				display= new Display(Sens,id_r,ss);
+			}
+			return display;
+		}
+	//non vine MAI richiamata la prima volta.!
+	public static synchronized Display getInstance(){
+			return display;
+		}
+		
+   //costruttore privato
+   private Display (ArrayList<SensoreInterface> Sens, String id_r, ArrayList <Float> ss){
     	initialize(Sens,id_r,ss);
     	clock();
     }  
@@ -43,7 +57,7 @@ public class Display {
     private void initialize(ArrayList<SensoreInterface> Sens, String id_robot, ArrayList<Float> soglie){
 		frame = new JFrame("DISPLAY - Centralina");
 
-		frame.setBounds(100, 100, 688, 333+70*Sens.size());
+		frame.setBounds(100, 100, 688, 333+50*Sens.size());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(TerminaleAmministratore.class.getResource("/logo.png")));
@@ -103,12 +117,12 @@ public class Display {
 			
 			jl3 = new JLabel("("+Sens.get(i).getID()+")"); //ID misurato
 			jl3.setFont(new Font("Tahoma", Font.BOLD, 18));
-			jl3.setBounds(350, 253+50*i, 80, 35);
+			jl3.setBounds(330, 253+50*i,100, 35);
 			frame.getContentPane().add(jl3);
 			VettIDSens.add(jl3);
 			
 			
-			jl4 = new JLabel(String.format ("%.2f",soglie.get(i))); //ID misurato
+			jl4 = new JLabel(String.format ("%.2f",soglie.get(i))); //soglia
 			jl4.setFont(new Font("Tahoma", Font.BOLD, 18));
 			jl4.setBounds(545, 253+50*i, 150, 35);
 			frame.getContentPane().add(jl4);
