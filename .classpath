@@ -19,5 +19,19 @@
 	<classpathentry kind="lib" path="lib/hawtbuf-1.11.jar"/>
 	<classpathentry kind="lib" path="lib/jcl-over-slf4j-1.7.13.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-api-1.7.13.jar"/>
+	<classpathentry kind="lib" path="/Bot Project/lib/telegrambots-4.1-jar-with-dependencies (1).jar"/>
+	<classpathentry kind="lib" path="/Bot Project/lib/telegrambots-4.1.jar"/>
+	<classpathentry kind="lib" path="/Bot Project/lib/TelegramBots-4.1.tar.gz"/>
+	<classpathentry kind="lib" path="/Bot Project/lib/TelegramBots-4.1.zip"/>
+	<classpathentry kind="lib" path="/Bot Project/lib/telegrambots-abilities-4.1-jar-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="/Bot Project/lib/telegrambots-abilities-4.1.jar"/>
+	<classpathentry kind="lib" path="/Bot Project/lib/telegrambots-chat-session-bot-4.1-jar-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="/Bot Project/lib/telegrambots-chat-session-bot-4.1.jar"/>
+	<classpathentry kind="lib" path="/Bot Project/lib/telegrambots-meta-4.1-jar-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="/Bot Project/lib/telegrambots-meta-4.1.jar"/>
+	<classpathentry kind="lib" path="/Bot Project/lib/telegrambots-spring-boot-starter-4.1-jar-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="/Bot Project/lib/telegrambots-spring-boot-starter-4.1.jar"/>
+	<classpathentry kind="lib" path="/Bot Project/lib/telegrambotsextensions-4.1-jar-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="/Bot Project/lib/telegrambotsextensions-4.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
